@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<script>
+<name />
+<version />
+<engineversion />
+<description />
+<arguments>
+</arguments>
+<sourcetext>
+</sourcetext>
+<codearray>
+<sval type="array" size="10"><sval type="string" val="mf.tg.dummy" /><sval type="int" val="42" /><sval type="string" val="Dummy" /><sval type="int" val="100" /><sval type="int" val="0" /><sval type="array" size="0" /><sval type="array" size="1"><sval type="array" size="3"><sval type="int" val="103" /><sval type="int" val="0" /><sval type="int" val="0" /></sval></sval><sval type="int" val="0" /><sval type="array" size="0" /><sval type="int" val="0" /></sval>
+</codearray>
+</script>

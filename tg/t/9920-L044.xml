@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="44">
+
+<page id="1">
+ <t id="99">\033</t>
+ <t id="101">\033Y%s\033X\(%s\): \033Gremove\033X</t>
+ <t id="102">\033GTG%s\033X %s %s</t>
+ <t id="103">Default Fuel resuply quantity\(jumps\):   \033Y%s\033X</t>
+ <t id="104">\033G%s\033X: \033C%s\033X \033Y%s\033X</t>
+ <t id="105">Destination: \033G%s\033X</t>
+ <t id="106">Ware: \033C%s\033X</t>
+ <t id="107">Amount:\033Y%s\033X</t>
+ <t id="108">Price: \033M%s\033X</t>
+ <t id="109">\033YSelect destination station\033X</t>
+ <t id="110">\033YSelect neded ware\033X</t>
+ <t id="111">\033YSelect amount of ware\033X</t>
+ <t id="112">\033YMax price \( \033X\033Gmin:%s avg:%s max:%s\033X \033Y\)\033X [min|max|avg][+|-N][%]</t>
+</page>
+
+<page id="2">
+ <t id="0">[author][b]Chief of Trader Guild[/b][/author]</t>
+ <t id="1">{2,0}From: [yellow]%s\(%s\)[/yellow]\n\nCan't sell junk ware [yellow]%s[/yellow]</t>
+ <t id="2">{2,0}Sorry, sir. But we don't need newbee pilot with a such [red]lame[/red] ship [yellow]%s \(%s\)[/yellow]\nThe pilot MUST to install required equipment: \n[yellow]%s[/yellow]</t>
+ <t id="3">{2,0}Sorry, sir. But the pilot of your ship [yellow]%s \(%s\)[/yellow] is a drunkard.\nWhere did he wasted required equipment? \n[yellow]%s[/yellow]\nWe dismiss him immediately</t>
+ <t id="4">{2,0}Sir! We lost the ship[yellow]%s \(%s\)[/yellow] in [yellow]%s[/yellow]\n It was destroyed by [red]%s[/red]. The pilot of the ship is dead.\nHis last transmission was:\n [magenta]MAYDAY!!! MAYDAY!!! I need a backup immedeatly!! The ship is damaged, cargo is lost. MAYADaaaahhhrr........[/magenta]\nWe are seeking venegance upon them!</t>
+ <t id="5">{2,0}Sir! One of ower ships [yellow]%s \(%s\)[/yellow] in [yellow]%s[/yellow]\n is under attack by [red]%s[/red]. Urgent backup is needed!! </t>
+</page>
+
+<page id="3">
+ <t id="0">[author][b]Trader Guild Statistic department[/b][/author]</t>
+ <t id="1">[left]Income[/left][right]%s Cr[/right]\n</t>
+ <t id="2">[left]Expences[/left][right]%s Cr[/right]\n</t>
+ <t id="3">[left]Profit[/left][right]%s Cr[/right]\n\n</t>
+ <t id="4">[left]Delivery[/left][right]%s Cr[/right]\n\n\n\n</t>
+ <t id="5">[left]%s[/left][right]%sCr\t%sCr\t%sCr[/right]\n</t>
+ <t id="97">[left]Ship[/left][right]Income          Expence          Profit[/right]\n</t>
+ <t id="98">{3,0}\n[center][b]Statistics of the trade operations[/b][/center]\n\n\n</t>
+ <t id="99">[left]-------------[/left][right]---------------[/right]\n</t>
+</page>
+
+</language>

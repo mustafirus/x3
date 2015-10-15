@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<script>
+<name />
+<version />
+<engineversion />
+<description />
+<arguments>
+</arguments>
+<sourcetext>
+</sourcetext>
+<codearray>
+<sval type="array" size="10"><sval type="string" val="mf.tg.ship.signal.killed" /><sval type="int" val="42" /><sval type="string" val="Synchron signal. killed" /><sval type="int" val="100" /><sval type="int" val="0" /><sval type="array" size="8"><sval type="string" val="killer" /><sval type="string" val="cmd" /><sval type="string" val="cmdtarget" /><sval type="string" val="cmdtarget2" /><sval type="string" val="cmdpar1" /><sval type="string" val="cmdpar2" /><sval type="string" val="sec" /><sval type="string" val="null" /></sval><sval type="array" size="4"><sval type="array" size="4"><sval type="int" val="703" /><sval type="int" val="131075" /><sval type="int" val="1" /><sval type="int" val="6" /></sval><sval type="array" size="12"><sval type="int" val="102" /><sval type="string" val="mf.tg.ship.problem" /><sval type="int" val="-2147483647" /><sval type="int" val="131075" /><sval type="int" val="1" /><sval type="int" val="3" /><sval type="int" val="4" /><sval type="int" val="4" /><sval type="int" val="131074" /><sval type="int" val="6" /><sval type="int" val="131074" /><sval type="int" val="0" /></sval><sval type="array" size="10"><sval type="int" val="102" /><sval type="string" val="mf.tg.ship.addremove" /><sval type="int" val="-2147483647" /><sval type="int" val="131074" /><sval type="int" val="7" /><sval type="int" val="2" /><sval type="int" val="131075" /><sval type="int" val="1" /><sval type="int" val="131075" /><sval type="int" val="9" /></sval><sval type="array" size="3"><sval type="int" val="103" /><sval type="int" val="0" /><sval type="int" val="0" /></sval></sval><sval type="array" size="6"><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="killer" /></sval><sval type="array" size="2"><sval type="int" val="31" /><sval type="string" val="cmd" /></sval><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="cmdtarget" /></sval><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="cmdtarget2" /></sval><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="cmdpar1" /></sval><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="cmdpar2" /></sval></sval><sval type="array" size="0" /><sval type="int" val="0" /></sval>
+</codearray>
+</script>
