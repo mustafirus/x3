@@ -1,0 +1,227 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<!--Produced externally by the Exscriptor-->
+<script>
+   <name>mf.tg.ship.cmd.check</name>
+   <version>16</version>
+   <engineversion>50</engineversion>
+   <description />
+   <arguments>
+      <argument index="0" name="ship" type="Var/Ship" desc="ship" />
+      <argument index="1" name="upgrade" type="Value" desc="Upgrade  1 or ware" />
+   </arguments>
+   <sourcetext>
+      <line linenr="001" indent=""><var>$flags = </var><text></text><var>[CmdConCheck.OneTime] </var><text></text></line>
+      <line linenr="002" indent=""> </line>
+      <line linenr="003" indent=""><comment>* <text></text><var>$a =</var><text> </text><var>$ship</var><text>  ->  is script </text><var></var><call>mf.tg.ship.signal.attacked</call><var></var><text> on stack of task=</text><var>0</var><text></text></comment></line>
+      <line linenr="004" indent=""><comment>* <text></text><var>$b =</var><text> </text><var>$ship</var><text>  ->  is script </text><var></var><call>mf.tg.mainloop</call><var></var><text> on stack of task=</text><var>0</var><text></text></comment></line>
+      <line linenr="005" indent=""> </line>
+      <line linenr="006" indent=""><comment>* <var>skip if </var><text></text><var>$a OR $b </var><text></text></comment></line>
+      <line linenr="007" indent=""><comment>* <text>return </text><var>$flags</var><text></text></comment></line>
+      <line linenr="008" indent=""> </line>
+      <line linenr="009" indent=""><text></text><var>if</var><text> </text><var>$ship</var><text>  ->  get local variable: name=</text><var>'waiting'</var><text></text></line>
+      <line linenr="010" indent="&#160;"><var>$flags = </var><text></text><var>$flags | [CmdConCheck.Available] </var><text></text></line>
+      <line linenr="011" indent="&#160;"><comment>* <text>else</text></comment></line>
+      <line linenr="012" indent="&#160;"><comment>* <var>$flags = </var><text></text><var>$flags | [CmdConCheck.Disabled] </var><text></text></comment></line>
+      <line linenr="013" indent=""><text>end</text></line>
+      <line linenr="014" indent=""><text>return </text><var>$flags</var><text></text></line>
+      <line linenr="015" indent=""> </line>
+      <line linenr="016" indent=""><comment>* <text></text><var>if</var><text> </text><var>$ship</var><text>  ->  is script </text><var></var><call>mf.tg.ship.signal.attacked</call><var></var><text> on stack of task=</text><var>0</var><text></text></comment></line>
+      <line linenr="017" indent=""><comment>* <text>return </text><var>[FALSE]</var><text></text></comment></line>
+      <line linenr="018" indent=""> </line>
+      <line linenr="019" indent=""><text>return </text><var>null</var><text></text></line>
+      <line linenr="020" indent=""> </line>
+      <line linenr="021" indent=""> </line>
+      <line linenr="022" indent=""> </line>
+      <line linenr="023" indent=""> </line>
+   </sourcetext>
+   <codearray>
+      <sval type="array" size="10">
+         <sval type="string" val="mf.tg.ship.cmd.check" />
+         <sval type="int" val="50" />
+         <sval type="string" val="" />
+         <sval type="int" val="16" />
+         <sval type="int" val="0" />
+         <sval type="array" size="3">
+            <sval type="string" val="ship" />
+            <sval type="string" val="upgrade" />
+            <sval type="string" val="flags" />
+         </sval>
+         <sval type="array" size="5">
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="2" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="119" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="156" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="5" />
+               <sval type="string" val="waiting" />
+               <sval type="int" val="-1610611965" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="2" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="117" />
+               <sval type="int" val="15" />
+               <sval type="int" val="7" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="7" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+         </sval>
+         <sval type="array" size="2">
+            <sval type="array" size="2">
+               <sval type="int" val="21" />
+               <sval type="string" val="ship" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="9" />
+               <sval type="string" val="Upgrade  1 or ware" />
+            </sval>
+         </sval>
+         <sval type="array" size="18">
+            <sval type="array" size="2">
+               <sval type="int" val="1" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="9">
+               <sval type="int" val="1" />
+               <sval type="int" val="3" />
+               <sval type="int" val="1072" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="ship" />
+               <sval type="string" val="a" />
+               <sval type="string" val="mf.tg.ship.signal.attacked" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="9">
+               <sval type="int" val="1" />
+               <sval type="int" val="3" />
+               <sval type="int" val="1072" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="ship" />
+               <sval type="string" val="b" />
+               <sval type="string" val="mf.tg.mainloop" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="1" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="11">
+               <sval type="int" val="1" />
+               <sval type="int" val="3" />
+               <sval type="int" val="104" />
+               <sval type="int" val="-536870905" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="a" />
+               <sval type="int" val="15" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="b" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="1" />
+               <sval type="int" val="3" />
+               <sval type="int" val="103" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="flags" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="1" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="3" />
+               <sval type="int" val="3" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="11">
+               <sval type="int" val="3" />
+               <sval type="int" val="3" />
+               <sval type="int" val="104" />
+               <sval type="string" val="flags" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="flags" />
+               <sval type="int" val="15" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="118" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="4" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="9">
+               <sval type="int" val="4" />
+               <sval type="int" val="3" />
+               <sval type="int" val="1072" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="ship" />
+               <sval type="int" val="-1610612733" />
+               <sval type="string" val="mf.tg.ship.signal.attacked" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="4" />
+               <sval type="int" val="3" />
+               <sval type="int" val="103" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="9" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="4" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+      </sval>
+   </codearray>
+</script>

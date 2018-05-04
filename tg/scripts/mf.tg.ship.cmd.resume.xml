@@ -1,0 +1,73 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<!--Produced externally by the Exscriptor-->
+<script>
+   <name>mf.tg.ship.cmd.resume</name>
+   <version>1</version>
+   <engineversion>50</engineversion>
+   <description />
+   <arguments />
+   <sourcetext>
+      <line linenr="001" indent=""><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'waiting'</var><text> value=</text><var>[FALSE]</var><text></text></line>
+      <line linenr="002" indent="" interruptable="@"><text></text><var> =</var><text> </text><var>[THIS]</var><text>  ->  move around </text><var>5000</var><text> ms</text></line>
+      <line linenr="003" indent=""> </line>
+      <line linenr="004" indent=""><text>return </text><var>null</var><text></text></line>
+      <line linenr="005" indent=""> </line>
+      <line linenr="006" indent=""> </line>
+      <line linenr="007" indent=""> </line>
+   </sourcetext>
+   <codearray>
+      <sval type="array" size="10">
+         <sval type="string" val="mf.tg.ship.cmd.resume" />
+         <sval type="int" val="50" />
+         <sval type="string" val="" />
+         <sval type="int" val="1" />
+         <sval type="int" val="0" />
+         <sval type="int" val="0" />
+         <sval type="array" size="3">
+            <sval type="array" size="7">
+               <sval type="int" val="155" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="string" val="waiting" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="9" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="507" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="4" />
+               <sval type="int" val="5000" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+         <sval type="array" size="4">
+            <sval type="array" size="2">
+               <sval type="int" val="2" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+      </sval>
+   </codearray>
+</script>

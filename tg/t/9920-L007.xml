@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="7">
+
+<page id="2008">
+ <t id="1226">COMMAND_MF_PAUSE</t>
+ <t id="1227">COMMAND_MF_RESUME</t>
+</page>
+
+<page id="2010">
+ <t id="1226">Pause TG</t>
+ <t id="1227">Resume TG</t>
+</page>
+
+<page id="2011">
+ <t id="1226">PTG</t>
+ <t id="1227">RTG</t>
+</page>
+
+
+<page id="9920">
+ <t id="99">\033</t>
+ <t id="101">\033Y%s\033X\(%s\): \033Gremove\033X</t>
+ <t id="103">Default Fuel resuply quantity\(jumps\):   \033Y%s\033X</t>
+ <t id="104">\033G%s\033X: \033C%s\033X \033Y%s\033X</t>
+ <t id="105">Destination: \033G%s\033X</t>
+ <t id="106">Ware: \033C%s\033X</t>
+ <t id="107">Amount:\033Y%s\033X</t>
+ <t id="108">Price: \033M%s\033X</t>
+ <t id="109">\033YSelect destination station\033X</t>
+ <t id="110">\033YSelect neded ware\033X</t>
+ <t id="111">\033YSelect amount of ware\033X</t>
+ <t id="112">\033YMax price \( \033X\033Gmin:%s avg:%s max:%s\033X \033Y\)\033X [min|max|avg][+|-N][%]</t>
+
+ <t id="20">[author][b]Chief of Trader Guild[/b][/author]</t>
+ <t id="21">{9920,20}From: [yellow]%s\(%s\)[/yellow]\n\nCan't sell junk ware [yellow]%s[/yellow]</t>
+ <t id="22">{9920,20}Sorry, sir. But we don't need newbee pilot with a such [red]lame[/red] ship [green]%s \(%s\)[/green]\nThe pilot MUST to install required equipment: \n[yellow]%s[/yellow]</t>
+ <t id="23">{9920,20}Sorry, sir. But the pilot of your ship [green]%s \(%s\)[/green] is a drunkard.\nWhere did he wasted required equipment? \n[yellow]%s[/yellow]\nWe dismiss him immediately</t>
+ <t id="24">{9920,20}Sir! We lost the ship[yellow]%s \(%s\)[/yellow] in [yellow]%s[/yellow]\n It was destroyed by [red]%s[/red]. The pilot of the ship is dead.\nHis last transmission was:\n [magenta]MAYDAY!!! MAYDAY!!! I need a backup immedeatly!! The ship is damaged, cargo is lost. MAYADaaaahhhrr........[/magenta]\nWe are seeking venegance upon them!</t>
+ <t id="25">{9920,20}Sir! One of ower ships [yellow]%s \(%s\)[/yellow] in [yellow]%s[/yellow]\n is under attack by [red]%s[/red]. Urgent backup is needed!! </t>
+
+ <t id="30">[author][b]Trader Guild Statistic department[/b][/author]</t>
+ <t id="31">[left]Income[/left][right]%s Cr[/right]\n</t>
+ <t id="32">[left]Expences[/left][right]%s Cr[/right]\n</t>
+ <t id="33">[left]Profit[/left][right]%s Cr[/right]\n\n</t>
+ <t id="34">[left]Delivery[/left][right]%s Cr[/right]\n\n\n\n</t>
+ <t id="35">[left]%s[/left][right]%sCr\t%sCr\t%sCr[/right]\n</t>
+ <t id="397">[left]Ship[/left][right]Income          Expence          Profit[/right]\n</t>
+ <t id="398">{9920,30}\n[center][b]Statistics of the trade operations[/b][/center]\n\n\n</t>
+ <t id="399">[left]-------------[/left][right]---------------[/right]\n</t>
+
+
+ <t id="1001">TG%s %s %s</t>
+ <t id="1002">\033GTG%s\033X %s %s</t>
+</page>
+
+</language>

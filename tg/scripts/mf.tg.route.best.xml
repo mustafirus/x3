@@ -1,0 +1,570 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<!--Produced externally by the Exscriptor-->
+<script>
+   <name>mf.tg.route.best</name>
+   <version>174</version>
+   <engineversion>50</engineversion>
+   <description />
+   <arguments />
+   <sourcetext>
+      <line linenr="001" indent=""><text></text><var>while</var><text> get global variable: name=</text><var>'mf.tg.routing.busy'</var><text></text></line>
+      <line linenr="002" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s Waiting for routing computer...'</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="003" indent="&#160;" interruptable="@"><text></text><var> =</var><text> wait randomly from </text><var>100</var><text> to </text><var>500</var><text> ms</text></line>
+      <line linenr="004" indent=""><text>end</text></line>
+      <line linenr="005" indent=""><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>[THIS]</var><text></text></line>
+      <line linenr="006" indent=""> </line>
+      <line linenr="007" indent=""><text></text><var>$max.jumps =</var><text> </text><var>[THIS]</var><text>  ->  get jumpdrive fuel resupply</text></line>
+      <line linenr="008" indent=""><var>$max.jumps = </var><text></text><var>$max.jumps / 2 </var><text></text></line>
+      <line linenr="009" indent=""><comment>* <text>write to log file </text><var>9920</var><text>  append=</text><var>[TRUE]</var><text>  printf: fmt=</text><var>'max.jumps: %s'</var><text>, </text><var>$max.jumps</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></comment></line>
+      <line linenr="010" indent=""> </line>
+      <line linenr="011" indent=""> </line>
+      <line linenr="012" indent=""><text></text><var>$routes =</var><text> = array alloc: size=</text><var>0</var><text></text></line>
+      <line linenr="013" indent=""><text></text><var>$bonuses =</var><text> = array alloc: size=</text><var>0</var><text></text></line>
+      <line linenr="014" indent="" interruptable="@"><text></text><var>$wares =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.wares</call><var></var><text> :</text></line>
+      <line linenr="015" indent=""><text></text><var>$ware.i =</var><text> size of array </text><var>$wares</var><text></text></line>
+      <line linenr="016" indent=""><var>while </var><text></text><var>$ware.i </var><text></text></line>
+      <line linenr="017" indent="&#160;"><var>skip if </var><text></text><var>$ware.i MOD 10 </var><text></text></line>
+      <line linenr="018" indent="&#160;&#160;" interruptable="@"><text></text><var> =</var><text> wait </text><var>100</var><text> ms</text></line>
+      <line linenr="019" indent="&#160;"><text>dec </text><var>$ware.i</var><text> =</text></line>
+      <line linenr="020" indent="&#160;"><text></text><var>$ware =</var><text> </text><var>$wares</var><text>[</text><var>$ware.i</var><text>]</text></line>
+      <line linenr="021" indent="&#160;"> </line>
+      <line linenr="022" indent="&#160;" interruptable="@"><text></text><var>$r =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.route.byware</call><var></var><text> : =</text><var>$ware</var><text>  max.jumps=</text><var>$max.jumps</var><text> </text></line>
+      <line linenr="023" indent="&#160;"><var>skip if </var><text></text><var>$r </var><text></text></line>
+      <line linenr="024" indent="&#160;&#160;"><text>continue</text></line>
+      <line linenr="025" indent="&#160;"><text>append </text><var>$r</var><text> to array </text><var>$routes</var><text></text></line>
+      <line linenr="026" indent="&#160;"><text></text><var>$b =</var><text> </text><var>$r</var><text>[</text><var>4</var><text>]</text></line>
+      <line linenr="027" indent="&#160;"><text>append </text><var>$b</var><text> to array </text><var>$bonuses</var><text></text></line>
+      <line linenr="028" indent=""><text>end</text></line>
+      <line linenr="029" indent=""> </line>
+      <line linenr="030" indent=""><text></text><var>if not</var><text> size of array </text><var>$routes</var><text></text></line>
+      <line linenr="031" indent="&#160;"> </line>
+      <line linenr="032" indent="&#160;" interruptable="@"><text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s route: none'</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></line>
+      <line linenr="033" indent="&#160;"> </line>
+      <line linenr="034" indent="&#160;"><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
+      <line linenr="035" indent="&#160;"><text>return </text><var>null</var><text></text></line>
+      <line linenr="036" indent=""><text>end</text></line>
+      <line linenr="037" indent=""><text></text><var>$routes =</var><text> = sort array: data=</text><var>$routes</var><text> sort values=</text><var>$bonuses</var><text></text></line>
+      <line linenr="038" indent=""> </line>
+      <line linenr="039" indent=""> </line>
+      <line linenr="040" indent=""><text></text><var>$i =</var><text> size of array </text><var>$routes</var><text></text></line>
+      <line linenr="041" indent=""><text>dec </text><var>$i</var><text> =</text></line>
+      <line linenr="042" indent=""><text></text><var>$ri =</var><text> </text><var>$routes</var><text>[</text><var>$i</var><text>]</text></line>
+      <line linenr="043" indent=""><text></text><var>$w =</var><text> </text><var>$ri</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="044" indent=""><text></text><var>$b =</var><text> </text><var>$ri</var><text>[</text><var>1</var><text>]</text></line>
+      <line linenr="045" indent=""><text></text><var>$bs =</var><text> </text><var>$b</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="046" indent=""><text></text><var>$s =</var><text> </text><var>$ri</var><text>[</text><var>2</var><text>]</text></line>
+      <line linenr="047" indent=""><text></text><var>$ss =</var><text> </text><var>$s</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="048" indent=""><text></text><var>$bonus =</var><text> </text><var>$ri</var><text>[</text><var>4</var><text>]</text></line>
+      <line linenr="049" indent=""><text>inc </text><var>$i</var><text> =</text></line>
+      <line linenr="050" indent=""> </line>
+      <line linenr="051" indent="" interruptable="@"><text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s route: ware %s, bonus: %s, from: %s, to: %s'</var><text>  =</text><var>$w</var><text>  =</text><var>$bonus</var><text>  =</text><var>$b</var><text>  =</text><var>$s</var><text> </text></line>
+      <line linenr="052" indent=""><text></text><var>$buyws =</var><text> = create new array, arguments=</text><var>$w</var><text>, </text><var>$bs</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="053" indent=""><text></text><var>$sellws =</var><text> = create new array, arguments=</text><var>$w</var><text>, </text><var>$ss</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="054" indent=""><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'buyws'</var><text> value=</text><var>$buyws</var><text></text></line>
+      <line linenr="055" indent=""><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'sellws'</var><text> value=</text><var>$sellws</var><text></text></line>
+      <line linenr="056" indent=""> </line>
+      <line linenr="057" indent=""><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
+      <line linenr="058" indent=""><text>return </text><var>$ri</var><text></text></line>
+      <line linenr="059" indent=""> </line>
+      <line linenr="060" indent=""> </line>
+   </sourcetext>
+   <codearray>
+      <sval type="array" size="10">
+         <sval type="string" val="mf.tg.route.best" />
+         <sval type="int" val="50" />
+         <sval type="string" val="" />
+         <sval type="int" val="174" />
+         <sval type="int" val="0" />
+         <sval type="array" size="17">
+            <sval type="string" val="max.jumps" />
+            <sval type="string" val="routes" />
+            <sval type="string" val="bonuses" />
+            <sval type="string" val="wares" />
+            <sval type="string" val="ware.i" />
+            <sval type="string" val="ware" />
+            <sval type="string" val="r" />
+            <sval type="string" val="b" />
+            <sval type="string" val="i" />
+            <sval type="string" val="ri" />
+            <sval type="string" val="w" />
+            <sval type="string" val="bs" />
+            <sval type="string" val="s" />
+            <sval type="string" val="ss" />
+            <sval type="string" val="bonus" />
+            <sval type="string" val="buyws" />
+            <sval type="string" val="sellws" />
+         </sval>
+         <sval type="array" size="44">
+            <sval type="array" size="4">
+               <sval type="int" val="158" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.routing.busy" />
+               <sval type="int" val="-1610611959" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="107" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="4" />
+               <sval type="int" val="100" />
+               <sval type="int" val="4" />
+               <sval type="int" val="500" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.routing.busy" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="1376" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="0" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="4" />
+               <sval type="int" val="2" />
+               <sval type="int" val="15" />
+               <sval type="int" val="14" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="14" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="128" />
+               <sval type="int" val="1" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="128" />
+               <sval type="int" val="2" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.wares" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="131" />
+               <sval type="int" val="4" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610607095" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536867577" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+               <sval type="int" val="4" />
+               <sval type="int" val="10" />
+               <sval type="int" val="15" />
+               <sval type="int" val="15" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="15" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="105" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="4" />
+               <sval type="int" val="100" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="143" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="5" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="10">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.route.byware" />
+               <sval type="int" val="6" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536866297" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="10" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="135" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="4" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="135" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="10" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="131" />
+               <sval type="int" val="-536864252" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="16">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s route: none" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.routing.busy" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="1417" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="131" />
+               <sval type="int" val="8" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="143" />
+               <sval type="int" val="8" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="9" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="8" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="11" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="12" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="4" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="13" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="12" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="14" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="4" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="142" />
+               <sval type="int" val="8" />
+            </sval>
+            <sval type="array" size="16">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s route: ware %s, bonus: %s, from: %s, to: %s" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="14" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="12" />
+            </sval>
+            <sval type="array" size="12">
+               <sval type="int" val="1415" />
+               <sval type="int" val="15" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="11" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="12">
+               <sval type="int" val="1415" />
+               <sval type="int" val="16" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="13" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="155" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="string" val="buyws" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="15" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="155" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="string" val="sellws" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="16" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.routing.busy" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+         <sval type="array" size="19">
+            <sval type="array" size="18">
+               <sval type="int" val="1" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s Waiting for routing computer..." />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="4" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="19">
+               <sval type="int" val="6" />
+               <sval type="int" val="3" />
+               <sval type="int" val="405" />
+               <sval type="int" val="4" />
+               <sval type="int" val="9920" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="10" />
+               <sval type="int" val="5" />
+               <sval type="string" val="max.jumps: %s" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="max.jumps" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="6" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="6" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="15" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="18" />
+               <sval type="int" val="6" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="22" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="22" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="23" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="24" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="26" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="27" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="27" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="37" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="42" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="44" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="44" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+      </sval>
+   </codearray>
+</script>

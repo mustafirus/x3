@@ -1,0 +1,273 @@
+<?xml version="1.0" standalone="yes"?>
+<?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<!--Produced externally by the Exscriptor-->
+<script>
+   <name>mf.tg.station.unknown</name>
+   <version>6</version>
+   <engineversion>50</engineversion>
+   <description />
+   <arguments />
+   <sourcetext>
+      <line linenr="001" indent=""><text></text><var>$t2 =</var><text> = playing time</text></line>
+      <line linenr="002" indent=""><var>$t2 = </var><text></text><var>$t2 - 60 </var><text></text></line>
+      <line linenr="003" indent=""><text></text><var>$t1 =</var><text> get global variable: name=</text><var>'mf.tg.cache.usectors.time'</var><text></text></line>
+      <line linenr="004" indent=""> </line>
+      <line linenr="005" indent=""><var>if </var><text></text><var>$t1 AND $t1 &gt; $t2 </var><text></text></line>
+      <line linenr="006" indent="&#160;"><text></text><var>$unknown.sectors =</var><text> get global variable: name=</text><var>'mf.tg.cache.usectors'</var><text></text></line>
+      <line linenr="007" indent=""><text>else</text></line>
+      <line linenr="008" indent="&#160;"><text></text><var>$unknown.sectors =</var><text> = array alloc: size=</text><var>0</var><text></text></line>
+      <line linenr="009" indent="&#160;"><text></text><var>$sector.list.all =</var><text> </text><var>[SECTOR]</var><text>  ->  find all sectors within </text><var>100</var><text> jumps: Only known sectors=</text><var>[FALSE]</var><text></text></line>
+      <line linenr="010" indent="&#160;"><text></text><var>$sector.list.num =</var><text> size of array </text><var>$sector.list.all</var><text></text></line>
+      <line linenr="011" indent="&#160;"><var>while </var><text></text><var>$sector.list.num </var><text></text></line>
+      <line linenr="012" indent="&#160;&#160;"><var>skip if </var><text></text><var>$sector.list.num MOD 10 </var><text></text></line>
+      <line linenr="013" indent="&#160;&#160;&#160;" interruptable="@"><text></text><var> =</var><text> wait </text><var>100</var><text> ms</text></line>
+      <line linenr="014" indent="&#160;&#160;"><text>dec </text><var>$sector.list.num</var><text> =</text></line>
+      <line linenr="015" indent="&#160;&#160;"><text></text><var>$sector =</var><text> </text><var>$sector.list.all</var><text>[</text><var>$sector.list.num</var><text>]</text></line>
+      <line linenr="016" indent="&#160;&#160;"><text></text><var>skip if</var><text> find ship: sector=</text><var>$sector</var><text> class or type=</text><var>All Satellites</var><text> race=</text><var>Player</var><text> flags=</text><var>null</var><text> refobj=</text><var>null</var><text> maxdist=</text><var>null</var><text> maxnum=</text><var>1</var><text> refpos=</text><var>null</var><text></text></line>
+      <line linenr="017" indent="&#160;&#160;&#160;"><text>append </text><var>$sector</var><text> to array </text><var>$unknown.sectors</var><text></text></line>
+      <line linenr="018" indent="&#160;"><text>end</text></line>
+      <line linenr="019" indent="&#160;"> </line>
+      <line linenr="020" indent="&#160;"><text>set global variable: name=</text><var>'mf.tg.cache.usectors'</var><text> value=</text><var>$unknown.sectors</var><text></text></line>
+      <line linenr="021" indent="&#160;"><text></text><var>$t2 =</var><text> = playing time</text></line>
+      <line linenr="022" indent="&#160;"><text>set global variable: name=</text><var>'mf.tg.cache.usectors.time'</var><text> value=</text><var>$t2</var><text></text></line>
+      <line linenr="023" indent="&#160;"> </line>
+      <line linenr="024" indent=""><text>end</text></line>
+      <line linenr="025" indent=""> </line>
+      <line linenr="026" indent=""><text>return </text><var>$unknown.sectors</var><text></text></line>
+      <line linenr="027" indent=""> </line>
+      <line linenr="028" indent=""> </line>
+   </sourcetext>
+   <codearray>
+      <sval type="array" size="10">
+         <sval type="string" val="mf.tg.station.unknown" />
+         <sval type="int" val="50" />
+         <sval type="string" val="" />
+         <sval type="int" val="6" />
+         <sval type="int" val="0" />
+         <sval type="array" size="6">
+            <sval type="string" val="t2" />
+            <sval type="string" val="t1" />
+            <sval type="string" val="unknown.sectors" />
+            <sval type="string" val="sector.list.all" />
+            <sval type="string" val="sector.list.num" />
+            <sval type="string" val="sector" />
+         </sval>
+         <sval type="array" size="21">
+            <sval type="array" size="2">
+               <sval type="int" val="141" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="0" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="4" />
+               <sval type="int" val="60" />
+               <sval type="int" val="15" />
+               <sval type="int" val="12" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="12" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="158" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.cache.usectors.time" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="19">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610611197" />
+               <sval type="int" val="5" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="15" />
+               <sval type="int" val="2" />
+               <sval type="int" val="15" />
+               <sval type="int" val="9" />
+               <sval type="int" val="5" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="9" />
+               <sval type="int" val="-2" />
+               <sval type="int" val="2" />
+               <sval type="int" val="-3" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="158" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.cache.usectors" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="20" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="128" />
+               <sval type="int" val="2" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="1334" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="6" />
+               <sval type="int" val="3" />
+               <sval type="int" val="4" />
+               <sval type="int" val="100" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="9" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="131" />
+               <sval type="int" val="4" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610608375" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536867833" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+               <sval type="int" val="4" />
+               <sval type="int" val="10" />
+               <sval type="int" val="15" />
+               <sval type="int" val="15" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="15" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="105" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="4" />
+               <sval type="int" val="100" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="143" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="129" />
+               <sval type="int" val="5" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="757" />
+               <sval type="int" val="-536866809" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+               <sval type="int" val="12" />
+               <sval type="int" val="2079" />
+               <sval type="int" val="10" />
+               <sval type="int" val="10" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="135" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="9" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.cache.usectors" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="141" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.cache.usectors.time" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+         <sval type="array" size="9">
+            <sval type="array" size="2">
+               <sval type="int" val="3" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="6" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="17" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="17" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="20" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="20" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="20" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="21" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="21" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+      </sval>
+   </codearray>
+</script>

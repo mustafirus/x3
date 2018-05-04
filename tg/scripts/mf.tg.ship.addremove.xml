@@ -1,15 +1,429 @@
 <?xml version="1.0" standalone="yes"?>
 <?xml-stylesheet href="x2script.xsl" type="text/xsl"?>
+<!--Produced externally by the Exscriptor-->
 <script>
-<name />
-<version />
-<engineversion />
-<description />
-<arguments>
-</arguments>
-<sourcetext>
-</sourcetext>
-<codearray>
-<sval type="array" size="10"><sval type="string" val="mf.tg.ship.addremove" /><sval type="int" val="42" /><sval type="string" val="" /><sval type="int" val="100" /><sval type="int" val="0" /><sval type="array" size="7"><sval type="string" val="ship" /><sval type="string" val="add" /><sval type="string" val="s" /><sval type="string" val="income" /><sval type="string" val="expence" /><sval type="string" val="i" /><sval type="string" val="m" /></sval><sval type="array" size="33"><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="-1610606589" /><sval type="int" val="1" /><sval type="int" val="131074" /><sval type="int" val="1" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="4"><sval type="int" val="158" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ships" /><sval type="int" val="2" /></sval><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="-536869628" /><sval type="int" val="1" /><sval type="int" val="131074" /><sval type="int" val="2" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="4"><sval type="int" val="128" /><sval type="int" val="2" /><sval type="int" val="4" /><sval type="int" val="0" /></sval><sval type="array" size="5"><sval type="int" val="157" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ships" /><sval type="int" val="131074" /><sval type="int" val="2" /></sval><sval type="array" size="6"><sval type="int" val="1406" /><sval type="int" val="-536865020" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="131074" /><sval type="int" val="2" /></sval><sval type="array" size="6"><sval type="int" val="102" /><sval type="string" val="mf.tg.ship.checkhw" /><sval type="int" val="-1610606845" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="0" /></sval><sval type="array" size="5"><sval type="int" val="135" /><sval type="int" val="131074" /><sval type="int" val="2" /><sval type="int" val="131074" /><sval type="int" val="0" /></sval><sval type="array" size="6"><sval type="int" val="102" /><sval type="string" val="mf.tg.ship.rename" /><sval type="int" val="-2147483647" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="0" /></sval><sval type="array" size="4"><sval type="int" val="1375" /><sval type="int" val="2" /><sval type="int" val="131074" /><sval type="int" val="2" /></sval><sval type="array" size="4"><sval type="int" val="1443" /><sval type="int" val="2" /><sval type="int" val="131074" /><sval type="int" val="2" /></sval><sval type="array" size="5"><sval type="int" val="157" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ships" /><sval type="int" val="131074" /><sval type="int" val="2" /></sval><sval type="array" size="8"><sval type="int" val="113" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1012" /><sval type="string" val="mf.tg.dummy" /><sval type="int" val="4" /><sval type="int" val="10" /></sval><sval type="array" size="8"><sval type="int" val="113" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1001" /><sval type="string" val="mf.tg.ship.signal.killed" /><sval type="int" val="4" /><sval type="int" val="10000" /></sval><sval type="array" size="8"><sval type="int" val="113" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1000" /><sval type="string" val="mf.tg.ship.signal.attacked" /><sval type="int" val="4" /><sval type="int" val="100" /></sval><sval type="array" size="6"><sval type="int" val="156" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ship.income" /><sval type="int" val="3" /></sval><sval type="array" size="6"><sval type="int" val="156" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ship.expence" /><sval type="int" val="4" /></sval><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="-536865788" /><sval type="int" val="1" /><sval type="int" val="131074" /><sval type="int" val="3" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="3" /><sval type="int" val="1" /><sval type="int" val="4" /><sval type="int" val="0" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="7"><sval type="int" val="155" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ship.income" /><sval type="int" val="131074" /><sval type="int" val="3" /></sval><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="-536865020" /><sval type="int" val="1" /><sval type="int" val="131074" /><sval type="int" val="4" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="7"><sval type="int" val="104" /><sval type="int" val="4" /><sval type="int" val="1" /><sval type="int" val="4" /><sval type="int" val="0" /><sval type="int" val="1" /><sval type="int" val="-1" /></sval><sval type="array" size="7"><sval type="int" val="155" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ship.expence" /><sval type="int" val="131074" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="112" /><sval type="int" val="32" /></sval><sval type="array" size="4"><sval type="int" val="158" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ships" /><sval type="int" val="2" /></sval><sval type="array" size="8"><sval type="int" val="1083" /><sval type="int" val="5" /><sval type="int" val="131074" /><sval type="int" val="2" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="4" /><sval type="int" val="-1" /></sval><sval type="array" size="13"><sval type="int" val="104" /><sval type="int" val="-1610604541" /><sval type="int" val="3" /><sval type="int" val="131074" /><sval type="int" val="5" /><sval type="int" val="4" /><sval type="int" val="0" /><sval type="int" val="15" /><sval type="int" val="4" /><sval type="int" val="3" /><sval type="int" val="-1" /><sval type="int" val="4" /><sval type="int" val="-2" /></sval><sval type="array" size="5"><sval type="int" val="136" /><sval type="int" val="131074" /><sval type="int" val="2" /><sval type="int" val="131074" /><sval type="int" val="5" /></sval><sval type="array" size="8"><sval type="int" val="102" /><sval type="string" val="mf.tg.ship.rename" /><sval type="int" val="6" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="1" /><sval type="int" val="131075" /><sval type="int" val="10" /></sval><sval type="array" size="5"><sval type="int" val="114" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1012" /></sval><sval type="array" size="5"><sval type="int" val="114" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1001" /></sval><sval type="array" size="5"><sval type="int" val="114" /><sval type="int" val="131074" /><sval type="int" val="0" /><sval type="int" val="18" /><sval type="int" val="1000" /></sval><sval type="array" size="3"><sval type="int" val="103" /><sval type="int" val="0" /><sval type="int" val="0" /></sval></sval><sval type="array" size="2"><sval type="array" size="2"><sval type="int" val="9" /><sval type="string" val="" /></sval><sval type="array" size="2"><sval type="int" val="63" /><sval type="string" val="" /></sval></sval><sval type="array" size="11"><sval type="array" size="2"><sval type="int" val="5" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="12" /><sval type="int" val="2" /></sval><sval type="array" size="2"><sval type="int" val="17" /><sval type="int" val="2" /></sval><sval type="array" size="2"><sval type="int" val="20" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="23" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="23" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="23" /><sval type="int" val="4" /></sval><sval type="array" size="2"><sval type="int" val="24" /><sval type="int" val="5" /></sval><sval type="array" size="2"><sval type="int" val="32" /><sval type="int" val="4" /></sval><sval type="array" size="7"><sval type="int" val="32" /><sval type="int" val="3" /><sval type="int" val="157" /><sval type="int" val="5" /><sval type="string" val="mf.tg.ships" /><sval type="int" val="131074" /><sval type="string" val="s" /></sval><sval type="array" size="2"><sval type="int" val="32" /><sval type="int" val="4" /></sval></sval><sval type="int" val="0" /></sval>
-</codearray>
+   <name>mf.tg.ship.addremove</name>
+   <version>104</version>
+   <engineversion>50</engineversion>
+   <description />
+   <arguments>
+      <argument index="0" name="ship" type="Value" desc="" />
+      <argument index="1" name="add" type="Var/Boolean" desc="" />
+   </arguments>
+   <sourcetext>
+      <line linenr="001" indent=""><var>if </var><text></text><var>$add </var><text></text></line>
+      <line linenr="002" indent="&#160;"><text></text><var>$s =</var><text> get global variable: name=</text><var>'mf.tg.ships'</var><text></text></line>
+      <line linenr="003" indent="&#160;"><var>if not </var><text></text><var>$s </var><text></text></line>
+      <line linenr="004" indent="&#160;&#160;"><text></text><var>$s =</var><text> = array alloc: size=</text><var>0</var><text></text></line>
+      <line linenr="005" indent="&#160;&#160;"><text>set global variable: name=</text><var>'mf.tg.ships'</var><text> value=</text><var>$s</var><text></text></line>
+      <line linenr="006" indent="&#160;"><text>end</text></line>
+      <line linenr="007" indent="&#160;"><text></text><var>if not</var><text> find </text><var>$ship</var><text> in array: </text><var>$s</var><text></text></line>
+      <line linenr="008" indent="&#160;&#160;" interruptable="@"><text></text><var>if  =</var><text> </text><var>$ship</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.ship.checkhw</call><var></var><text> :</text></line>
+      <line linenr="009" indent="&#160;&#160;&#160;"><text>append </text><var>$ship</var><text> to array </text><var>$s</var><text></text></line>
+      <line linenr="010" indent="&#160;&#160;&#160;" interruptable="@"><text></text><var> =</var><text> </text><var>$ship</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.ship.rename</call><var></var><text> : rename to original?=</text><var>[FALSE]</var><text> </text></line>
+      <line linenr="011" indent="&#160;&#160;&#160;"><text></text><var>$s =</var><text> = sort array </text><var>$s</var><text></text></line>
+      <line linenr="012" indent="&#160;&#160;&#160;"><text></text><var>$s =</var><text> reverse array </text><var>$s</var><text></text></line>
+      <line linenr="013" indent="&#160;&#160;&#160;"><comment>* <text>set global variable: name=</text><var>'mf.tg.ships'</var><text> value=</text><var>$s</var><text></text></comment></line>
+      <line linenr="014" indent="&#160;&#160;&#160;"> </line>
+      <line linenr="015" indent="&#160;&#160;&#160;"><text></text><var>$ship</var><text>  ->  connect ship command/signal </text><var>SIGNAL_DOCKED</var><text> to script </text><var></var><call>mf.tg.dummy</call><var></var><text> with prio </text><var>10</var><text></text></line>
+      <line linenr="016" indent="&#160;&#160;&#160;"><text></text><var>$ship</var><text>  ->  connect ship command/signal </text><var>SIGNAL_KILLED</var><text> to script </text><var></var><call>mf.tg.ship.signal.killed</call><var></var><text> with prio </text><var>10000</var><text></text></line>
+      <line linenr="017" indent="&#160;&#160;&#160;"><text></text><var>$ship</var><text>  ->  connect ship command/signal </text><var>SIGNAL_ATTACKED</var><text> to script </text><var></var><call>mf.tg.ship.signal.attacked</call><var></var><text> with prio </text><var>99</var><text></text></line>
+      <line linenr="018" indent="&#160;&#160;&#160;"><text></text><var>$income =</var><text> </text><var>$ship</var><text>  ->  get local variable: name=</text><var>'mf.tg.ship.income'</var><text></text></line>
+      <line linenr="019" indent="&#160;&#160;&#160;"><text></text><var>$expence =</var><text> </text><var>$ship</var><text>  ->  get local variable: name=</text><var>'mf.tg.ship.expence'</var><text></text></line>
+      <line linenr="020" indent="&#160;&#160;&#160;"> </line>
+      <line linenr="021" indent="&#160;&#160;&#160;"><var>if not </var><text></text><var>$income </var><text></text></line>
+      <line linenr="022" indent="&#160;&#160;&#160;&#160;"><var>$income = </var><text></text><var>0 </var><text></text></line>
+      <line linenr="023" indent="&#160;&#160;&#160;&#160;"><text></text><var>$ship</var><text>  ->  set local variable: name=</text><var>'mf.tg.ship.income'</var><text> value=</text><var>$income</var><text></text></line>
+      <line linenr="024" indent="&#160;&#160;&#160;"><text>end</text></line>
+      <line linenr="025" indent="&#160;&#160;&#160;"><var>if not </var><text></text><var>$expence </var><text></text></line>
+      <line linenr="026" indent="&#160;&#160;&#160;&#160;"><var>$expence = </var><text></text><var>0 </var><text></text></line>
+      <line linenr="027" indent="&#160;&#160;&#160;&#160;"><text></text><var>$ship</var><text>  ->  set local variable: name=</text><var>'mf.tg.ship.expence'</var><text> value=</text><var>$expence</var><text></text></line>
+      <line linenr="028" indent="&#160;&#160;&#160;"><text>end</text></line>
+      <line linenr="029" indent="&#160;&#160;"><text>end</text></line>
+      <line linenr="030" indent="&#160;"><text>end</text></line>
+      <line linenr="031" indent=""><text>else</text></line>
+      <line linenr="032" indent="&#160;"><text></text><var>$s =</var><text> get global variable: name=</text><var>'mf.tg.ships'</var><text></text></line>
+      <line linenr="033" indent="&#160;"><text></text><var>$i =</var><text> = get index of </text><var>$ship</var><text> in array </text><var>$s</var><text> offset=</text><var>-1</var><text> + 1</text></line>
+      <line linenr="034" indent="&#160;"><var>if </var><text></text><var>$i &gt;= 0 </var><text></text></line>
+      <line linenr="035" indent="&#160;&#160;"><text>remove element from array </text><var>$s</var><text> at index </text><var>$i</var><text></text></line>
+      <line linenr="036" indent="&#160;&#160;" interruptable="@"><text></text><var>$m =</var><text> </text><var>$ship</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.ship.rename</call><var></var><text> : rename to original?=</text><var>[TRUE]</var><text> </text></line>
+      <line linenr="037" indent="&#160;&#160;"><text></text><var>$ship</var><text>  ->  set ship command/signal </text><var>SIGNAL_DOCKED</var><text> to global default behaviour</text></line>
+      <line linenr="038" indent="&#160;&#160;"><text></text><var>$ship</var><text>  ->  set ship command/signal </text><var>SIGNAL_KILLED</var><text> to global default behaviour</text></line>
+      <line linenr="039" indent="&#160;&#160;"><text></text><var>$ship</var><text>  ->  set ship command/signal </text><var>SIGNAL_ATTACKED</var><text> to global default behaviour</text></line>
+      <line linenr="040" indent="&#160;"><text>end</text></line>
+      <line linenr="041" indent="&#160;"><comment>* <text>set global variable: name=</text><var>'mf.tg.ships'</var><text> value=</text><var>$s</var><text></text></comment></line>
+      <line linenr="042" indent=""><text>end</text></line>
+      <line linenr="043" indent=""><text>return </text><var>null</var><text></text></line>
+      <line linenr="044" indent=""> </line>
+      <line linenr="045" indent=""> </line>
+      <line linenr="046" indent=""> </line>
+      <line linenr="047" indent=""> </line>
+   </sourcetext>
+   <codearray>
+      <sval type="array" size="10">
+         <sval type="string" val="mf.tg.ship.addremove" />
+         <sval type="int" val="50" />
+         <sval type="string" val="" />
+         <sval type="int" val="104" />
+         <sval type="int" val="0" />
+         <sval type="array" size="7">
+            <sval type="string" val="ship" />
+            <sval type="string" val="add" />
+            <sval type="string" val="s" />
+            <sval type="string" val="income" />
+            <sval type="string" val="expence" />
+            <sval type="string" val="i" />
+            <sval type="string" val="m" />
+         </sval>
+         <sval type="array" size="32">
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610606845" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="158" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ships" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536869628" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="128" />
+               <sval type="int" val="2" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ships" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="1406" />
+               <sval type="int" val="-536865276" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.ship.checkhw" />
+               <sval type="int" val="-1610607101" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="135" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.ship.rename" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="9" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="1375" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="1443" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="113" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1012" />
+               <sval type="string" val="mf.tg.dummy" />
+               <sval type="int" val="4" />
+               <sval type="int" val="10" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="113" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1001" />
+               <sval type="string" val="mf.tg.ship.signal.killed" />
+               <sval type="int" val="4" />
+               <sval type="int" val="10000" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="113" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1000" />
+               <sval type="string" val="mf.tg.ship.signal.attacked" />
+               <sval type="int" val="4" />
+               <sval type="int" val="99" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="156" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ship.income" />
+               <sval type="int" val="3" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="156" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ship.expence" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536866044" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="3" />
+               <sval type="int" val="1" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="155" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ship.income" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536865276" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="4" />
+               <sval type="int" val="1" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="155" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ship.expence" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="31" />
+            </sval>
+            <sval type="array" size="4">
+               <sval type="int" val="158" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ships" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="1083" />
+               <sval type="int" val="5" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="4" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610604797" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+               <sval type="int" val="15" />
+               <sval type="int" val="4" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="4" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="136" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="8">
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.ship.rename" />
+               <sval type="int" val="6" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="10" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="114" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1012" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="114" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1001" />
+            </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="114" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="0" />
+               <sval type="int" val="18" />
+               <sval type="int" val="1000" />
+            </sval>
+            <sval type="array" size="3">
+               <sval type="int" val="103" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+         </sval>
+         <sval type="array" size="2">
+            <sval type="array" size="2">
+               <sval type="int" val="9" />
+               <sval type="string" val="" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="63" />
+               <sval type="string" val="" />
+            </sval>
+         </sval>
+         <sval type="array" size="16">
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="11" />
+               <sval type="int" val="3" />
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ships" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="s" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="11" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="16" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="19" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="22" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="22" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="22" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="23" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="31" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="31" />
+               <sval type="int" val="3" />
+               <sval type="int" val="157" />
+               <sval type="int" val="5" />
+               <sval type="string" val="mf.tg.ships" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="s" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="31" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="32" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="32" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="32" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="32" />
+               <sval type="int" val="2" />
+            </sval>
+         </sval>
+         <sval type="int" val="0" />
+      </sval>
+   </codearray>
 </script>
