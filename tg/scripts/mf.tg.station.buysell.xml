@@ -3,7 +3,7 @@
 <!--Produced externally by the Exscriptor-->
 <script>
    <name>mf.tg.station.buysell</name>
-   <version>24</version>
+   <version>38</version>
    <engineversion>50</engineversion>
    <description />
    <arguments>
@@ -23,69 +23,85 @@
       <line linenr="007" indent="&#160;"><text></text><var>$ex =</var><text> = array alloc: size=</text><var>0</var><text></text></line>
       <line linenr="008" indent=""><text>end</text></line>
       <line linenr="009" indent=""> </line>
-      <line linenr="010" indent=""><var>$station = </var><text></text><var>null </var><text></text></line>
-      <line linenr="011" indent=""> </line>
-      <line linenr="012" indent=""><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
-      <line linenr="013" indent="&#160;"><text></text><var>$station =</var><text> </text><var>[THIS]</var><text>  ->  find station: product </text><var>$ware</var><text> with best price:  max.price=</text><var>null</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
-      <line linenr="014" indent=""><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
-      <line linenr="015" indent="&#160;"><text></text><var>$station =</var><text> </text><var>[THIS]</var><text>  ->  find station: resource </text><var>$ware</var><text> with best price: min.price=</text><var>null</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
-      <line linenr="016" indent=""><text>end</text></line>
-      <line linenr="017" indent=""><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s ware:%s %s station1: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$buysell</var><text>  =</text><var>$station</var><text>  =</text><var>null</var><text> </text></comment></line>
-      <line linenr="018" indent=""><var>skip if </var><text></text><var>$station </var><text></text></line>
-      <line linenr="019" indent="&#160;"><text>return </text><var>null</var><text></text></line>
-      <line linenr="020" indent=""> </line>
-      <line linenr="021" indent=""><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
-      <line linenr="022" indent=""><var>$distance = </var><text></text><var>200000 </var><text></text></line>
-      <line linenr="023" indent=""><var>$station = </var><text></text><var>null </var><text></text></line>
-      <line linenr="024" indent=""><var>$i = </var><text></text><var>5 </var><text></text></line>
-      <line linenr="025" indent=""><var>while </var><text></text><var>$i </var><text></text></line>
-      <line linenr="026" indent="&#160;"><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
-      <line linenr="027" indent="&#160;&#160;"><text></text><var>$s =</var><text> </text><var>[THIS]</var><text>  ->  find station: product </text><var>$ware</var><text> with min. jumps:  max.price=</text><var>$price</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
-      <line linenr="028" indent="&#160;"><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
-      <line linenr="029" indent="&#160;&#160;"><text></text><var>$s =</var><text> </text><var>[THIS]</var><text>  ->  find station: resource </text><var>$ware</var><text> with min. jumps: min.price=</text><var>$price</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
-      <line linenr="030" indent="&#160;"><text>end</text></line>
-      <line linenr="031" indent="&#160;"> </line>
-      <line linenr="032" indent="&#160;"><var>skip if </var><text></text><var>$s </var><text></text></line>
-      <line linenr="033" indent="&#160;&#160;"><text>break</text></line>
-      <line linenr="034" indent="&#160;"><text>append </text><var>$s</var><text> to array </text><var>$ex</var><text></text></line>
+      <line linenr="010" indent=""><var>while </var><text></text><var>[TRUE] </var><text></text></line>
+      <line linenr="011" indent="&#160;"><var>$station = </var><text></text><var>null </var><text></text></line>
+      <line linenr="012" indent="&#160;"><var>$price = </var><text></text><var>0 </var><text></text></line>
+      <line linenr="013" indent="&#160;"><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
+      <line linenr="014" indent="&#160;&#160;"><text></text><var>$station =</var><text> </text><var>[THIS]</var><text>  ->  find station: product </text><var>$ware</var><text> with best price:  max.price=</text><var>null</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="015" indent="&#160;&#160;"><text></text><var>$station1 =</var><text> </text><var>[THIS]</var><text>  ->  find station sells: resource </text><var>$ware</var><text> with best price: max.price=</text><var>null</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="016" indent="&#160;&#160;"><var>if </var><text></text><var>$station AND $station1 </var><text></text></line>
+      <line linenr="017" indent="&#160;&#160;&#160;"><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="018" indent="&#160;&#160;&#160;"><text></text><var>$price1 =</var><text> </text><var>$station1</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="019" indent="&#160;&#160;&#160;"><var>if </var><text></text><var>$price &gt; $price1 </var><text></text></line>
+      <line linenr="020" indent="&#160;&#160;&#160;&#160;"><var>$price = </var><text></text><var>$price1 </var><text></text></line>
+      <line linenr="021" indent="&#160;&#160;&#160;"><text>end</text></line>
+      <line linenr="022" indent="&#160;&#160;"><text>else</text></line>
+      <line linenr="023" indent="&#160;&#160;&#160;"><var>skip if </var><text></text><var>$station </var><text></text></line>
+      <line linenr="024" indent="&#160;&#160;&#160;&#160;"><var>$station = </var><text></text><var>$station1 </var><text></text></line>
+      <line linenr="025" indent="&#160;&#160;&#160;"><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="026" indent="&#160;&#160;"><text>end</text></line>
+      <line linenr="027" indent="&#160;"><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
+      <line linenr="028" indent="&#160;&#160;"><text></text><var>$station =</var><text> </text><var>[THIS]</var><text>  ->  find station: resource </text><var>$ware</var><text> with best price: min.price=</text><var>null</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="029" indent="&#160;&#160;"><var>do if </var><text></text><var>$station </var><text></text></line>
+      <line linenr="030" indent="&#160;&#160;"><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="031" indent="&#160;"><text>end</text></line>
+      <line linenr="032" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s ware:%s %s price: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$buysell</var><text>  =</text><var>$price</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="033" indent="&#160;"><var>skip if </var><text></text><var>$price </var><text></text></line>
+      <line linenr="034" indent="&#160;&#160;"><text>return </text><var>null</var><text></text></line>
       <line linenr="035" indent="&#160;"> </line>
-      <line linenr="036" indent="&#160;"><text>dec </text><var>$i</var><text> =</text></line>
-      <line linenr="037" indent="&#160;" interruptable="@"><text></text><var>$d =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.distance</call><var></var><text> : =</text><var>$s</var><text> </text></line>
-      <line linenr="038" indent="&#160;"><var>if </var><text></text><var>$distance &gt; $d </var><text></text></line>
-      <line linenr="039" indent="&#160;&#160;"><var>$distance = </var><text></text><var>$d </var><text></text></line>
-      <line linenr="040" indent="&#160;&#160;"><var>$station = </var><text></text><var>$s </var><text></text></line>
-      <line linenr="041" indent="&#160;"><text>end</text></line>
-      <line linenr="042" indent=""><text>end</text></line>
-      <line linenr="043" indent=""><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s ware:%s %s station2: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$buysell</var><text>  =</text><var>$station</var><text>  =</text><var>null</var><text> </text></comment></line>
-      <line linenr="044" indent=""><var>skip if </var><text></text><var>$station </var><text></text></line>
-      <line linenr="045" indent="&#160;"><text>return </text><var>null</var><text></text></line>
-      <line linenr="046" indent=""> </line>
-      <line linenr="047" indent=""> </line>
-      <line linenr="048" indent=""> </line>
-      <line linenr="049" indent=""><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
-      <line linenr="050" indent=""><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
-      <line linenr="051" indent="&#160;"><text></text><var>$amount =</var><text> </text><var>$station</var><text>  ->  get true amount of ware </text><var>$ware</var><text> in cargo bay</text></line>
-      <line linenr="052" indent=""><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
-      <line linenr="053" indent="&#160;"><text></text><var>$amount =</var><text> </text><var>$station</var><text>  ->  get free amount of ware </text><var>$ware</var><text> in cargo bay</text></line>
-      <line linenr="054" indent=""><text>end</text></line>
-      <line linenr="055" indent=""><var>$distance = </var><text></text><var>$distance </var><text></text></line>
-      <line linenr="056" indent=""> </line>
-      <line linenr="057" indent=""><text></text><var>$buysell =</var><text> = create new array, arguments=</text><var>$station</var><text>, </text><var>$price</var><text>, </text><var>$amount</var><text>, </text><var>$distance</var><text>, </text><var>null</var><text></text></line>
-      <line linenr="058" indent=""> </line>
-      <line linenr="059" indent=""><text>return </text><var>$buysell</var><text></text></line>
-      <line linenr="060" indent=""> </line>
-      <line linenr="061" indent=""> </line>
-      <line linenr="062" indent=""> </line>
-      <line linenr="063" indent=""> </line>
+      <line linenr="036" indent="&#160;"><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="037" indent="&#160;"><var>$distance = </var><text></text><var>200000 </var><text></text></line>
+      <line linenr="038" indent="&#160;"><var>$station = </var><text></text><var>null </var><text></text></line>
+      <line linenr="039" indent="&#160;"><var>$i = </var><text></text><var>5 </var><text></text></line>
+      <line linenr="040" indent="&#160;"><var>while </var><text></text><var>$i </var><text></text></line>
+      <line linenr="041" indent="&#160;&#160;"><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
+      <line linenr="042" indent="&#160;&#160;&#160;"><text></text><var>$s =</var><text> </text><var>[THIS]</var><text>  ->  find station: product </text><var>$ware</var><text> with min. jumps:  max.price=</text><var>$price</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="043" indent="&#160;&#160;&#160;"><var>skip if </var><text></text><var>$s </var><text></text></line>
+      <line linenr="044" indent="&#160;&#160;&#160;&#160;"><text></text><var>$s =</var><text> </text><var>[THIS]</var><text>  ->  find station sells: resource </text><var>$ware</var><text> with min. jumps: max.price=</text><var>$price</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="045" indent="&#160;&#160;"><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
+      <line linenr="046" indent="&#160;&#160;&#160;"><text></text><var>$s =</var><text> </text><var>[THIS]</var><text>  ->  find station: resource </text><var>$ware</var><text> with min. jumps: min.price=</text><var>$price</var><text>, amount=</text><var>null</var><text>, max.jumps=</text><var>$maxjumps</var><text>, startsector=</text><var>$startsector</var><text>, trader=</text><var>[THIS]</var><text>, exclude array=</text><var>$ex</var><text></text></line>
+      <line linenr="047" indent="&#160;&#160;"><text>end</text></line>
+      <line linenr="048" indent="&#160;&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s ware:%s %s station1: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$buysell</var><text>  =</text><var>$s</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="049" indent="&#160;&#160;"> </line>
+      <line linenr="050" indent="&#160;&#160;"><var>skip if </var><text></text><var>$s </var><text></text></line>
+      <line linenr="051" indent="&#160;&#160;&#160;"><text>break</text></line>
+      <line linenr="052" indent="&#160;&#160;"><text>append </text><var>$s</var><text> to array </text><var>$ex</var><text></text></line>
+      <line linenr="053" indent="&#160;&#160;"> </line>
+      <line linenr="054" indent="&#160;&#160;"><text>dec </text><var>$i</var><text> =</text></line>
+      <line linenr="055" indent="&#160;&#160;" interruptable="@"><text></text><var>$d =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.distance</call><var></var><text> : =</text><var>$s</var><text> </text></line>
+      <line linenr="056" indent="&#160;&#160;"><var>if </var><text></text><var>$distance &gt; $d </var><text></text></line>
+      <line linenr="057" indent="&#160;&#160;&#160;"><var>$distance = </var><text></text><var>$d </var><text></text></line>
+      <line linenr="058" indent="&#160;&#160;&#160;"><var>$station = </var><text></text><var>$s </var><text></text></line>
+      <line linenr="059" indent="&#160;&#160;"><text>end</text></line>
+      <line linenr="060" indent="&#160;"><text>end</text></line>
+      <line linenr="061" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s ware:%s %s station2: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$buysell</var><text>  =</text><var>$station</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="062" indent="&#160;"><var>do if </var><text></text><var>$station </var><text></text></line>
+      <line linenr="063" indent="&#160;"><text>break</text></line>
+      <line linenr="064" indent=""><text>end</text></line>
+      <line linenr="065" indent=""> </line>
+      <line linenr="066" indent=""> </line>
+      <line linenr="067" indent=""><text></text><var>$price =</var><text> </text><var>$station</var><text>  ->  get price of ware </text><var>$ware</var><text></text></line>
+      <line linenr="068" indent=""><var>if </var><text></text><var>$buysell == 'buy' </var><text></text></line>
+      <line linenr="069" indent="&#160;"><text></text><var>$amount =</var><text> </text><var>$station</var><text>  ->  get true amount of ware </text><var>$ware</var><text> in cargo bay</text></line>
+      <line linenr="070" indent=""><var>else if </var><text></text><var>$buysell == 'sell' </var><text></text></line>
+      <line linenr="071" indent="&#160;"><text></text><var>$amount =</var><text> </text><var>$station</var><text>  ->  get free amount of ware </text><var>$ware</var><text> in cargo bay</text></line>
+      <line linenr="072" indent=""><text>end</text></line>
+      <line linenr="073" indent=""><var>$distance = </var><text></text><var>$distance </var><text></text></line>
+      <line linenr="074" indent=""> </line>
+      <line linenr="075" indent=""><text></text><var>$buysell =</var><text> = create new array, arguments=</text><var>$station</var><text>, </text><var>$price</var><text>, </text><var>$amount</var><text>, </text><var>$distance</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="076" indent=""> </line>
+      <line linenr="077" indent=""><text>return </text><var>$buysell</var><text></text></line>
+      <line linenr="078" indent=""> </line>
+      <line linenr="079" indent=""> </line>
    </sourcetext>
    <codearray>
       <sval type="array" size="10">
          <sval type="string" val="mf.tg.station.buysell" />
          <sval type="int" val="50" />
          <sval type="string" val="" />
-         <sval type="int" val="24" />
+         <sval type="int" val="38" />
          <sval type="int" val="0" />
-         <sval type="array" size="13">
+         <sval type="array" size="15">
             <sval type="string" val="buysell" />
             <sval type="string" val="ware" />
             <sval type="string" val="maxjumps" />
@@ -94,13 +110,15 @@
             <sval type="string" val="ex" />
             <sval type="string" val="station" />
             <sval type="string" val="price" />
+            <sval type="string" val="station1" />
+            <sval type="string" val="price1" />
             <sval type="string" val="distance" />
             <sval type="string" val="i" />
             <sval type="string" val="s" />
             <sval type="string" val="d" />
             <sval type="string" val="amount" />
          </sval>
-         <sval type="array" size="44">
+         <sval type="array" size="61">
             <sval type="array" size="7">
                <sval type="int" val="104" />
                <sval type="int" val="-536870393" />
@@ -143,6 +161,15 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
+               <sval type="int" val="-1610599415" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="10" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
                <sval type="int" val="6" />
                <sval type="int" val="1" />
                <sval type="int" val="0" />
@@ -150,9 +177,18 @@
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="7" />
+               <sval type="int" val="1" />
+               <sval type="int" val="4" />
+               <sval type="int" val="0" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610610173" />
+               <sval type="int" val="-1610607101" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -185,13 +221,118 @@
                <sval type="int" val="131074" />
                <sval type="int" val="5" />
             </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="112" />
-               <sval type="int" val="12" />
+            <sval type="array" size="18">
+               <sval type="int" val="1006" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="8" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610609659" />
+               <sval type="int" val="-1610608125" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="8" />
+               <sval type="int" val="15" />
+               <sval type="int" val="9" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="9" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="8" />
+               <sval type="int" val="9" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610608381" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="15" />
+               <sval type="int" val="2" />
+               <sval type="int" val="3" />
+               <sval type="int" val="-1" />
+               <sval type="int" val="2" />
+               <sval type="int" val="-2" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="7" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="9" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="21" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536865785" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="6" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="8" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="26" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-1610606075" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -226,10 +367,27 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-536867321" />
+               <sval type="int" val="-1610606072" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+               <sval type="int" val="7" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536863737" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
@@ -248,7 +406,7 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="1" />
                <sval type="int" val="4" />
                <sval type="int" val="200000" />
@@ -266,7 +424,7 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="9" />
+               <sval type="int" val="11" />
                <sval type="int" val="1" />
                <sval type="int" val="4" />
                <sval type="int" val="5" />
@@ -275,16 +433,16 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610604279" />
+               <sval type="int" val="-1610600183" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="9" />
+               <sval type="int" val="11" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610607101" />
+               <sval type="int" val="-1610603005" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -301,7 +459,36 @@
                <sval type="int" val="1003" />
                <sval type="int" val="131075" />
                <sval type="int" val="1" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="7" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="2" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="3" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="7">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536861433" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="12" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="1007" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="12" />
                <sval type="int" val="131074" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
@@ -319,11 +506,11 @@
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="24" />
+               <sval type="int" val="40" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610606587" />
+               <sval type="int" val="-1610602491" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -340,7 +527,7 @@
                <sval type="int" val="1005" />
                <sval type="int" val="131075" />
                <sval type="int" val="1" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
                <sval type="int" val="131074" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
@@ -358,46 +545,46 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-536864249" />
+               <sval type="int" val="-536860153" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="33" />
+               <sval type="int" val="49" />
             </sval>
             <sval type="array" size="5">
                <sval type="int" val="135" />
                <sval type="int" val="131074" />
                <sval type="int" val="5" />
                <sval type="int" val="131074" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="143" />
-               <sval type="int" val="9" />
+               <sval type="int" val="11" />
             </sval>
             <sval type="array" size="8">
                <sval type="int" val="102" />
                <sval type="string" val="mf.tg.distance" />
-               <sval type="int" val="11" />
+               <sval type="int" val="13" />
                <sval type="int" val="131075" />
                <sval type="int" val="1" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610604541" />
+               <sval type="int" val="-1610600445" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="131074" />
-               <sval type="int" val="11" />
+               <sval type="int" val="13" />
                <sval type="int" val="15" />
                <sval type="int" val="2" />
                <sval type="int" val="3" />
@@ -407,10 +594,10 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="11" />
+               <sval type="int" val="13" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
@@ -419,27 +606,30 @@
                <sval type="int" val="6" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="10" />
+               <sval type="int" val="12" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="18" />
+               <sval type="int" val="32" />
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-536861945" />
+               <sval type="int" val="-1610599672" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
-            <sval type="array" size="3">
-               <sval type="int" val="103" />
-               <sval type="int" val="0" />
-               <sval type="int" val="0" />
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="52" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="112" />
+               <sval type="int" val="6" />
             </sval>
             <sval type="array" size="6">
                <sval type="int" val="627" />
@@ -451,7 +641,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610602749" />
+               <sval type="int" val="-1610598397" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -468,17 +658,17 @@
                <sval type="int" val="619" />
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
-               <sval type="int" val="12" />
+               <sval type="int" val="14" />
                <sval type="int" val="131074" />
                <sval type="int" val="1" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="41" />
+               <sval type="int" val="58" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610602235" />
+               <sval type="int" val="-1610597883" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="0" />
@@ -495,16 +685,16 @@
                <sval type="int" val="620" />
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
-               <sval type="int" val="12" />
+               <sval type="int" val="14" />
                <sval type="int" val="131074" />
                <sval type="int" val="1" />
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="1" />
                <sval type="int" val="-1" />
             </sval>
@@ -516,9 +706,9 @@
                <sval type="int" val="131074" />
                <sval type="int" val="7" />
                <sval type="int" val="131074" />
-               <sval type="int" val="12" />
+               <sval type="int" val="14" />
                <sval type="int" val="131074" />
-               <sval type="int" val="8" />
+               <sval type="int" val="10" />
                <sval type="int" val="0" />
                <sval type="int" val="0" />
             </sval>
@@ -550,7 +740,7 @@
                <sval type="string" val="" />
             </sval>
          </sval>
-         <sval type="array" size="25">
+         <sval type="array" size="27">
             <sval type="array" size="2">
                <sval type="int" val="2" />
                <sval type="int" val="2" />
@@ -568,15 +758,51 @@
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="7" />
-               <sval type="int" val="2" />
+               <sval type="int" val="17" />
+               <sval type="int" val="4" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="12" />
+               <sval type="int" val="18" />
+               <sval type="int" val="5" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="21" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="26" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="18">
-               <sval type="int" val="12" />
+               <sval type="int" val="26" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s ware:%s %s price: %s" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="ware" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="buysell" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="price" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="28" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="40" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="40" />
                <sval type="int" val="3" />
                <sval type="int" val="102" />
                <sval type="string" val="mf.tg.log" />
@@ -591,40 +817,32 @@
                <sval type="int" val="131074" />
                <sval type="string" val="buysell" />
                <sval type="int" val="131074" />
-               <sval type="string" val="station" />
+               <sval type="string" val="s" />
                <sval type="int" val="0" />
                <sval type="int" val="0" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="14" />
+               <sval type="int" val="40" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="24" />
-               <sval type="int" val="4" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="24" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="26" />
+               <sval type="int" val="42" />
                <sval type="int" val="7" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="27" />
+               <sval type="int" val="43" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="32" />
+               <sval type="int" val="48" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="33" />
+               <sval type="int" val="49" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="18">
-               <sval type="int" val="33" />
+               <sval type="int" val="49" />
                <sval type="int" val="3" />
                <sval type="int" val="102" />
                <sval type="string" val="mf.tg.log" />
@@ -644,43 +862,39 @@
                <sval type="int" val="0" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="35" />
-               <sval type="int" val="2" />
+               <sval type="int" val="51" />
+               <sval type="int" val="7" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="35" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="35" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="41" />
+               <sval type="int" val="52" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="42" />
+               <sval type="int" val="52" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="43" />
+               <sval type="int" val="52" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="44" />
+               <sval type="int" val="58" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="59" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="44" />
+               <sval type="int" val="60" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="44" />
+               <sval type="int" val="61" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="44" />
+               <sval type="int" val="61" />
                <sval type="int" val="2" />
             </sval>
          </sval>

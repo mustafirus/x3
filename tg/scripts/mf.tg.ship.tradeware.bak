@@ -1,0 +1,71 @@
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [TRUE]
+
+$thisplainname = [THIS]-> get local variable: name='plainname'
+
+
+skip if [DOCKEDAT]
+ return 0
+
+$delivery = [THIS]-> get local variable: name='delivery'
+
+if $type == 'buy'
+ $race = [DOCKEDAT]-> get owner race
+ if $race == [Player]
+  $amt = [THIS]-> load $ware.amt units of $ware
+  do if $debug
+   write to log file $pageId append=[TRUE] printf: fmt='%s loaded %s of %sCr', $thisplainname, $amt, $ware, null, null
+ else
+  $price = [DOCKEDAT]-> get price of ware $ware
+  $amt = [THIS]-> buy $ware.amt units of $ware
+  $cr = $price * $amt
+  if not $delivery
+   $b = [THIS]-> get local variable: name='mf.tg.ship.expence'
+   $b = $b + $cr
+   [THIS]-> set local variable: name='mf.tg.ship.expence' value=$b
+   $b = get global variable: name='mf.tg.stat.expence'
+   $b = $b + $cr
+   set global variable: name='mf.tg.stat.expence' value=$b
+  else
+   $b = get global variable: name='mf.tg.stat.delivery'
+   $b = $b + $cr
+   set global variable: name='mf.tg.stat.delivery' value=$b
+  end
+  do if $debug
+   write to log file $pageId append=[TRUE] printf: fmt='%s bought %s: %s * %s = %s Cr', $thisplainname, $ware, $amt, $price, $cr
+ end
+else if $type == 'sell'
+ $race = [DOCKEDAT]-> get owner race
+ if $race == [Player]
+  $amt = [THIS]-> unload $ware.amt units of $ware
+  do if $debug
+   write to log file $pageId append=[TRUE] printf: fmt='%s unloaded %s of %sCr', $thisplainname, $amt, $ware, null, null
+ else
+  $price = [DOCKEDAT]-> get price of ware $ware
+  $amt = [THIS]-> sell $ware.amt units of $ware
+  $cr = $price * $amt
+  if not $delivery
+   $b = [THIS]-> get local variable: name='mf.tg.ship.income'
+   $b = $b + $cr
+   [THIS]-> set local variable: name='mf.tg.ship.income' value=$b
+   $b = get global variable: name='mf.tg.stat.income'
+   $b = $b + $cr
+   set global variable: name='mf.tg.stat.income' value=$b
+  end
+  write to log file $pageId append=[TRUE] printf: fmt='%s sold %s for %sCr', $thisplainname, $ware, $cr, null, null
+ end
+ if $delivery
+  $order = $delivery[3]
+  = [THIS]-> call script 'mf.tg.log' : fmt='%s order changed: %s' arg1=$order arg2=null arg3=null arg4=null
+  $order.amount = $order[2]
+  $order.amount = $order.amount - $amt
+  $order[2] = $order.amount
+  = [THIS]-> call script 'mf.tg.log' : fmt='%s new order: %s' arg1=$order arg2=null arg3=null arg4=null
+ end
+else
+ write to log file $pageId append=[TRUE] printf: fmt='??? unknown trade type %s', $type, null, null, null, null
+end
+
+return $amt
+
+

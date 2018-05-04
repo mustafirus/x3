@@ -3,7 +3,7 @@
 <!--Produced externally by the Exscriptor-->
 <script>
    <name>mf.tg.orders</name>
-   <version>135</version>
+   <version>137</version>
    <engineversion>50</engineversion>
    <description />
    <arguments>
@@ -76,7 +76,7 @@
       <line linenr="064" indent="&#160;&#160;&#160;"><text></text><var>$order.dest =</var><text> </text><var>$dw</var><text>[</text><var>1</var><text>]</text></line>
       <line linenr="065" indent="&#160;&#160;&#160;"><text></text><var>$order.ware =</var><text> </text><var>$dw</var><text>[</text><var>0</var><text>]</text></line>
       <line linenr="066" indent="&#160;&#160;&#160;"><text></text><var>$order.amt =</var><text> </text><var>$order.dest</var><text>  ->  get free amount of ware </text><var>$order.ware</var><text> in cargo bay</text></line>
-      <line linenr="067" indent="&#160;&#160;&#160;"><text></text><var>$order.price =</var><text> = get min price of ware </text><var>$order.ware</var><text></text></line>
+      <line linenr="067" indent="&#160;&#160;&#160;"><text></text><var>$order.price =</var><text> </text><var>$order.dest</var><text>  ->  get price of ware </text><var>$order.ware</var><text></text></line>
       <line linenr="068" indent="&#160;&#160;"><text>end</text></line>
       <line linenr="069" indent="&#160;&#160;"> </line>
       <line linenr="070" indent="&#160;"><var>else if </var><text></text><var>$ret == 'amt' </var><text></text></line>
@@ -99,35 +99,37 @@
       <line linenr="087" indent="&#160;&#160;"><var>do if </var><text></text><var>$p </var><text></text></line>
       <line linenr="088" indent="&#160;&#160;"><var>$order.price = </var><text></text><var>$o </var><text></text></line>
       <line linenr="089" indent="&#160;&#160;"><text></text><var>$order.price =</var><text> = string </text><var>$p</var><text> to integer</text></line>
-      <line linenr="090" indent="&#160;&#160;"> </line>
-      <line linenr="091" indent="&#160;&#160;"><var>skip if </var><text></text><var>$order.price &gt;= $t.min </var><text></text></line>
-      <line linenr="092" indent="&#160;&#160;&#160;"><var>$order.price = </var><text></text><var>$t.min </var><text></text></line>
-      <line linenr="093" indent="&#160;&#160;"><var>skip if </var><text></text><var>$order.price &lt;= $t.max </var><text></text></line>
-      <line linenr="094" indent="&#160;&#160;&#160;"><var>$order.price = </var><text></text><var>$t.max </var><text></text></line>
-      <line linenr="095" indent="&#160;&#160;"> </line>
-      <line linenr="096" indent="&#160;"><var>else if </var><text></text><var>$ret == 'delete' </var><text></text></line>
-      <line linenr="097" indent="&#160;&#160;"><text>remove element from array </text><var>$orders</var><text> at index </text><var>$orders.i</var><text></text></line>
-      <line linenr="098" indent="&#160;&#160;"><text>return </text><var>null</var><text></text></line>
-      <line linenr="099" indent="&#160;"><text>end</text></line>
-      <line linenr="100" indent=""><text>end</text></line>
-      <line linenr="101" indent=""> </line>
-      <line linenr="102" indent=""><var>if not </var><text></text><var>( $order.dest OR $order.ware OR $order.amt OR $order.price ) </var><text></text></line>
-      <line linenr="103" indent="&#160;"><text>remove element from array </text><var>$orders</var><text> at index </text><var>$orders.i</var><text></text></line>
-      <line linenr="104" indent=""><text>end</text></line>
-      <line linenr="105" indent=""><text></text><var>$order</var><text>[</text><var>0</var><text>] = </text><var>$order.dest</var><text></text></line>
-      <line linenr="106" indent=""><text></text><var>$order</var><text>[</text><var>1</var><text>] = </text><var>$order.ware</var><text></text></line>
-      <line linenr="107" indent=""><text></text><var>$order</var><text>[</text><var>2</var><text>] = </text><var>$order.amt</var><text></text></line>
-      <line linenr="108" indent=""><text></text><var>$order</var><text>[</text><var>3</var><text>] = </text><var>$order.price</var><text></text></line>
-      <line linenr="109" indent=""><text>return </text><var>null</var><text></text></line>
-      <line linenr="110" indent=""> </line>
-      <line linenr="111" indent=""> </line>
+      <line linenr="090" indent="&#160;&#160;"><var>skip if </var><text></text><var>$order.price </var><text></text></line>
+      <line linenr="091" indent="&#160;&#160;&#160;"><text></text><var>$order.price =</var><text> </text><var>$order.dest</var><text>  ->  get price of ware </text><var>$order.ware</var><text></text></line>
+      <line linenr="092" indent="&#160;&#160;"> </line>
+      <line linenr="093" indent="&#160;&#160;"><var>skip if </var><text></text><var>$order.price &gt;= $t.min </var><text></text></line>
+      <line linenr="094" indent="&#160;&#160;&#160;"><var>$order.price = </var><text></text><var>$t.min </var><text></text></line>
+      <line linenr="095" indent="&#160;&#160;"><var>skip if </var><text></text><var>$order.price &lt;= $t.max </var><text></text></line>
+      <line linenr="096" indent="&#160;&#160;&#160;"><var>$order.price = </var><text></text><var>$t.max </var><text></text></line>
+      <line linenr="097" indent="&#160;&#160;"> </line>
+      <line linenr="098" indent="&#160;"><var>else if </var><text></text><var>$ret == 'delete' </var><text></text></line>
+      <line linenr="099" indent="&#160;&#160;"><text>remove element from array </text><var>$orders</var><text> at index </text><var>$orders.i</var><text></text></line>
+      <line linenr="100" indent="&#160;&#160;"><text>return </text><var>null</var><text></text></line>
+      <line linenr="101" indent="&#160;"><text>end</text></line>
+      <line linenr="102" indent=""><text>end</text></line>
+      <line linenr="103" indent=""> </line>
+      <line linenr="104" indent=""><var>if not </var><text></text><var>( $order.dest OR $order.ware OR $order.amt OR $order.price ) </var><text></text></line>
+      <line linenr="105" indent="&#160;"><text>remove element from array </text><var>$orders</var><text> at index </text><var>$orders.i</var><text></text></line>
+      <line linenr="106" indent=""><text>end</text></line>
+      <line linenr="107" indent=""><text></text><var>$order</var><text>[</text><var>0</var><text>] = </text><var>$order.dest</var><text></text></line>
+      <line linenr="108" indent=""><text></text><var>$order</var><text>[</text><var>1</var><text>] = </text><var>$order.ware</var><text></text></line>
+      <line linenr="109" indent=""><text></text><var>$order</var><text>[</text><var>2</var><text>] = </text><var>$order.amt</var><text></text></line>
+      <line linenr="110" indent=""><text></text><var>$order</var><text>[</text><var>3</var><text>] = </text><var>$order.price</var><text></text></line>
+      <line linenr="111" indent=""><text>return </text><var>null</var><text></text></line>
+      <line linenr="112" indent=""> </line>
+      <line linenr="113" indent=""> </line>
    </sourcetext>
    <codearray>
       <sval type="array" size="10">
          <sval type="string" val="mf.tg.orders" />
          <sval type="int" val="50" />
          <sval type="string" val="" />
-         <sval type="int" val="135" />
+         <sval type="int" val="137" />
          <sval type="int" val="0" />
          <sval type="array" size="19">
             <sval type="string" val="menu" />
@@ -150,7 +152,7 @@
             <sval type="string" val="t.max" />
             <sval type="string" val="p" />
          </sval>
-         <sval type="array" size="94">
+         <sval type="array" size="96">
             <sval type="array" size="4">
                <sval type="int" val="158" />
                <sval type="int" val="5" />
@@ -415,7 +417,7 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610590455" />
+               <sval type="int" val="-1610589943" />
                <sval type="int" val="1" />
                <sval type="int" val="131075" />
                <sval type="int" val="10" />
@@ -570,11 +572,11 @@
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="87" />
+               <sval type="int" val="89" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="86" />
+               <sval type="int" val="88" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
@@ -652,15 +654,17 @@
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
             </sval>
-            <sval type="array" size="4">
-               <sval type="int" val="631" />
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
                <sval type="int" val="10" />
                <sval type="int" val="131074" />
                <sval type="int" val="6" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="86" />
+               <sval type="int" val="88" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
@@ -771,11 +775,11 @@
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="86" />
+               <sval type="int" val="88" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610591483" />
+               <sval type="int" val="-1610590971" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="9" />
@@ -858,9 +862,26 @@
                <sval type="int" val="131074" />
                <sval type="int" val="18" />
             </sval>
-            <sval type="array" size="13">
+            <sval type="array" size="7">
                <sval type="int" val="104" />
                <sval type="int" val="-536850425" />
+               <sval type="int" val="1" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="10" />
+               <sval type="int" val="1" />
+               <sval type="int" val="-1" />
+            </sval>
+            <sval type="array" size="6">
+               <sval type="int" val="627" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="5" />
+               <sval type="int" val="10" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="6" />
+            </sval>
+            <sval type="array" size="13">
+               <sval type="int" val="104" />
+               <sval type="int" val="-536849913" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="10" />
@@ -884,7 +905,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-536849913" />
+               <sval type="int" val="-536849401" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="10" />
@@ -908,11 +929,11 @@
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="112" />
-               <sval type="int" val="86" />
+               <sval type="int" val="88" />
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610590715" />
+               <sval type="int" val="-1610590203" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="9" />
@@ -943,7 +964,7 @@
             </sval>
             <sval type="array" size="27">
                <sval type="int" val="104" />
-               <sval type="int" val="-536848124" />
+               <sval type="int" val="-536847612" />
                <sval type="int" val="7" />
                <sval type="int" val="131074" />
                <sval type="int" val="5" />
@@ -1123,35 +1144,35 @@
                <sval type="int" val="0" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="78" />
+               <sval type="int" val="80" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="82" />
+               <sval type="int" val="84" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="86" />
+               <sval type="int" val="88" />
                <sval type="int" val="4" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="87" />
-               <sval type="int" val="4" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="87" />
-               <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="89" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="94" />
+               <sval type="int" val="89" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="94" />
+               <sval type="int" val="91" />
+               <sval type="int" val="4" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="96" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="96" />
                <sval type="int" val="2" />
             </sval>
          </sval>

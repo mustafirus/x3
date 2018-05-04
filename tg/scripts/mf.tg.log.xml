@@ -27,6 +27,8 @@
       <line linenr="011" indent=""> </line>
       <line linenr="012" indent=""> </line>
       <line linenr="013" indent=""> </line>
+      <line linenr="014" indent=""> </line>
+      <line linenr="015" indent=""> </line>
    </sourcetext>
    <codearray>
       <sval type="array" size="10">
@@ -117,9 +119,17 @@
                <sval type="string" val="" />
             </sval>
          </sval>
-         <sval type="array" size="8">
+         <sval type="array" size="10">
             <sval type="array" size="2">
                <sval type="int" val="0" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="5" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">

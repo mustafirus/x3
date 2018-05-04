@@ -3,7 +3,7 @@
 <!--Produced externally by the Exscriptor-->
 <script>
    <name>mf.tg.route.delivery</name>
-   <version>151</version>
+   <version>162</version>
    <engineversion>50</engineversion>
    <description />
    <arguments />
@@ -29,51 +29,51 @@
       <line linenr="019" indent="&#160;"><text></text><var>$sell.maxprice =</var><text> </text><var>$order</var><text>[</text><var>3</var><text>]</text></line>
       <line linenr="020" indent="&#160;"> </line>
       <line linenr="021" indent="&#160;"> </line>
-      <line linenr="022" indent="&#160;"> </line>
-      <line linenr="023" indent="&#160;"> </line>
-      <line linenr="024" indent="&#160;"> </line>
-      <line linenr="025" indent="&#160;"> </line>
-      <line linenr="026" indent="&#160;"><var>skip if </var><text></text><var>$sell.station AND $ware AND $sell.amount AND $sell.maxprice </var><text></text></line>
-      <line linenr="027" indent="&#160;&#160;"><text>continue</text></line>
-      <line linenr="028" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check delivery route: dest: %s, ware: %s, amount: %s, price: %s'</var><text>  =</text><var>$sell.station</var><text>  =</text><var>$ware</var><text>  =</text><var>$sell.amount</var><text>  =</text><var>$sell.maxprice</var><text> </text></comment></line>
-      <line linenr="029" indent="&#160;"><comment>* </comment></line>
-      <line linenr="030" indent="&#160;"><comment>* Calculate reserved(alredy gone buy) amount of ware</comment></line>
-      <line linenr="031" indent="&#160;"><text></text><var>$ships =</var><text> get global variable: name=</text><var>'mf.tg.ships'</var><text></text></line>
-      <line linenr="032" indent="&#160;"><text></text><var>$ships.i =</var><text> size of array </text><var>$ships</var><text></text></line>
-      <line linenr="033" indent="&#160;"><var>$amount.reserve = </var><text></text><var>0 </var><text></text></line>
-      <line linenr="034" indent="&#160;"><var>while </var><text></text><var>$ships.i </var><text></text></line>
-      <line linenr="035" indent="&#160;&#160;"><text>dec </text><var>$ships.i</var><text> =</text></line>
-      <line linenr="036" indent="&#160;&#160;"><text></text><var>$ship =</var><text> </text><var>$ships</var><text>[</text><var>$ships.i</var><text>]</text></line>
-      <line linenr="037" indent="&#160;&#160;"><text></text><var>$delivery =</var><text> </text><var>$ship</var><text>  ->  get local variable: name=</text><var>'delivery'</var><text></text></line>
-      <line linenr="038" indent="&#160;&#160;"><text></text><var>$delivery.ware =</var><text> </text><var>$delivery</var><text>[</text><var>0</var><text>]</text></line>
-      <line linenr="039" indent="&#160;&#160;"><text></text><var>$delivery.station =</var><text> </text><var>$delivery</var><text>[</text><var>1</var><text>]</text></line>
-      <line linenr="040" indent="&#160;&#160;"><text></text><var>$delivery.amount =</var><text> </text><var>$delivery</var><text>[</text><var>2</var><text>]</text></line>
-      <line linenr="041" indent="&#160;&#160;"><var>skip if </var><text></text><var>$delivery.ware == $ware AND $delivery.station == $sell.station AND $delivery.amount </var><text></text></line>
-      <line linenr="042" indent="&#160;&#160;&#160;"><text>continue</text></line>
-      <line linenr="043" indent="&#160;&#160;"><var>$amount.reserve = </var><text></text><var>$amount.reserve + $delivery.amount </var><text></text></line>
-      <line linenr="044" indent="&#160;"><text>end</text></line>
+      <line linenr="022" indent="&#160;"><var>skip if </var><text></text><var>$sell.station AND $ware AND $sell.amount AND $sell.maxprice </var><text></text></line>
+      <line linenr="023" indent="&#160;&#160;"><text>continue</text></line>
+      <line linenr="024" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check delivery route: dest: %s, ware: %s, amount: %s, price: %s'</var><text>  =</text><var>$sell.station</var><text>  =</text><var>$ware</var><text>  =</text><var>$sell.amount</var><text>  =</text><var>$sell.maxprice</var><text> </text></comment></line>
+      <line linenr="025" indent="&#160;"><comment>* </comment></line>
+      <line linenr="026" indent="&#160;"><comment>* Calculate reserved(alredy gone buy) amount of ware</comment></line>
+      <line linenr="027" indent="&#160;"><text></text><var>$ships =</var><text> get global variable: name=</text><var>'mf.tg.ships'</var><text></text></line>
+      <line linenr="028" indent="&#160;"><text></text><var>$ships.i =</var><text> size of array </text><var>$ships</var><text></text></line>
+      <line linenr="029" indent="&#160;"><var>$amount.reserve = </var><text></text><var>0 </var><text></text></line>
+      <line linenr="030" indent="&#160;"><var>while </var><text></text><var>$ships.i </var><text></text></line>
+      <line linenr="031" indent="&#160;&#160;"><text>dec </text><var>$ships.i</var><text> =</text></line>
+      <line linenr="032" indent="&#160;&#160;"><text></text><var>$ship =</var><text> </text><var>$ships</var><text>[</text><var>$ships.i</var><text>]</text></line>
+      <line linenr="033" indent="&#160;&#160;"><text></text><var>$delivery =</var><text> </text><var>$ship</var><text>  ->  get local variable: name=</text><var>'delivery'</var><text></text></line>
+      <line linenr="034" indent="&#160;&#160;"><text></text><var>$delivery.ware =</var><text> </text><var>$delivery</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="035" indent="&#160;&#160;"><text></text><var>$delivery.station =</var><text> </text><var>$delivery</var><text>[</text><var>1</var><text>]</text></line>
+      <line linenr="036" indent="&#160;&#160;"><text></text><var>$delivery.amount =</var><text> </text><var>$delivery</var><text>[</text><var>2</var><text>]</text></line>
+      <line linenr="037" indent="&#160;&#160;"><var>skip if </var><text></text><var>$delivery.ware == $ware AND $delivery.station == $sell.station AND $delivery.amount </var><text></text></line>
+      <line linenr="038" indent="&#160;&#160;&#160;"><text>continue</text></line>
+      <line linenr="039" indent="&#160;&#160;"><var>$amount.reserve = </var><text></text><var>$amount.reserve + $delivery.amount </var><text></text></line>
+      <line linenr="040" indent="&#160;"><text>end</text></line>
+      <line linenr="041" indent="&#160;"> </line>
+      <line linenr="042" indent="&#160;"><var>$sell.amount = </var><text></text><var>$sell.amount - $amount.reserve </var><text></text></line>
+      <line linenr="043" indent="&#160;"><var>skip if </var><text></text><var>$sell.amount &gt; 0 </var><text></text></line>
+      <line linenr="044" indent="&#160;&#160;"><text>continue</text></line>
       <line linenr="045" indent="&#160;"> </line>
-      <line linenr="046" indent="&#160;"><var>$sell.amount = </var><text></text><var>$sell.amount - $amount.reserve </var><text></text></line>
-      <line linenr="047" indent="&#160;"><var>skip if </var><text></text><var>$sell.amount &gt; 0 </var><text></text></line>
-      <line linenr="048" indent="&#160;&#160;"><text>continue</text></line>
-      <line linenr="049" indent="&#160;"> </line>
-      <line linenr="050" indent="&#160;"><comment>* **************************************************************</comment></line>
-      <line linenr="051" indent="&#160;" interruptable="@"><text></text><var>$exbs =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.station.exclude</call><var></var><text> : =</text><var>$ware</var><text> </text></line>
-      <line linenr="052" indent="&#160;"><text></text><var>$buystations =</var><text> </text><var>$exbs</var><text>[</text><var>0</var><text>]</text></line>
-      <line linenr="053" indent="&#160;"><text></text><var>$maxjumps =</var><text> </text><var>[THIS]</var><text>  ->  get jumpdrive fuel resupply</text></line>
-      <line linenr="054" indent="&#160;"><comment>* <var>$maxjumps = </var><text></text><var>$maxjumps / 2 </var><text></text></comment></line>
-      <line linenr="055" indent="&#160;"><comment>* ***************************************************************************************</comment></line>
-      <line linenr="056" indent="&#160;" interruptable="@"><text></text><var>$buy =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.station.buysell</call><var></var><text> : =</text><var>'buy'</var><text>  =</text><var>$ware</var><text>  =</text><var>$maxjumps</var><text>  =</text><var>[SECTOR]</var><text>  =</text><var>$buystations</var><text> </text></line>
-      <line linenr="057" indent="&#160;"><var>skip if </var><text></text><var>$buy </var><text></text></line>
-      <line linenr="058" indent="&#160;&#160;"><text>continue</text></line>
-      <line linenr="059" indent="&#160;"> </line>
-      <line linenr="060" indent="&#160;"><text></text><var>$buy.station =</var><text> </text><var>$buy</var><text>[</text><var>0</var><text>]</text></line>
-      <line linenr="061" indent="&#160;"><text></text><var>$buy.price =</var><text> </text><var>$buy</var><text>[</text><var>1</var><text>]</text></line>
-      <line linenr="062" indent="&#160;"><text></text><var>$buy.amount =</var><text> </text><var>$buy</var><text>[</text><var>2</var><text>]</text></line>
-      <line linenr="063" indent="&#160;"> </line>
-      <line linenr="064" indent="&#160;"><var>skip if </var><text></text><var>$buy.price &lt;= $sell.maxprice </var><text></text></line>
-      <line linenr="065" indent="&#160;&#160;"><text>continue</text></line>
-      <line linenr="066" indent="&#160;"> </line>
+      <line linenr="046" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check1'</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="047" indent="&#160;"><comment>* **************************************************************</comment></line>
+      <line linenr="048" indent="&#160;" interruptable="@"><text></text><var>$exbs =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.station.exclude</call><var></var><text> : =</text><var>$ware</var><text> </text></line>
+      <line linenr="049" indent="&#160;"><text></text><var>$buystations =</var><text> </text><var>$exbs</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="050" indent="&#160;"><text>append </text><var>$sell.station</var><text> to array </text><var>$buystations</var><text></text></line>
+      <line linenr="051" indent="&#160;"><text></text><var>$maxjumps =</var><text> </text><var>[THIS]</var><text>  ->  get jumpdrive fuel resupply</text></line>
+      <line linenr="052" indent="&#160;"><comment>* <var>$maxjumps = </var><text></text><var>$maxjumps / 2 </var><text></text></comment></line>
+      <line linenr="053" indent="&#160;"><comment>* ***************************************************************************************</comment></line>
+      <line linenr="054" indent="&#160;" interruptable="@"><text></text><var>$buy =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.station.buysell</call><var></var><text> : =</text><var>'buy'</var><text>  =</text><var>$ware</var><text>  =</text><var>$maxjumps</var><text>  =</text><var>[SECTOR]</var><text>  =</text><var>$buystations</var><text> </text></line>
+      <line linenr="055" indent="&#160;"><var>skip if </var><text></text><var>$buy </var><text></text></line>
+      <line linenr="056" indent="&#160;&#160;"><text>continue</text></line>
+      <line linenr="057" indent="&#160;"> </line>
+      <line linenr="058" indent="&#160;"><text></text><var>$buy.station =</var><text> </text><var>$buy</var><text>[</text><var>0</var><text>]</text></line>
+      <line linenr="059" indent="&#160;"><text></text><var>$buy.price =</var><text> </text><var>$buy</var><text>[</text><var>1</var><text>]</text></line>
+      <line linenr="060" indent="&#160;"><text></text><var>$buy.amount =</var><text> </text><var>$buy</var><text>[</text><var>2</var><text>]</text></line>
+      <line linenr="061" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check2 %s %s'</var><text>  =</text><var>$buy.price</var><text>  =</text><var>$sell.maxprice</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="062" indent="&#160;"> </line>
+      <line linenr="063" indent="&#160;"><var>skip if </var><text></text><var>$buy.price &lt;= $sell.maxprice </var><text></text></line>
+      <line linenr="064" indent="&#160;&#160;"><text>continue</text></line>
+      <line linenr="065" indent="&#160;"> </line>
+      <line linenr="066" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check3'</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></comment></line>
       <line linenr="067" indent="&#160;"><text></text><var>$trade.amount =</var><text> </text><var>[THIS]</var><text>  ->  get free amount of ware </text><var>$ware</var><text> in cargo bay</text></line>
       <line linenr="068" indent="&#160;"><text></text><var>$e =</var><text> </text><var>[THIS]</var><text>  ->  get resupply fuel required</text></line>
       <line linenr="069" indent="&#160;"><text></text><var>$v =</var><text> = get volume of ware </text><var>$ware</var><text></text></line>
@@ -85,33 +85,34 @@
       <line linenr="075" indent="&#160;"><var>$trade.amount = </var><text></text><var>$sell.amount </var><text></text></line>
       <line linenr="076" indent="&#160;"><var>skip if </var><text></text><var>$trade.amount </var><text></text></line>
       <line linenr="077" indent="&#160;&#160;"><text>continue</text></line>
-      <line linenr="078" indent="&#160;"> </line>
-      <line linenr="079" indent="&#160;"><text></text><var>$sell =</var><text> = create new array, arguments=</text><var>$sell.station</var><text>, </text><var>$sell.maxprice</var><text>, </text><var>$sell.amount</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
-      <line linenr="080" indent="&#160;"><text></text><var>$r =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$buy</var><text>, </text><var>$sell</var><text>, </text><var>$trade.amount</var><text>, </text><var>null</var><text></text></line>
-      <line linenr="081" indent="&#160;"><text></text><var>$buyws =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$buy.station</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
-      <line linenr="082" indent="&#160;"><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'buyws'</var><text> value=</text><var>$buyws</var><text></text></line>
-      <line linenr="083" indent="&#160;"><text></text><var>$delivery =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$sell.station</var><text>, </text><var>$trade.amount</var><text>, </text><var>$order</var><text>, </text><var>null</var><text></text></line>
-      <line linenr="084" indent="&#160;"><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'delivery'</var><text> value=</text><var>$delivery</var><text></text></line>
-      <line linenr="085" indent="&#160;"> </line>
-      <line linenr="086" indent="&#160;"><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
-      <line linenr="087" indent="&#160;" interruptable="@"><text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: got delivery route: %s of ware: %s, from: %s, to: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$trade.amount</var><text>  =</text><var>$buy</var><text>  =</text><var>$sell</var><text> </text></line>
-      <line linenr="088" indent="&#160;"> </line>
-      <line linenr="089" indent="&#160;"><text>return </text><var>$r</var><text></text></line>
-      <line linenr="090" indent="&#160;"> </line>
+      <line linenr="078" indent="&#160;"><comment>* <text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: check4'</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text>  =</text><var>null</var><text> </text></comment></line>
+      <line linenr="079" indent="&#160;"> </line>
+      <line linenr="080" indent="&#160;"><text></text><var>$sell =</var><text> = create new array, arguments=</text><var>$sell.station</var><text>, </text><var>$sell.maxprice</var><text>, </text><var>$sell.amount</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="081" indent="&#160;"><text></text><var>$r =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$buy</var><text>, </text><var>$sell</var><text>, </text><var>$trade.amount</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="082" indent="&#160;"><text></text><var>$buyws =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$buy.station</var><text>, </text><var>null</var><text>, </text><var>null</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="083" indent="&#160;"><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'buyws'</var><text> value=</text><var>$buyws</var><text></text></line>
+      <line linenr="084" indent="&#160;"><text></text><var>$delivery =</var><text> = create new array, arguments=</text><var>$ware</var><text>, </text><var>$sell.station</var><text>, </text><var>$trade.amount</var><text>, </text><var>$order</var><text>, </text><var>null</var><text></text></line>
+      <line linenr="085" indent="&#160;"><text></text><var>[THIS]</var><text>  ->  set local variable: name=</text><var>'delivery'</var><text> value=</text><var>$delivery</var><text></text></line>
+      <line linenr="086" indent="&#160;"> </line>
+      <line linenr="087" indent="&#160;"><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
+      <line linenr="088" indent="&#160;" interruptable="@"><text></text><var> =</var><text> </text><var>[THIS]</var><text></text><var> -> </var><text>call script </text><var></var><call>mf.tg.log</call><var></var><text> : =</text><var>'%s: got delivery route: %s of ware: %s, from: %s, to: %s'</var><text>  =</text><var>$ware</var><text>  =</text><var>$trade.amount</var><text>  =</text><var>$buy</var><text>  =</text><var>$sell</var><text> </text></line>
+      <line linenr="089" indent="&#160;"> </line>
+      <line linenr="090" indent="&#160;"><text>return </text><var>$r</var><text></text></line>
       <line linenr="091" indent="&#160;"> </line>
-      <line linenr="092" indent=""><text>end</text></line>
-      <line linenr="093" indent=""> </line>
-      <line linenr="094" indent=""><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
-      <line linenr="095" indent=""><text>return </text><var>null</var><text></text></line>
-      <line linenr="096" indent=""> </line>
+      <line linenr="092" indent="&#160;"> </line>
+      <line linenr="093" indent=""><text>end</text></line>
+      <line linenr="094" indent=""> </line>
+      <line linenr="095" indent=""><text>set global variable: name=</text><var>'mf.tg.routing.busy'</var><text> value=</text><var>null</var><text></text></line>
+      <line linenr="096" indent=""><text>return </text><var>null</var><text></text></line>
       <line linenr="097" indent=""> </line>
+      <line linenr="098" indent=""> </line>
    </sourcetext>
    <codearray>
       <sval type="array" size="10">
          <sval type="string" val="mf.tg.route.delivery" />
          <sval type="int" val="50" />
          <sval type="string" val="" />
-         <sval type="int" val="151" />
+         <sval type="int" val="162" />
          <sval type="int" val="0" />
          <sval type="array" size="29">
             <sval type="string" val="busy" />
@@ -144,7 +145,7 @@
             <sval type="string" val="r" />
             <sval type="string" val="buyws" />
          </sval>
-         <sval type="array" size="69">
+         <sval type="array" size="70">
             <sval type="array" size="7">
                <sval type="int" val="104" />
                <sval type="int" val="-1610611191" />
@@ -212,7 +213,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610595575" />
+               <sval type="int" val="-1610595319" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="2" />
@@ -482,6 +483,13 @@
                <sval type="int" val="4" />
                <sval type="int" val="0" />
             </sval>
+            <sval type="array" size="5">
+               <sval type="int" val="135" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="17" />
+               <sval type="int" val="131074" />
+               <sval type="int" val="4" />
+            </sval>
             <sval type="array" size="4">
                <sval type="int" val="1376" />
                <sval type="int" val="131075" />
@@ -508,7 +516,7 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-536860153" />
+               <sval type="int" val="-536859897" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
                <sval type="int" val="19" />
@@ -545,7 +553,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-536858873" />
+               <sval type="int" val="-536858617" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="21" />
@@ -613,7 +621,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610599160" />
+               <sval type="int" val="-1610598904" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="23" />
@@ -637,7 +645,7 @@
             </sval>
             <sval type="array" size="13">
                <sval type="int" val="104" />
-               <sval type="int" val="-1610598648" />
+               <sval type="int" val="-1610598392" />
                <sval type="int" val="3" />
                <sval type="int" val="131074" />
                <sval type="int" val="23" />
@@ -661,7 +669,7 @@
             </sval>
             <sval type="array" size="7">
                <sval type="int" val="104" />
-               <sval type="int" val="-536856313" />
+               <sval type="int" val="-536856057" />
                <sval type="int" val="1" />
                <sval type="int" val="131074" />
                <sval type="int" val="23" />
@@ -820,22 +828,6 @@
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="17" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="17" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="17" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="17" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
                <sval type="int" val="19" />
                <sval type="int" val="6" />
             </sval>
@@ -889,13 +881,33 @@
                <sval type="int" val="36" />
                <sval type="int" val="2" />
             </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="36" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s: check1" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
             <sval type="array" size="3">
                <sval type="int" val="36" />
                <sval type="int" val="1" />
                <sval type="string" val="**************************************************************" />
             </sval>
             <sval type="array" size="11">
-               <sval type="int" val="39" />
+               <sval type="int" val="40" />
                <sval type="int" val="3" />
                <sval type="int" val="104" />
                <sval type="string" val="maxjumps" />
@@ -908,52 +920,104 @@
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="3">
-               <sval type="int" val="39" />
+               <sval type="int" val="40" />
                <sval type="int" val="1" />
                <sval type="string" val="***************************************************************************************" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="42" />
+               <sval type="int" val="43" />
                <sval type="int" val="6" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="42" />
+               <sval type="int" val="43" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="46" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s: check2 %s %s" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="buy.price" />
+               <sval type="int" val="131074" />
+               <sval type="string" val="sell.maxprice" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="46" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="45" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="47" />
+               <sval type="int" val="48" />
                <sval type="int" val="6" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="47" />
+               <sval type="int" val="48" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="48" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s: check3" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="52" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="51" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="57" />
+               <sval type="int" val="58" />
                <sval type="int" val="6" />
             </sval>
+            <sval type="array" size="18">
+               <sval type="int" val="58" />
+               <sval type="int" val="3" />
+               <sval type="int" val="102" />
+               <sval type="string" val="mf.tg.log" />
+               <sval type="int" val="-2147483647" />
+               <sval type="int" val="131075" />
+               <sval type="int" val="1" />
+               <sval type="int" val="5" />
+               <sval type="int" val="5" />
+               <sval type="string" val="%s: check4" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+               <sval type="int" val="0" />
+            </sval>
             <sval type="array" size="2">
-               <sval type="int" val="57" />
+               <sval type="int" val="58" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="63" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="65" />
-               <sval type="int" val="2" />
-            </sval>
-            <sval type="array" size="2">
-               <sval type="int" val="66" />
+               <sval type="int" val="64" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
@@ -962,18 +1026,26 @@
             </sval>
             <sval type="array" size="2">
                <sval type="int" val="67" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="67" />
+               <sval type="int" val="2" />
+            </sval>
+            <sval type="array" size="2">
+               <sval type="int" val="68" />
                <sval type="int" val="4" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="67" />
+               <sval type="int" val="68" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="69" />
+               <sval type="int" val="70" />
                <sval type="int" val="2" />
             </sval>
             <sval type="array" size="2">
-               <sval type="int" val="69" />
+               <sval type="int" val="70" />
                <sval type="int" val="2" />
             </sval>
          </sval>
