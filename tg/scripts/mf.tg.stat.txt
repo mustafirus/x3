@@ -1,0 +1,132 @@
+NAME: mf.tg.stat
+CMD:  0
+DESC: 
+VSN:  106
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+* load text: id=$pageId
+ 
+$income = get global variable: name='mf.tg.stat.income'
+$expence = get global variable: name='mf.tg.stat.expence'
+$delivery = get global variable: name='mf.tg.stat.delivery'
+$expence = -$expence 
+$delivery = -$delivery 
+$profit = $income + $expence 
+$income = [THIS]->call script 'mf.tg.cr' : cr=$income  msg=[TRUE] 
+$expence = [THIS]->call script 'mf.tg.cr' : cr=$expence  msg=[TRUE] 
+$profit = [THIS]->call script 'mf.tg.cr' : cr=$profit  msg=[TRUE] 
+$delivery = [THIS]->call script 'mf.tg.cr' : cr=$delivery  msg=[TRUE] 
+ 
+$text = '' 
+$t = sprintf: pageid=$pageId textid=398, null, null, null, null, null
+$text = $text + $t 
+$t = sprintf: pageid=$pageId textid=31, $income, null, null, null, null
+$text = $text + $t 
+$t = sprintf: pageid=$pageId textid=32, $expence, null, null, null, null
+$text = $text + $t 
+$t = sprintf: pageid=$pageId textid=399, null, null, null, null, null
+$text = $text + $t 
+$t = sprintf: pageid=$pageId textid=33, $profit, null, null, null, null
+$text = $text + $t 
+$t = sprintf: pageid=$pageId textid=34, $delivery, null, null, null, null
+$text = $text + $t 
+ 
+ 
+ 
+$t = sprintf: pageid=$pageId textid=397, null, null, null, null, null
+$text = $text + $t 
+ 
+ 
+$ships = get global variable: name='mf.tg.ships'
+$ships.i = size of array $ships
+while $ships.i 
+  dec $ships.i =
+  $ship = $ships[$ships.i]
+  skip if $ship->exists
+    continue
+  $name = $ship->get local variable: name='plainname'
+   
+  * gosub nameMangle
+   
+  $income = $ship->get local variable: name='mf.tg.ship.income'
+  $expence = $ship->get local variable: name='mf.tg.ship.expence'
+  $expence = -$expence 
+  $profit = $income + $expence 
+  $income = $ship->call script 'mf.tg.cr' : cr=$income  msg=[TRUE] 
+  $expence = $ship->call script 'mf.tg.cr' : cr=$expence  msg=[TRUE] 
+  $profit = $ship->call script 'mf.tg.cr' : cr=$profit  msg=[TRUE] 
+   
+  $t = sprintf: pageid=$pageId textid=35, $name, $income, $expence, $profit, null
+  $text = $text + $t 
+   
+end
+ 
+ 
+ 
+ 
+ 
+ 
+* send incoming message $text to player: display it=[TRUE]
+[THIS]->send incoming message: text=$text temporary=[TRUE]
+* write to log file $pageId  append=[TRUE]  printf: fmt='%s', $text, null, null, null, null
+ 
+ 
+return null
+nameMangle:
+$colorcode = sprintf: pageid=$pageId textid=99, null, null, null, null, null
+$name.ar = array alloc: size=0
+$name.len = get length of string $name
+$name.i = 0 
+while $name.i < $name.len 
+  $c = get substring of $name offset=$name.i length=1
+  inc $name.i =
+   
+  if $c == $colorcode 
+    if $color 
+      $coltag = '[/' + $color + ']' 
+      append $coltag to array $name.ar
+      $color = null 
+    end
+    $state = 'color' 
+    continue
+  end
+  if $state == 'color' 
+    $state = null 
+    if $c == 'R' 
+      $color = 'red' 
+    else if $c == 'G' 
+      $color = 'green' 
+    else if $c == 'B' 
+      $color = 'blue' 
+    else if $c == 'C' 
+      $color = 'cyan' 
+    else if $c == 'M' 
+      $color = 'magenta' 
+    else if $c == 'M' 
+      $color = 'magenta' 
+    else if $c == 'X' 
+      $color = null 
+    else
+      $color = null 
+    end
+    if $color 
+      $coltag = '[' + $color + ']' 
+      append $coltag to array $name.ar
+    end
+    continue
+  end
+  append $c to array $name.ar
+end
+$name.len = size of array $name.ar
+$name.i = 0 
+$name = '' 
+while $name.i < $name.len 
+  $n = $name.ar[$name.i]
+  $name = $name + $n 
+  inc $name.i =
+end
+endsub
+return null
+ 
+ 

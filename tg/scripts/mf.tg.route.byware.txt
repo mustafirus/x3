@@ -1,0 +1,77 @@
+NAME: mf.tg.route.byware
+CMD:  0
+DESC: 
+VSN:  106
+ARGS: 2
+ware|Var/Ware|13|
+maxjumps|Number|3|max.jumps
+---END-OF-METADATA---
+skip if $ware 
+  return null
+ 
+$exbs = [THIS]->call script 'mf.tg.station.exclude' : ware=$ware 
+$buystations = $exbs[0]
+$sellstations = $exbs[1]
+* ***************************************************************************************
+$buy = [THIS]->call script 'mf.tg.station.buysell' : buysell='buy'  ware=$ware  maxjumps=$maxjumps  startsector=[SECTOR]  exclude=$buystations 
+skip if $buy 
+  return null
+ 
+$buy.station = $buy[0]
+$buy.price = $buy[1]
+$buy.amount = $buy[2]
+$buy.distance = $buy[3]
+$buy.sector = $buy.station->get sector
+ 
+* ***************************************************************************************
+$sell = [THIS]->call script 'mf.tg.station.buysell' : buysell='sell'  ware=$ware  maxjumps=$maxjumps  startsector=$buy.sector  exclude=$sellstations 
+skip if $sell 
+  return null
+ 
+$sell.station = $sell[0]
+$sell.price = $sell[1]
+$sell.amount = $sell[2]
+$sell.distance = $sell[3]
+$sell.sector = $sell.station->get sector
+ 
+skip if $buy.price < $sell.price 
+  return null
+ 
+ 
+$trade.amount = [THIS]->get free amount of ware $ware in cargo bay
+$e = [THIS]->get resupply fuel required
+$v = get volume of ware $ware
+$trade.amount = $trade.amount - ( $e / $v ) - 1 
+ 
+do if $trade.amount > $buy.amount 
+$trade.amount = $buy.amount 
+do if $trade.amount > $sell.amount 
+$trade.amount = $sell.amount 
+ 
+$speed = [THIS]->get current max speed
+$Ecost = [THIS]->needed jump drive energy for jump to sector [SECTOR]
+$Ecost = $Ecost * 16 
+ 
+$jump1 = get jumps from sector [SECTOR] to sector $buy.sector
+$jump2 = get jumps from sector $buy.sector to sector $sell.sector
+$jump = $jump1 + $jump2 
+ 
+$bonus = ( ( $sell.price - $buy.price ) * $trade.amount - ( $jump * $Ecost ) ) * $speed * 60 / ( $buy.distance + $sell.distance ) 
+ 
+* = [THIS]->call script 'mf.tg.log' : fmt='%s ware:%s bonus: %s, from: %s, to: %s'  arg1=$ware  arg2=$bonus  arg3=$buy  arg4=$sell
+* $rp = ( $sell.price - $buy.price ) * $trade.amount
+* $ec = $jump * $Ecost
+* = [THIS]->call script 'mf.tg.log' : fmt='%s   raw profit: %s, ecost: %s, buy: %s, sell: %s'  arg1=$rp  arg2=$ec  arg3=$buy.price  arg4=$sell.price
+ 
+ 
+ 
+skip if $bonus > 600 
+  return null
+ 
+$r = create new array, arguments=$ware, $buy, $sell, $trade.amount, $bonus
+ 
+return $r
+ 
+ 
+ 
+ 

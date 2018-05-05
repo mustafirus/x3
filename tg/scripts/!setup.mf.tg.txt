@@ -1,0 +1,23 @@
+NAME: !setup.mf.tg
+CMD:  0
+DESC: 
+VSN:  116
+ARGS: 0
+---END-OF-METADATA---
+set script command upgrade: command={COMMAND_MF_RESUME}  upgrade=[TRUE]  script='mf.tg.ship.cmd.check'
+global script map: set: key={COMMAND_MF_RESUME}, class={Moveable Ship 2134}, race={Player}, script='mf.tg.ship.cmd.resume', prio=100
+set script command upgrade: command={COMMAND_MF_PAUSE}  upgrade=[TRUE]  script='mf.tg.ship.cmd.check1'
+global script map: set: key={COMMAND_MF_PAUSE}, class={Moveable Ship 2134}, race={Player}, script='mf.tg.ship.cmd.pause', prio=100
+ 
+if not get global variable: name='mf.tg.hotkey'
+  * $text = read text: page=$Page.ID id=901
+  $id = register hotkey 'Traders Guild Menu' to call script 'mf.tg.menu'
+  set global variable: name='mf.tg.hotkey' value=$id
+  set global variable: name='mf.tg.pageId' value=9920
+  $ver = get script version
+  set global variable: name='mf.tg.version' value=$ver
+end
+ 
+return null
+ 
+ 

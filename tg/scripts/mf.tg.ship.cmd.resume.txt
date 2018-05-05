@@ -1,0 +1,13 @@
+NAME: mf.tg.ship.cmd.resume
+CMD:  0
+DESC: 
+VSN:  1
+ARGS: 0
+---END-OF-METADATA---
+[THIS]->set local variable: name='waiting' value=[FALSE]
+= [THIS]->move around 5000 ms
+ 
+return null
+ 
+ 
+ 

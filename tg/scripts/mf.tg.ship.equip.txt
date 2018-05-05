@@ -1,0 +1,141 @@
+NAME: mf.tg.ship.equip
+CMD:  0
+DESC: 
+VSN:  156
+ARGS: 1
+Eneed|Value|9|
+---END-OF-METADATA---
+skip if $Eneed 
+  $Eneed = 100 
+ 
+if not [THIS]->get jumpdrive fuel resupply
+  $j1 = get global variable: name='mf.tg.defaults.refueljumps'
+  [THIS]->set jumpdrive fuel resupply: amount=$j1
+end
+ 
+skip if [THIS]->is autojump activated
+  [THIS]->set autojump active: [TRUE]
+ 
+[THIS]->autojump minimum jumps= 0
+ 
+ 
+gosub resuply
+ 
+$hull = [THIS]->get hull percent
+if $hull < 100 
+  = [THIS]->call script '!ship.cmd.moverepair.std' : object=null 
+end
+ 
+gosub resuply
+ 
+$ware = {Fighter Drone 3933} 
+$w.need = 20 
+$w.amt = [THIS]->get amount of ware $ware in cargo bay
+if $w.amt < $w.need 
+  $ware.amt = $w.need - $w.amt 
+  gosub buyWare
+end
+gosub resuply
+ 
+return null
+ 
+ 
+resuply:
+$ware = {Energy Cells} 
+$ware.need = [THIS]->get resupply fuel required
+$ware.amt = [THIS]->get amount of ware $ware in cargo bay
+$ware.free = [THIS]->get free amount of ware $ware in cargo bay
+ 
+if $ware.amt < $Eneed 
+  $ware.amt = $ware.need 
+  if $ware.free < $ware.amt 
+    $ware.amt = $ware.free 
+  end
+  do if $ware.amt 
+  gosub buyWare
+end
+endsub
+ 
+buyWare:
+ 
+while [TRUE] 
+  = wait randomly from 10 to 20 ms
+   
+  while [TRUE] 
+    $busy = get global variable: name='mf.tg.routing.busy'
+    skip if $busy->exists
+      break
+    = wait randomly from 10 to 20 ms
+  end
+  set global variable: name='mf.tg.routing.busy' value=[THIS]
+   
+   
+  $exbs = [THIS]->call script 'mf.tg.station.exclude' : ware=$ware 
+  $buystations = $exbs[0]
+  $minamt = $ware.amt / 10 
+  skip if $minamt 
+    $minamt = 1 
+  if $ware == {Energy Cells} 
+    $maxjumps = 10 
+  else
+    $maxjumps = [THIS]->get jumpdrive fuel resupply
+    $maxjumps = $maxjumps / 2 
+  end
+   
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s buystations:%s'  arg1=$buystations  arg2=null  arg3=null  arg4=null
+  $station = null 
+  $station = [THIS]->find station: product $ware with min. jumps:  max.price=null, amount=$minamt, max.jumps=$maxjumps, startsector=[SECTOR], trader=[THIS], exclude array=$buystations
+  skip if $station 
+    $station = [THIS]->find station sells: resource $ware with min. jumps: max.price=null, amount=$minamt, max.jumps=$maxjumps, startsector=[SECTOR], trader=[THIS], exclude array=$buystations
+   
+  if not $station 
+    set global variable: name='mf.tg.routing.busy' value=null
+    = [THIS]->call script 'mf.tg.log' : fmt='%s equip ware %s: station not found'  arg1=$ware  arg2=null  arg3=null  arg4=null 
+    = wait randomly from 10000 to 20000 ms
+    continue
+  end
+   
+  $s = $station 
+  $sector = $station->get sector
+  $jumps = get jumps from sector [SECTOR] to sector $sector
+  $station = [THIS]->find station: product $ware with best price:  max.price=null, amount=$minamt, max.jumps=$jumps, startsector=[SECTOR], trader=[THIS], exclude array=$buystations
+  skip if $station 
+    $station = [THIS]->find station sells: resource $ware with best price: max.price=null, amount=$minamt, max.jumps=$jumps, startsector=[SECTOR], trader=[THIS], exclude array=$buystations
+  skip if $station 
+    $station = $s 
+  * append $station to array $buystations
+  = [THIS]->call script 'mf.tg.log' : fmt='%s equip ware %s: station %s'  arg1=$ware  arg2=$station  arg3=null  arg4=null 
+   
+  $buyws = create new array, arguments=$ware, $station, null, null, null
+  [THIS]->set local variable: name='buyws' value=$buyws
+  set global variable: name='mf.tg.routing.busy' value=null
+   
+  $old.cmd = [THIS]->call script 'mf.tg.ship.cmd' : cmd='save'  old=null 
+  [THIS]->set destination to $station
+  [THIS]->set wanted ware to $ware
+  [THIS]->set wanted ware count to $ware.amt
+  [THIS]->set command: {COMMAND_GET_WARE}
+  = [THIS]->call script '!move.movetostation' : targetstation=$station 
+  skip if [THIS]->is docked
+    continue
+   
+  if $ware == {Energy Cells} 
+    $ware.amt.c = [THIS]->get resupply fuel required
+    = [THIS]->call script 'mf.tg.log' : fmt='%s correct resupply fuel required after jump from %s to %s'  arg1=$ware.amt  arg2=$ware.amt.c  arg3=null  arg4=null 
+    $ware.amt = $ware.amt.c 
+  end
+  $amt = [THIS]->call script 'mf.tg.ship.tradeware' : type='buy'  ware=$ware  ware.amt=$ware.amt 
+  = [THIS]->call script 'mf.tg.ship.cmd' : cmd='restore'  old=$old.cmd 
+  $ware.amt = $ware.amt - $amt 
+  [THIS]->set local variable: name='buyws' value=null
+  skip if $ware.amt 
+    break
+end
+ 
+endsub
+ 
+return null
+ 
+ 
+ 
+ 

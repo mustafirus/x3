@@ -1,0 +1,180 @@
+NAME: mf.tg.delivery
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [TRUE] 
+$null = null 
+ 
+$orders = get global variable: name='mf.tg.orders'
+ 
+$orders.i = size of array $orders
+while $orders.i > 0 
+  dec $orders.i =
+  $order = $orders[$orders.i]
+  do if $debug 
+  write to log file $pageId  append=[TRUE]  printf: fmt='***%s: %s', [THIS], $order, null, null, null
+   
+  $ware.dest = $order[0]
+  $ware = $order[1]
+  $ware.amt = $order[2]
+  $ware.maxprice = $order[3]
+  skip if $ware.dest AND $ware AND $ware.amt AND $ware.price 
+    continue
+  * *******************************************
+  * END Buy and deliver
+  * *******************************************
+   
+   
+  while [TRUE] 
+     
+    $delivery = array alloc: size=3
+    $delivery[2] = 0
+    [THIS]->set local variable: name='mf.tg.delivery' value=$delivery
+    * *******************************************
+    * BEGIN Buy ware until full cargo
+    * *******************************************
+    $ware.amt.lastbuy = 0 
+    $ware.amt.total = 0 
+    while [TRUE] 
+      while [TRUE] 
+        $busy = get global variable: name='mf.tg.delivery'
+        skip if $busy->exists
+          break
+        = wait randomly from 1000 to 5000 ms
+      end
+       
+      set global variable: name='mf.tg.delivery' value=[THIS]
+       
+      $orders.i = get index of $order in array $orders offset=-1 + 1
+      skip if $orders.i >= 0 
+        break
+       
+      $ware.dest = $order[0]
+      $ware = $order[1]
+      $ware.amt = $order[2]
+      $ware.maxprice = $order[3]
+      * $order.bought = $order[4]
+       
+      $a = [THIS]->get free amount of ware $ware in cargo bay
+      skip if $ware.amt.lastbuy <= $a 
+        break
+       
+      $ships = get global variable: name='mf.tg.ships'
+      $ships.i = size of array $ships
+      $exclude = array alloc: size=0
+      * ******mf.tg.delivery
+      * 0 - order
+      * 1 - station to buy
+      * 2 - ware amount reserve
+      $ware.reserve = 0 
+      while $ships.i 
+        dec $ships.i =
+        $ship = $ships[$ships.i]
+        $d = $ship->get local variable: name='mf.tg.delivery'
+        skip if $d 
+          continue
+        $o = $d[0]
+        $s = $d[1]
+        $r = $d[2]
+         
+        $w = $o[1]
+        skip if $w == $ware 
+          continue
+        append $s to array $exclude
+        $i = get index of $o in array $orders offset=-1 + 1
+        skip if $i == $orders.i 
+          continue
+         
+        $ware.reserve = $ware.reserve + $r 
+      end
+      $ware.amt = $ware.amt - $ware.reserve 
+      skip if $ware.amt > 0 
+        break
+      * *******************************************
+      * BEGIN Get next station to buy ware
+      * *******************************************
+      $station = [THIS]->call script 'mf.tg.delivery.station' : ware=$ware  maxprice=$ware.maxprice  exclude=$exclude 
+      skip if $station 
+        break
+      $delivery[0] = $order
+      $delivery[1] = $station
+      * *******************************************
+      * END get next station to buy ware
+      * *******************************************
+       
+      * *******************************************
+      * BEGIN Buy ware at station
+      * *******************************************
+      * 
+      $a = [THIS]->get free amount of ware $ware in cargo bay
+      $e = [THIS]->get resupply fuel required
+      $v = get volume of ware $ware
+      $a = $a - ( $e / $v ) - 1 
+      skip if $a >= $ware.amt 
+        $ware.amt = $a 
+      $a = $station->get amount of ware $ware in cargo bay
+      skip if $a >= $ware.amt 
+        $ware.amt = $a 
+      $a = $delivery[2]
+      $a = $a + $ware.amt 
+      $delivery[2] = $a
+      do if $debug 
+      write to log file $pageId  append=[TRUE]  printf: fmt='***%s: delivery route %s', [THIS], $delivery, null, null, null
+      set global variable: name='mf.tg.delivery' value=null
+       
+       
+      $ware.price = $station->get price of ware $order.ware
+       
+      $old.cmd = [THIS]->call script 'mf.tg.ship.cmd' : cmd='save' 
+      [THIS]->set destination to $station
+      [THIS]->set wanted ware to $ware
+      [THIS]->set wanted ware count to $ware.amt
+      [THIS]->set command: {COMMAND_GET_WARE}
+      = [THIS]->call script 'mf.tg.move.jumptostation' : station=$station 
+      = [THIS]->call script 'mf.tg.ship.cmd' : cmd='restore'  old=$old.cmd 
+       
+      $ware.amt.lastbuy = [THIS]->call script 'mf.tg.ship.tradeware' : type='buy'  ware=$ware  ware.amt=$ware.amt 
+      $ware.amt.total = $ware.amt.total + $ware.amt.lastbuy 
+      * *******************************************
+      * END Buy ware at station
+      * *******************************************
+       
+    end
+    $busy = get global variable: name='mf.tg.delivery'
+    skip if $busy != [THIS] 
+      set global variable: name='mf.tg.delivery' value=null
+     
+    * *******************************************
+    * END Buy ware until full cargo
+    * *******************************************
+    skip if $ware.amt.total 
+      break
+    $old.cmd = [THIS]->call script 'mf.tg.ship.cmd' : cmd='save' 
+    [THIS]->set destination to $ware.dest
+    [THIS]->set wanted ware to $ware
+    [THIS]->set wanted ware count to $ware.amt.total
+    [THIS]->set command: {COMMAND_SELL_WARE}
+    = [THIS]->call script 'mf.tg.move.jumptostation' : station=$ware.dest 
+    = [THIS]->call script 'mf.tg.ship.cmd' : cmd='restore'  old=$old.cmd 
+    $amt = [THIS]->call script 'mf.tg.ship.tradeware' : type='sell'  ware=$ware  ware.amt=$ware.amt.total 
+     
+    $ware.amt = $order[2]
+    $ware.amt = $ware.amt - $amt 
+    $order[2] = $ware.amt
+    [THIS]->set local variable: name='mf.tg.delivery' value=null
+    skip if $ware.amt > 0 
+      break
+    $orders.i = get index of $order in array $orders offset=-1 + 1
+    skip if $orders.i >= 0 
+      break
+     
+  end
+  * *******************************************
+  * END Buy and deliver
+  * *******************************************
+   
+end
+return null

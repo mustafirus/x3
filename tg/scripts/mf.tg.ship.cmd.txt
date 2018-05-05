@@ -1,0 +1,33 @@
+NAME: mf.tg.ship.cmd
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 2
+cmd|Var/String|11|
+old|Var|0|
+---END-OF-METADATA---
+if $cmd == 'save' 
+  $old = array alloc: size=4
+  $o0 = [THIS]->get destination
+  $o1 = [THIS]->get wanted ware
+  $o2 = [THIS]->get wanted ware count
+  $o3 = [THIS]->get command
+   
+  $old[0] = $o0
+  $old[1] = $o1
+  $old[2] = $o2
+  $old[3] = $o3
+  return $old
+else if $cmd == 'restore' 
+  $o0 = $old[0]
+  $o1 = $old[1]
+  $o2 = $old[2]
+  $o3 = $old[3]
+  [THIS]->set destination to $o0
+  [THIS]->set wanted ware to $o1
+  [THIS]->set wanted ware count to $o2
+  [THIS]->set command: $o3
+end
+return null
+ 
+ 

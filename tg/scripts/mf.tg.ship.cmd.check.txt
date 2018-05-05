@@ -1,0 +1,31 @@
+NAME: mf.tg.ship.cmd.check
+CMD:  0
+DESC: 
+VSN:  16
+ARGS: 2
+ship|Var/Ship|21|ship
+upgrade|Value|9|Upgrade  1 or ware
+---END-OF-METADATA---
+$flags = [CmdConCheck.OneTime] 
+ 
+* $a = $ship->is script 'mf.tg.ship.signal.attacked' on stack of task=0
+* $b = $ship->is script 'mf.tg.mainloop' on stack of task=0
+ 
+* skip if $a OR $b
+* return $flags
+ 
+if $ship->get local variable: name='waiting'
+  $flags = $flags | [CmdConCheck.Available] 
+  * else
+  * $flags = $flags | [CmdConCheck.Disabled]
+end
+return $flags
+ 
+* if $ship->is script 'mf.tg.ship.signal.attacked' on stack of task=0
+* return [FALSE]
+ 
+return null
+ 
+ 
+ 
+ 

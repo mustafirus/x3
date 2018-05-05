@@ -1,0 +1,69 @@
+NAME: mf.tg.ship.selfclear
+CMD:  0
+DESC: 
+VSN:  142
+ARGS: 2
+ware|Var/Ware|13|
+amount|Number|3|
+---END-OF-METADATA---
+$maxjumps = [THIS]->get jumpdrive fuel resupply
+$notcnt = 60 
+while $amount 
+  = wait randomly from 100 to 200 ms
+  while get global variable: name='mf.tg.routing.busy'
+    * = [THIS]->call script 'mf.tg.log' : fmt='%s Waiting for routing computer...'  arg1=null  arg2=null  arg3=null  arg4=null
+    = wait randomly from 100 to 500 ms
+  end
+  set global variable: name='mf.tg.routing.busy' value=[THIS]
+   
+  $exbs = [THIS]->call script 'mf.tg.station.exclude' : ware=$ware 
+  $sellstations = $exbs[1]
+  $sell = [THIS]->call script 'mf.tg.station.buysell' : buysell='sell'  ware=$ware  maxjumps=$maxjumps  startsector=[SECTOR]  exclude=$sellstations 
+   
+  if not $sell 
+    dec $notcnt =
+    = [THIS]->call script 'mf.tg.log' : fmt='%s cant sell %s %s...'  arg1=$ware  arg2=$amount  arg3=null  arg4=null 
+    set global variable: name='mf.tg.routing.busy' value=null
+    [THIS]->set command: {COMMAND_IDLE}
+    $Eneed = [THIS]->get resupply fuel required
+    = [THIS]->call script 'mf.tg.ship.equip' : Eneed=$Eneed 
+    if not $notcnt 
+      = [THIS]->call script 'mf.tg.ship.problem' : id=21  Arg1=$ware  Arg2=null  Arg3=null 
+      $notcnt = 60 
+    end
+    = wait 10000 ms
+    continue
+  end
+   
+  $notcnt = 60 
+  $station = $sell[0]
+  $sellws = create new array, arguments=$ware, $station, null, null, null
+  [THIS]->set local variable: name='sellws' value=$sellws
+  set global variable: name='mf.tg.routing.busy' value=null
+   
+  = [THIS]->call script 'mf.tg.log' : fmt='%s try to sell %s %s to %s ... %s'  arg1=$ware  arg2=$amount  arg3=$station  arg4=$sell 
+  [THIS]->set command: {COMMAND_SELL_WARE}
+  [THIS]->set destination to $station
+  [THIS]->set wanted ware to $ware
+  [THIS]->set wanted ware count to $amount
+   
+  = [THIS]->call script 'mf.tg.move.jumptostation' : station=$station 
+  $sold = [THIS]->call script 'mf.tg.ship.tradeware' : type='sell'  ware=$ware  ware.amt=$amount 
+  $amount = $amount - $sold 
+   
+  [THIS]->set command: {COMMAND_NONE 0}
+  [THIS]->set destination to null
+  [THIS]->set wanted ware to null
+  [THIS]->set wanted ware count to 0
+  [THIS]->set local variable: name='sellws' value=null
+   
+   
+  skip if $amount > 0 
+    $amount = 0 
+end
+ 
+ 
+ 
+return null
+ 
+ 

@@ -1,0 +1,26 @@
+NAME: mf.tg.log
+CMD:  0
+DESC: 
+VSN:  2
+ARGS: 5
+fmt|String|2|
+arg1|Value|9|
+arg2|Value|9|
+arg3|Value|9|
+arg4|Value|9|
+---END-OF-METADATA---
+ 
+$plainname = 'global' 
+do if [THIS] 
+$plainname = [THIS]->get local variable: name='plainname'
+write to log file 9920  append=[TRUE]  printf: fmt=$fmt, $plainname, $arg1, $arg2, $arg3, $arg4
+return null
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

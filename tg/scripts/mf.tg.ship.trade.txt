@@ -1,0 +1,80 @@
+NAME: mf.tg.ship.trade
+CMD:  0
+DESC: 
+VSN:  140
+ARGS: 1
+route|Value|9|
+---END-OF-METADATA---
+ 
+$ware = $route[0]
+$buy = $route[1]
+$sell = $route[2]
+$amount = $route[3]
+ 
+$buy.station = $buy[0]
+$buy.price = $buy[1]
+* $buy.amount = $buy[2]
+* $buy.distance = $buy[3]
+* $buy.sector = $buy.station->get sector
+ 
+$sell.station = $sell[0]
+$sell.price = $sell[1]
+* $sell.amount = $sell[2]
+* $sell.distance = $sell[3]
+* $sell.sector = $sell.station->get sector
+ 
+ 
+= [THIS]->call script 'mf.tg.log' : fmt='%s: begin trade route: ware: %s, from: %s, to:%s'  arg1=$ware  arg2=$buy  arg3=$sell  arg4=null 
+ 
+[THIS]->set destination to $buy.station
+[THIS]->set wanted ware to $ware
+[THIS]->set wanted ware count to $amount
+[THIS]->set command: {COMMAND_GET_WARE}
+ 
+= [THIS]->call script 'mf.tg.move.jumptostation' : station=$buy.station 
+ 
+skip if [DOCKEDAT] == $buy.station 
+  return null
+ 
+$price = $buy.station->get price of ware $ware
+$buy.owner = $buy.station->get owner race
+if $buy.owner != {Player} AND $price > $buy.price 
+  = [THIS]->call script 'mf.tg.log' : fmt='%s: Buy price of ware: %s changed: %s - %s'  arg1=$ware  arg2=$buy.price  arg3=$price  arg4=null 
+  return null
+end
+ 
+$buy.price = $price 
+ 
+$buy.amount = [THIS]->call script 'mf.tg.ship.tradeware' : type='buy'  ware=$ware  ware.amt=$amount 
+$amount = $buy.amount 
+ 
+ 
+[THIS]->set destination to $sell.station
+[THIS]->set wanted ware to $ware
+[THIS]->set wanted ware count to $amount
+[THIS]->set command: {COMMAND_SELL_WARE}
+= [THIS]->call script 'mf.tg.move.jumptostation' : station=$sell.station 
+ 
+$price = $sell.station->get price of ware $ware
+$sell.owner = $sell.station->get owner race
+if $sell.owner != {Player} AND $price < $sell.price 
+  = [THIS]->call script 'mf.tg.log' : fmt='%s: Sell price of ware: %s changed: %s - %s'  arg1=$ware  arg2=$sell.price  arg3=$price  arg4=null 
+  = [THIS]->call script 'mf.tg.ship.selfclear' : ware=$ware  amount=$amount 
+  return null
+end
+ 
+$sell.price = $price 
+ 
+$sell.amount = [THIS]->call script 'mf.tg.ship.tradeware' : type='sell'  ware=$ware  ware.amt=$amount 
+$profit = ( $sell.price * $sell.amount ) - ( $buy.price * $buy.amount ) 
+= [THIS]->call script 'mf.tg.log' : fmt='%s: Got Profit %s from trade %s'  arg1=$profit  arg2=$ware  arg3=null  arg4=null 
+= [THIS]->call script 'mf.tg.log' : fmt='%s:  %s at %sCr - %s at %sCr'  arg1=$buy.amount  arg2=$buy.price  arg3=$sell.amount  arg4=$sell.price 
+ 
+if $amount > $sell.amount 
+  $amount = $amount - $sell.amount 
+  = [THIS]->call script 'mf.tg.ship.selfclear' : ware=$ware  amount=$amount 
+end
+ 
+return null
+ 
+ 

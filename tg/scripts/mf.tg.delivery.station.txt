@@ -1,0 +1,97 @@
+NAME: mf.tg.delivery.station
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 3
+ware|Var/Ware|13|
+maxprice|Var/Number|10|
+exclude|Var/Array|45|
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [TRUE] 
+$null = null 
+ 
+* *******************************************
+* BEGIN Get next station to buy ware
+* *******************************************
+do if $debug 
+write to log file $pageId  append=[TRUE]  printf: fmt='***%s: find station for %s, exclude: %s', [THIS], $ware, $exclude, null, null
+ 
+$stations = array alloc: size=0
+ 
+if not $maxprice 
+  $maxprice = get max price of ware $ware
+end
+ 
+$price.stop = $maxprice 
+$stations = array alloc: size=0
+$stations.amt = array alloc: size=0
+while [TRUE] 
+  = wait 1 ms
+  $sec = [THIS]->get sector
+  $station = [THIS]->find station: product $ware with best price:  max.price=$maxprice, amount=null, max.jumps=null, startsector=$sec, trader=[THIS], exclude array=$exclude
+  skip if $station 
+    break
+  append $station to array $exclude
+   
+  gosub checkKnown
+  skip if $station 
+    continue
+   
+   
+  $p = $station->get price of ware $ware
+  skip if $p <= $price.stop 
+    break
+  $price.stop = $p 
+   
+   
+  if not [THIS]->can buy ware $ware at station $station
+    continue
+  end
+   
+  $amt = $station->get amount of ware $ware in cargo bay
+  append $station to array $stations
+  append $amt to array $stations.amt
+end
+skip if size of array $stations
+  return null
+$stations = sort array: data=$stations sort values=$stations.amt
+$stations = reverse array $stations
+$station = $stations[0]
+do if $debug 
+write to log file $pageId  append=[TRUE]  printf: fmt='***%s: found station for %s, exclude: %s', [THIS], $ware, $exclude, null, null
+return $station
+ 
+* *******************************************
+* END get next station to buy ware
+* *******************************************
+checkKnown:
+ 
+if not $station->is known
+  $station = null 
+  endsub
+end
+ 
+$so = $station->get owner race
+if $so == {Player} 
+  $station = null 
+  endsub
+end
+ 
+if not [PLAYERSHIP]->is docking allowed at $station
+  $station = null 
+  endsub
+end
+ 
+$sec = $station->get sector
+$sh = find ship: sector=$sec class or type={Ship 2004} race={Player} flags=[Find.IncludeDocked] refobj=null maxdist=null maxnum=1 refpos=null
+if not $sh 
+  $st = find station: sector=$sec class or type={Station 2016} race={Player} flags=null refobj=null maxdist=null maxnum=1 refpos=null
+  if not $st 
+    $station = null 
+  end
+end
+endsub
+ 
+ 
+return null

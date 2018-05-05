@@ -1,0 +1,34 @@
+NAME: mf.tg.station.unknown
+CMD:  0
+DESC: 
+VSN:  6
+ARGS: 0
+---END-OF-METADATA---
+$t2 = playing time
+$t2 = $t2 - 60 
+$t1 = get global variable: name='mf.tg.cache.usectors.time'
+ 
+if $t1 AND $t1 > $t2 
+  $unknown.sectors = get global variable: name='mf.tg.cache.usectors'
+else
+  $unknown.sectors = array alloc: size=0
+  $sector.list.all = [SECTOR]->find all sectors within 100 jumps: Only known sectors=[FALSE]
+  $sector.list.num = size of array $sector.list.all
+  while $sector.list.num 
+    skip if $sector.list.num MOD 10 
+      = wait 100 ms
+    dec $sector.list.num =
+    $sector = $sector.list.all[$sector.list.num]
+    skip if find ship: sector=$sector class or type={All Satellites} race={Player} flags=null refobj=null maxdist=null maxnum=1 refpos=null
+      append $sector to array $unknown.sectors
+  end
+   
+  set global variable: name='mf.tg.cache.usectors' value=$unknown.sectors
+  $t2 = playing time
+  set global variable: name='mf.tg.cache.usectors.time' value=$t2
+   
+end
+ 
+return $unknown.sectors
+ 
+ 

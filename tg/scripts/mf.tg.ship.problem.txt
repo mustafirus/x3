@@ -1,0 +1,32 @@
+NAME: mf.tg.ship.problem
+CMD:  0
+DESC: 
+VSN:  120
+ARGS: 4
+id|Var/Number|10|
+Arg1|Value|9|
+Arg2|Value|9|
+Arg3|Value|9|
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+load text: id=$pageId
+* $debug = [TRUE]
+* $null = null
+ 
+* [THIS]->set destination to null
+[THIS]->set command: {COMMAND_IDLE}
+$name = [THIS]->get local variable: name='plainname'
+skip if $name 
+  $name = [THIS]->get name
+ 
+$colorcode = sprintf: pageid=$pageId textid=99, null, null, null, null, null
+$name = substitute in string $name: pattern $colorcode with ''
+ 
+$code = [THIS]->get ID code
+$t = sprintf: pageid=$pageId textid=$id, $name, $code, $Arg1, $Arg2, $Arg3
+[THIS]->send incoming message: text=$t temporary=[FALSE]
+return null
+ 
+ 
+ 
+ 

@@ -1,0 +1,172 @@
+NAME: mf.tg.bestroute.actual
+CMD:  0
+DESC: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = 1 
+$null = null 
+ 
+skip if [THIS] 
+  return null
+ 
+$routes = $null->call script 'mf.tg.routes' :
+skip if $routes 
+  return null
+ 
+$broutes = array alloc: size=0
+$broutes.bonus = array alloc: size=0
+ 
+skip if $debug < 1 
+  $debug.begin = playing time
+ 
+$Ecost = [THIS]->needed jump drive energy for jump to sector [SECTOR]
+$Ecost = $Ecost * 16 
+$playermoney = get player money
+$speed = [THIS]->get current max speed
+ 
+= wait 1 ms
+ 
+$zzzyyy = 0 
+$routes.num = size of array $routes
+$routes.i = size of array $routes
+while $routes.i 
+  dec $routes.i =
+  $route = $routes[$routes.i]
+   
+  if not $zzzyyy 
+    = wait 1 ms
+    $zzzyyy = 100 
+  end
+  dec $zzzyyy =
+   
+  $ware = $route[0]
+  $ware.seller.ar = $route[1]
+  $ware.seller = $ware.seller.ar[0]
+  $ware.seller.price = $ware.seller.ar[1]
+  $ware.seller.amt = $ware.seller.ar[2]
+  $ware.seller.dist = $ware.seller.ar[3]
+  $ware.buyer.ar = $route[2]
+  $ware.buyer = $ware.buyer.ar[0]
+  $ware.buyer.price = $ware.buyer.ar[1]
+  $ware.buyer.amt = $ware.buyer.ar[2]
+  $ware.buyer.dist = $ware.buyer.ar[3]
+   
+   
+  $amt = [THIS]->get free amount of ware $ware in cargo bay
+  $e = [THIS]->get resupply fuel required
+  $v = get volume of ware $ware
+  $amt = $amt - ( $e / $v ) - 1 
+  skip if $amt < $ware.seller.amt 
+    $amt = $ware.seller.amt 
+  skip if $amt < $ware.buyer.amt 
+    $amt = $ware.buyer.amt 
+   
+  $ware.seller.sector = $ware.seller->get sector
+  $jump = get jumps from sector [SECTOR] to sector $ware.seller.sector
+  $ware.buyer.sector = $ware.buyer->get sector
+  $jump1 = get jumps from sector $ware.seller.sector to sector $ware.buyer.sector
+  $jump = $jump + $jump1 + 2 
+   
+  $needmoney = ( $ware.seller.price * $amt ) 
+  skip if $playermoney >= $needmoney 
+    continue
+  * *** bonus for min
+  $bonus = ( ( $ware.buyer.price * $amt ) - $needmoney - ( $jump * $Ecost ) ) * $speed * 60 / ( $ware.buyer.dist + $ware.seller.dist ) 
+  skip if $bonus > 600 
+    continue
+   
+  $r = array alloc: size=5
+  $r[0] = $ware
+  $r[1] = $ware.seller.ar
+  $r[2] = $ware.buyer.ar
+  $r[3] = $amt
+  $r[4] = $bonus
+  append $r to array $broutes
+  append $bonus to array $broutes.bonus
+   
+end
+ 
+= wait 10 ms
+ 
+$broutes = sort array: data=$broutes sort values=$broutes.bonus
+= wait 10 ms
+ 
+$bestroute = null 
+$broutes.num = size of array $broutes
+$routes.i = size of array $broutes
+while $routes.i 
+  dec $routes.i =
+  $route = $broutes[$routes.i]
+  * = wait 1 ms
+   
+  $ware = $route[0]
+  $ware.seller = $route[1][0]
+  $ware.seller.price = $route[1][1]
+  $ware.buyer = $route[2][0]
+  $ware.buyer.price = $route[2][1]
+  $amt = $route[3]
+  $bonus = $route[4]
+   
+  $x = $ware.seller->get price of ware $ware
+  if $x > $ware.seller.price 
+    skip if $debug < 3 
+      write to log file $pageId  append=[TRUE]  printf: fmt='??? Price seller changed %s -> %s removing #%s', $ware.seller.price, $x, $routes.i, null, null
+    remove element from array $routes at index $routes.i
+    continue
+  end
+  $x = $ware.buyer->get price of ware $ware
+  if $x < $ware.buyer.price 
+    skip if $debug < 3 
+      write to log file $pageId  append=[TRUE]  printf: fmt='??? Price buyer changed %s -> %s removing #%s', $ware.buyer.price, $x, $routes.i, null, null
+    remove element from array $routes at index $routes.i
+    continue
+  end
+   
+  $x = $ware.seller->get true amount of ware $ware in cargo bay
+  if $x < $amt 
+    skip if $debug < 3 
+      write to log file $pageId  append=[TRUE]  printf: fmt='??? Amt seller changed %s -> %s removing #%s', $amt, $x, $routes.i, null, null
+    remove element from array $routes at index $routes.i
+    continue
+  end
+   
+  $x = $ware.buyer->get free amount of ware $ware in cargo bay
+  if $x < $amt 
+    skip if $debug < 3 
+      write to log file $pageId  append=[TRUE]  printf: fmt='??? Amt buyer changed %s -> %s removing #%s', $amt, $x, $routes.i, null, null
+    remove element from array $routes at index $routes.i
+    continue
+  end
+  $bestroute = $route 
+  break
+   
+end
+ 
+if $debug >= 1 
+  $debug.end = playing time
+  $elapced = $debug.end - $debug.begin 
+  write to log file $pageId  append=[TRUE]  printf: fmt='!!!%s got route in %ss from %s good from %s routes', [THIS], $elapced, $broutes.num, $routes.num, null
+   
+  $routes.i = size of array $broutes
+  = [THIS]->call script 'mf.tg.route.dump' : route=$bestroute 
+   
+  if $debug >= 2 
+    $cnt = 20 
+    while $routes.i AND $cnt 
+      dec $routes.i =
+      dec $cnt =
+      = wait 1 ms
+      $r = $broutes[$routes.i]
+      $w = $r[0]
+      $s = $r[1]
+      $b = $r[2]
+      $a = $r[3]
+      $i = $r[4]
+      write to log file $pageId  append=[TRUE]  printf: fmt='%s %s(%s): %s -> %s', $i, $w, $a, $s, $b
+    end
+  end
+end
+ 
+return $bestroute

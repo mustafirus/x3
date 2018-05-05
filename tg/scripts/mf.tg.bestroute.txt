@@ -1,0 +1,66 @@
+NAME: mf.tg.bestroute
+CMD:  0
+DESC: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = 1 
+$null = null 
+ 
+skip if [THIS] 
+  return null
+ 
+while [TRUE] 
+  $busy = get global variable: name='mf.tg.bestroute.busy'
+  if not $busy->exists
+    do if $debug 
+    write to log file $pageId  append=[TRUE]  printf: fmt='$$$ %s Begin finding route ', [THIS], null, null, null, null
+    set global variable: name='mf.tg.bestroute.busy' value=[THIS]
+    $r = [THIS]->call script 'mf.tg.bestroute.actual' :
+    if $r 
+       
+      $routes = $null->call script 'mf.tg.routes' :
+       
+      if $routes 
+        do if $debug 
+        $num.routes = size of array $routes
+         
+        $routes.i = size of array $routes
+        while $routes.i 
+          dec $routes.i =
+          $route = $routes[$routes.i]
+           
+          $ware1 = $r[0]
+          $ware2 = $route[0]
+          $seller1 = $r[1][0]
+          $seller2 = $route[1][0]
+          $buyer1 = $r[2][0]
+          $buyer2 = $route[2][0]
+           
+          if ( ( $ware1 == $ware2 ) AND ( $seller1 == $seller2 ) ) OR ( ( $ware1 == $ware2 ) AND ( $buyer1 == $buyer2 ) ) 
+             
+            skip if $debug < 2 
+              write to log file $pageId  append=[TRUE]  printf: fmt='-remove route at index %s: %s', $routes.i, $route, null, null, null
+             
+            remove element from array $routes at index $routes.i
+          end
+           
+        end
+        * set global variable: name='mf.tg.routes' value=$routes
+      end
+    end
+    set global variable: name='mf.tg.bestroute.busy' value=$null
+    if $debug 
+      $s = $r[1]
+      $b = $r[2]
+      write to log file $pageId  append=[TRUE]  printf: fmt='!!!%s got route from #%s routes %s %s -> %s', [THIS], $num.routes, $r, $s, $b
+    end
+    return $r
+  end
+  do if $debug 
+  write to log file $pageId  append=[TRUE]  printf: fmt='%s waiting for route', [THIS], null, null, null, null
+   
+  = wait randomly from 5000 to 20000 ms
+end
+return null

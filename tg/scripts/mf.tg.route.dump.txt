@@ -1,0 +1,38 @@
+NAME: mf.tg.route.dump
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 1
+route|Value|9|
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [FALSE] 
+$null = null 
+ 
+$ware = $route[0]
+$ware.seller.ar = $route[1]
+$ware.seller = $ware.seller.ar[0]
+$ware.seller.price = $ware.seller.ar[1]
+$ware.seller.amt = $ware.seller.ar[2]
+$ware.buyer.ar = $route[2]
+$ware.buyer = $ware.buyer.ar[0]
+$ware.buyer.price = $ware.buyer.ar[1]
+$ware.buyer.amt = $ware.buyer.ar[2]
+$cargo.amt = [THIS]->get true amount of ware $ware in cargo bay
+$cargo.free = [THIS]->get free amount of ware $ware in cargo bay
+ 
+ 
+write to log file $pageId  append=[TRUE]  printf: fmt='route dump: %s in cargo %s, free amount %s', $ware, $cargo.amt, $cargo.free, null, null
+write to log file $pageId  append=[TRUE]  printf: fmt=' %s at %sCr from %s', $ware.seller.amt, $ware.seller.price, $ware.seller, null, null
+write to log file $pageId  append=[TRUE]  printf: fmt=' ->%s at %sCr from %s', $ware.buyer.amt, $ware.buyer.price, $ware.buyer, null, null
+write to log file $pageId  append=[TRUE]  printf: fmt='now state:', $ware.buyer.amt, $ware.buyer.price, $ware.buyer, null, null
+ 
+$ware.seller.price = $ware.seller->get price of ware $ware
+$ware.seller.amt = $ware.seller->get true amount of ware $ware in cargo bay
+$ware.buyer.price = $ware.buyer->get price of ware $ware
+$ware.buyer.amt = $ware.buyer->get free amount of ware $ware in cargo bay
+ 
+write to log file $pageId  append=[TRUE]  printf: fmt=' %s at %sCr from %s', $ware.seller.amt, $ware.seller.price, $ware.seller, null, null
+write to log file $pageId  append=[TRUE]  printf: fmt=' ->%s at %sCr from %s', $ware.buyer.amt, $ware.buyer.price, $ware.buyer, null, null
+ 
+return null

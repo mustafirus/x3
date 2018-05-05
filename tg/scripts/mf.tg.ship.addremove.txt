@@ -1,0 +1,55 @@
+NAME: mf.tg.ship.addremove
+CMD:  0
+DESC: 
+VSN:  104
+ARGS: 2
+ship|Value|9|
+add|Var/Boolean|63|
+---END-OF-METADATA---
+if $add 
+  $s = get global variable: name='mf.tg.ships'
+  if not $s 
+    $s = array alloc: size=0
+    set global variable: name='mf.tg.ships' value=$s
+  end
+  if not find $ship in array: $s
+    if $ship->call script 'mf.tg.ship.checkhw' :
+      append $ship to array $s
+      = $ship->call script 'mf.tg.ship.rename' : back=[FALSE] 
+      $s = sort array $s
+      $s = reverse array $s
+      * set global variable: name='mf.tg.ships' value=$s
+       
+      $ship->connect ship command/signal {SIGNAL_DOCKED} to script 'mf.tg.dummy' with prio 10
+      $ship->connect ship command/signal {SIGNAL_KILLED} to script 'mf.tg.ship.signal.killed' with prio 10000
+      $ship->connect ship command/signal {SIGNAL_ATTACKED} to script 'mf.tg.ship.signal.attacked' with prio 99
+      $income = $ship->get local variable: name='mf.tg.ship.income'
+      $expence = $ship->get local variable: name='mf.tg.ship.expence'
+       
+      if not $income 
+        $income = 0 
+        $ship->set local variable: name='mf.tg.ship.income' value=$income
+      end
+      if not $expence 
+        $expence = 0 
+        $ship->set local variable: name='mf.tg.ship.expence' value=$expence
+      end
+    end
+  end
+else
+  $s = get global variable: name='mf.tg.ships'
+  $i = get index of $ship in array $s offset=-1 + 1
+  if $i >= 0 
+    remove element from array $s at index $i
+    $m = $ship->call script 'mf.tg.ship.rename' : back=[TRUE] 
+    $ship->set ship command/signal {SIGNAL_DOCKED} to global default behaviour
+    $ship->set ship command/signal {SIGNAL_KILLED} to global default behaviour
+    $ship->set ship command/signal {SIGNAL_ATTACKED} to global default behaviour
+  end
+  * set global variable: name='mf.tg.ships' value=$s
+end
+return null
+ 
+ 
+ 
+ 

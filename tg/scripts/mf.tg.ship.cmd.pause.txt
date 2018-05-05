@@ -1,0 +1,11 @@
+NAME: mf.tg.ship.cmd.pause
+CMD:  0
+DESC: 
+VSN:  2
+ARGS: 0
+---END-OF-METADATA---
+[THIS]->set local variable: name='waiting' value=[TRUE]
+ 
+return null
+ 
+ 

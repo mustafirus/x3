@@ -1,0 +1,44 @@
+NAME: mf.tg.distance
+CMD:  0
+DESC: 
+VSN:  101
+ARGS: 1
+station|Var/Station|12|
+---END-OF-METADATA---
+ 
+$sd = get global variable: name='mf.tg.stadist'
+if not $sd 
+  $sd = array alloc: size=2
+  $st = array alloc: size=0
+  $di = array alloc: size=0
+  $sd[0] = $st
+  $sd[1] = $di
+  set global variable: name='mf.tg.stadist' value=$sd
+else
+  $st = $sd[0]
+  $di = $sd[1]
+end
+ 
+$si = get index of $station in array $st offset=-1 + 1
+if $si >= 0 
+  $d = $di[$si]
+  return $d
+end
+ 
+* [Find.Expand]
+$gate.flags = [Find.Nearest] | [Find.Known] | [Find.JumpableGate] 
+$bg = find gate: flags=$gate.flags, refobj=$station, max dist=null, refpos=null
+$s1 = $bg->get sector
+$s2 = $station->get sector
+ 
+if $bg AND $s1 == $s2 
+  $d = get distance between $bg and $station
+else
+  $d = null 
+end
+append $station to array $st
+append $d to array $di
+ 
+return $d
+ 
+ 

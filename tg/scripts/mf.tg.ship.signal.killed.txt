@@ -1,0 +1,18 @@
+NAME: mf.tg.ship.signal.killed
+CMD:  0
+DESC: Synchron signal. killed
+VSN:  100
+ARGS: 6
+killer|Value|9|killer
+cmd|Object Command|31|cmd
+cmdtarget|Value|9|cmdtarget
+cmdtarget2|Value|9|cmdtarget2
+cmdpar1|Value|9|cmdpar1
+cmdpar2|Value|9|cmdpar2
+---END-OF-METADATA---
+$sec = [THIS]->get sector
+= [THIS]->call script 'mf.tg.ship.problem' : id=24  Arg1=$sec  Arg2=$killer 
+= $null->call script 'mf.tg.ship.addremove' : ship=[THIS]  add=[FALSE] 
+return null
+ 
+ 

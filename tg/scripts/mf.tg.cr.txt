@@ -1,0 +1,57 @@
+NAME: mf.tg.cr
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 2
+cr|Var/Number|10|
+msg|Var/Boolean|63|
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+load text: id=$pageId
+$debug = [TRUE] 
+$null = null 
+ 
+skip if $cr 
+  $cr = 0 
+ 
+if $msg 
+  $G = 'green' 
+  $R = 'red' 
+  $Y = 'yellow' 
+else
+  $G = 'G' 
+  $R = 'R' 
+  $Y = 'Y' 
+end
+$cfm = sprintf: pageid=$pageId textid=99, null, null, null, null, null
+$cr.str = sprintf: fmt='%s', $cr, null, null, null, null
+$cr.str1 = '' 
+ 
+$cr.i = get length of string $cr.str
+$digit = 0 
+while $cr.i 
+  dec $cr.i =
+  $c = get substring of $cr.str offset=$cr.i length=1
+  if $c != '-' AND ( $digit == 3 OR $digit == 6 OR $digit == 9 OR $digit == 12 ) 
+    $cr.str1 = ',' + $cr.str1 
+  end
+  inc $digit =
+  $cr.str1 = $c + $cr.str1 
+end
+if $cr > 0 
+  $cl = $G 
+else if $cr < 0 
+  $cl = $R 
+else
+  $cl = $Y 
+end
+ 
+if $msg 
+  $cr.str1 = sprintf: fmt='% 15s', $cr.str1, null, null, null, null
+  $cr.str1 = '[' + $cl + ']' + $cr.str1 + '[/' + $cl + ']' 
+else
+  $cr.str1 = $cfm + $cl + $cr.str1 + $cfm + 'X' 
+end
+return $cr.str1
+ 
+ 

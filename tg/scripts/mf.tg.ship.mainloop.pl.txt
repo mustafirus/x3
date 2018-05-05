@@ -1,0 +1,18 @@
+NAME: mf.tg.ship.mainloop.pl
+CMD:  0
+DESC: 
+VSN:  138
+ARGS: 0
+---END-OF-METADATA---
+ 
+while [TRUE] 
+  * $ret = [THIS]->call script 'mf.tg.ship.mainloop' :
+  * = [THIS]->call script 'mf.tg.log' : fmt='%sret from mainloop %s'  arg1=$ret  arg2=null  arg3=null  arg4=null
+  skip if [THIS]->call script 'mf.tg.ship.mainloop' :
+    break
+end
+return null
+ 
+ 
+ 
+ 

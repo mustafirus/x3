@@ -1,0 +1,37 @@
+NAME: mf.tg.mainloop
+CMD:  0
+DESC: 
+VSN:  119
+ARGS: 0
+---END-OF-METADATA---
+ 
+while [TRUE] 
+  = wait randomly from 3000 to 8000 ms
+   
+  $status = get global variable: name='mf.tg.status'
+  skip if $status == 'running' 
+    break
+   
+  $ships = get global variable: name='mf.tg.ships'
+  $ships.i = size of array $ships
+  while $ships.i 
+    dec $ships.i =
+    $ship = $ships[$ships.i]
+    = wait randomly from 100 to 200 ms
+     
+    do if $ship->is script 'mf.tg.ship.mainloop.pl' on stack of task=0
+    continue
+    do if $ship->get local variable: name='waiting'
+    continue
+     
+     
+    = $ship->call script 'mf.tg.log' : fmt='%s: starting TG on ship'  arg1=null  arg2=null  arg3=null  arg4=null 
+     
+    START $ship->call script 'mf.tg.ship.mainloop.pl' :
+  end
+end
+return null
+ 
+ 
+ 
+ 

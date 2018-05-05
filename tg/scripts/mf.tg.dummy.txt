@@ -1,0 +1,7 @@
+NAME: mf.tg.dummy
+CMD:  0
+DESC: Dummy
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+return null

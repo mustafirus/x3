@@ -1,0 +1,63 @@
+NAME: mf.tg.ship.checkhw
+CMD:  0
+DESC: 
+VSN:  103
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+load text: id=$pageId
+$debug = [FALSE] 
+$null = null 
+ 
+ 
+$missed = array alloc: size=0
+$w = {Jumpdrive} 
+gosub check
+$w = {Navigation Command Software MK1} 
+gosub check
+$w = {Trade Command Software MK1} 
+gosub check
+$w = {Triplex Scanner} 
+$a = [THIS]->get amount of ware $w in cargo bay
+if not $a 
+  $w = {Duplex Scanner} 
+  $a = [THIS]->get amount of ware $w in cargo bay
+  skip if $a 
+    append $w to array $missed
+end
+$missed.i = size of array $missed
+$missed.str = null 
+while $missed.i 
+  dec $missed.i =
+  $m = $missed[$missed.i]
+  skip if $missed.str 
+    $missed.str = '' 
+  $n = sprintf: fmt='%s, ', $m, null, null, null, null
+  $missed.str = $missed.str + $n 
+end
+if $missed.str 
+  do if $debug 
+  write to log file $pageId  append=[TRUE]  printf: fmt='??? %s missed hw %s ', [THIS], $missed.str, null, null, null
+  if [THIS]->is script 'mf.tg.ship.mainloop' on stack of task=0
+    = [THIS]->call script 'mf.tg.ship.problem' : id=23  Arg1=$missed.str  Arg2=null  Arg3=null 
+  else
+    = [THIS]->call script 'mf.tg.ship.problem' : id=22  Arg1=$missed.str  Arg2=null  Arg3=null 
+  end
+  = $null->call script 'mf.tg.ship.addremove' : ship=[THIS]  add=[FALSE] 
+  return [FALSE]
+else
+  do if $debug 
+  write to log file $pageId  append=[TRUE]  printf: fmt='??? hw is ok ', [THIS], $missed.str, null, null, null
+  return [TRUE]
+end
+ 
+check:
+$a = [THIS]->get amount of ware $w in cargo bay
+skip if $a 
+  append $w to array $missed
+endsub
+return null
+ 
+ 
+ 
+ 

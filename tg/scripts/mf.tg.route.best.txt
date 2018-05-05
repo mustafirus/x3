@@ -1,0 +1,66 @@
+NAME: mf.tg.route.best
+CMD:  0
+DESC: 
+VSN:  174
+ARGS: 0
+---END-OF-METADATA---
+while get global variable: name='mf.tg.routing.busy'
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s Waiting for routing computer...'  arg1=null  arg2=null  arg3=null  arg4=null
+  = wait randomly from 100 to 500 ms
+end
+set global variable: name='mf.tg.routing.busy' value=[THIS]
+ 
+$max.jumps = [THIS]->get jumpdrive fuel resupply
+$max.jumps = $max.jumps / 2 
+* write to log file 9920  append=[TRUE]  printf: fmt='max.jumps: %s', $max.jumps, null, null, null, null
+ 
+ 
+$routes = array alloc: size=0
+$bonuses = array alloc: size=0
+$wares = [THIS]->call script 'mf.tg.wares' :
+$ware.i = size of array $wares
+while $ware.i 
+  skip if $ware.i MOD 10 
+    = wait 100 ms
+  dec $ware.i =
+  $ware = $wares[$ware.i]
+   
+  $r = [THIS]->call script 'mf.tg.route.byware' : ware=$ware  maxjumps=$max.jumps 
+  skip if $r 
+    continue
+  append $r to array $routes
+  $b = $r[4]
+  append $b to array $bonuses
+end
+ 
+if not size of array $routes
+   
+  = [THIS]->call script 'mf.tg.log' : fmt='%s route: none'  arg1=null  arg2=null  arg3=null  arg4=null 
+   
+  set global variable: name='mf.tg.routing.busy' value=null
+  return null
+end
+$routes = sort array: data=$routes sort values=$bonuses
+ 
+ 
+$i = size of array $routes
+dec $i =
+$ri = $routes[$i]
+$w = $ri[0]
+$b = $ri[1]
+$bs = $b[0]
+$s = $ri[2]
+$ss = $s[0]
+$bonus = $ri[4]
+inc $i =
+ 
+= [THIS]->call script 'mf.tg.log' : fmt='%s route: ware %s, bonus: %s, from: %s, to: %s'  arg1=$w  arg2=$bonus  arg3=$b  arg4=$s 
+$buyws = create new array, arguments=$w, $bs, null, null, null
+$sellws = create new array, arguments=$w, $ss, null, null, null
+[THIS]->set local variable: name='buyws' value=$buyws
+[THIS]->set local variable: name='sellws' value=$sellws
+ 
+set global variable: name='mf.tg.routing.busy' value=null
+return $ri
+ 
+ 

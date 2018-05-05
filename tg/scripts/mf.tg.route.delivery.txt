@@ -1,0 +1,104 @@
+NAME: mf.tg.route.delivery
+CMD:  0
+DESC: 
+VSN:  162
+ARGS: 0
+---END-OF-METADATA---
+while [TRUE] 
+  $busy = get global variable: name='mf.tg.routing.busy'
+  skip if $busy->exists
+    break
+  = wait randomly from 100 to 200 ms
+end
+set global variable: name='mf.tg.routing.busy' value=[THIS]
+ 
+$orders = get global variable: name='mf.tg.orders'
+$orders.i = size of array $orders
+$order = null 
+while $orders.i > 0 
+  dec $orders.i =
+  $order = $orders[$orders.i]
+   
+  $sell.station = $order[0]
+  $ware = $order[1]
+  $sell.amount = $order[2]
+  $sell.maxprice = $order[3]
+   
+   
+  skip if $sell.station AND $ware AND $sell.amount AND $sell.maxprice 
+    continue
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s: check delivery route: dest: %s, ware: %s, amount: %s, price: %s'  arg1=$sell.station  arg2=$ware  arg3=$sell.amount  arg4=$sell.maxprice
+  * 
+  * Calculate reserved(alredy gone buy) amount of ware
+  $ships = get global variable: name='mf.tg.ships'
+  $ships.i = size of array $ships
+  $amount.reserve = 0 
+  while $ships.i 
+    dec $ships.i =
+    $ship = $ships[$ships.i]
+    $delivery = $ship->get local variable: name='delivery'
+    $delivery.ware = $delivery[0]
+    $delivery.station = $delivery[1]
+    $delivery.amount = $delivery[2]
+    skip if $delivery.ware == $ware AND $delivery.station == $sell.station AND $delivery.amount 
+      continue
+    $amount.reserve = $amount.reserve + $delivery.amount 
+  end
+   
+  $sell.amount = $sell.amount - $amount.reserve 
+  skip if $sell.amount > 0 
+    continue
+   
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s: check1'  arg1=null  arg2=null  arg3=null  arg4=null
+  * **************************************************************
+  $exbs = [THIS]->call script 'mf.tg.station.exclude' : ware=$ware 
+  $buystations = $exbs[0]
+  append $sell.station to array $buystations
+  $maxjumps = [THIS]->get jumpdrive fuel resupply
+  * $maxjumps = $maxjumps / 2
+  * ***************************************************************************************
+  $buy = [THIS]->call script 'mf.tg.station.buysell' : buysell='buy'  ware=$ware  maxjumps=$maxjumps  startsector=[SECTOR]  exclude=$buystations 
+  skip if $buy 
+    continue
+   
+  $buy.station = $buy[0]
+  $buy.price = $buy[1]
+  $buy.amount = $buy[2]
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s: check2 %s %s'  arg1=$buy.price  arg2=$sell.maxprice  arg3=null  arg4=null
+   
+  skip if $buy.price <= $sell.maxprice 
+    continue
+   
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s: check3'  arg1=null  arg2=null  arg3=null  arg4=null
+  $trade.amount = [THIS]->get free amount of ware $ware in cargo bay
+  $e = [THIS]->get resupply fuel required
+  $v = get volume of ware $ware
+  $trade.amount = $trade.amount - ( $e / $v ) - 1 
+   
+  do if $trade.amount > $buy.amount 
+  $trade.amount = $buy.amount 
+  do if $trade.amount > $sell.amount 
+  $trade.amount = $sell.amount 
+  skip if $trade.amount 
+    continue
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s: check4'  arg1=null  arg2=null  arg3=null  arg4=null
+   
+  $sell = create new array, arguments=$sell.station, $sell.maxprice, $sell.amount, null, null
+  $r = create new array, arguments=$ware, $buy, $sell, $trade.amount, null
+  $buyws = create new array, arguments=$ware, $buy.station, null, null, null
+  [THIS]->set local variable: name='buyws' value=$buyws
+  $delivery = create new array, arguments=$ware, $sell.station, $trade.amount, $order, null
+  [THIS]->set local variable: name='delivery' value=$delivery
+   
+  set global variable: name='mf.tg.routing.busy' value=null
+  = [THIS]->call script 'mf.tg.log' : fmt='%s: got delivery route: %s of ware: %s, from: %s, to: %s'  arg1=$ware  arg2=$trade.amount  arg3=$buy  arg4=$sell 
+   
+  return $r
+   
+   
+end
+ 
+set global variable: name='mf.tg.routing.busy' value=null
+return null
+ 
+ 

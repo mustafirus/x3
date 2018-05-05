@@ -1,0 +1,57 @@
+NAME: mf.tg.wares
+CMD:  0
+DESC: Generates a ware list from a ware main-type array
+VSN:  105
+ARGS: 0
+---END-OF-METADATA---
+ 
+$wares = get global variable: name='mf.tg.wares'
+$time = get global variable: name='mf.tg.wares.time'
+$now = playing time
+$delta = $now - $time 
+do if $wares AND $delta < 3600 
+return $wares
+ 
+ 
+ 
+$wares = array alloc: size=0
+ 
+$wareType = 8 - 1 
+while $wareType < 16 
+  inc $wareType =
+  skip if $wareType != 12 
+    continue
+   
+  $wareType.subType = get number of subtypes of maintype $wareType
+  while $wareType.subType 
+    dec $wareType.subType =
+     
+    $ware = get ware from maintype $wareType and subtype $wareType.subType
+     
+    do if is upgrade: ware=$ware
+    continue
+    do if is equipment: ware=$ware
+    continue
+    do if is inventory: ware=$ware
+    continue
+     
+     
+    * docks, factories and ships
+    $stations.product = get station array: product=$ware include empty=[TRUE]
+    $stations.resource = get station array: resource=$ware include empty=[TRUE]
+     
+    skip if $stations.product != null OR $stations.resource != null 
+      continue
+     
+    append $ware to array $wares
+  end
+   
+end
+ 
+ 
+set global variable: name='mf.tg.wares' value=$wares
+set global variable: name='mf.tg.wares.time' value=$now
+ 
+return $wares
+ 
+ 

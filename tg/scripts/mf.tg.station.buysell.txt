@@ -1,0 +1,90 @@
+NAME: mf.tg.station.buysell
+CMD:  0
+DESC: 
+VSN:  38
+ARGS: 5
+buysell|String|2|
+ware|Var/Ware|13|
+maxjumps|Number|3|
+startsector|Var/Sector|14|
+exclude|Value|9|
+---END-OF-METADATA---
+skip if $ware 
+  return null
+ 
+if size of array $exclude
+  $ex = clone array $exclude : index 0 ... null
+else
+  $ex = array alloc: size=0
+end
+ 
+while [TRUE] 
+  $station = null 
+  $price = 0 
+  if $buysell == 'buy' 
+    $station = [THIS]->find station: product $ware with best price:  max.price=null, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+    $station1 = [THIS]->find station sells: resource $ware with best price: max.price=null, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+    if $station AND $station1 
+      $price = $station->get price of ware $ware
+      $price1 = $station1->get price of ware $ware
+      if $price > $price1 
+        $price = $price1 
+      end
+    else
+      skip if $station 
+        $station = $station1 
+      $price = $station->get price of ware $ware
+    end
+  else if $buysell == 'sell' 
+    $station = [THIS]->find station: resource $ware with best price: min.price=null, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+    do if $station 
+    $price = $station->get price of ware $ware
+  end
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s ware:%s %s price: %s'  arg1=$ware  arg2=$buysell  arg3=$price  arg4=null
+  skip if $price 
+    return null
+   
+  $price = $station->get price of ware $ware
+  $distance = 200000 
+  $station = null 
+  $i = 5 
+  while $i 
+    if $buysell == 'buy' 
+      $s = [THIS]->find station: product $ware with min. jumps:  max.price=$price, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+      skip if $s 
+        $s = [THIS]->find station sells: resource $ware with min. jumps: max.price=$price, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+    else if $buysell == 'sell' 
+      $s = [THIS]->find station: resource $ware with min. jumps: min.price=$price, amount=null, max.jumps=$maxjumps, startsector=$startsector, trader=[THIS], exclude array=$ex
+    end
+    * = [THIS]->call script 'mf.tg.log' : fmt='%s ware:%s %s station1: %s'  arg1=$ware  arg2=$buysell  arg3=$s  arg4=null
+     
+    skip if $s 
+      break
+    append $s to array $ex
+     
+    dec $i =
+    $d = [THIS]->call script 'mf.tg.distance' : station=$s 
+    if $distance > $d 
+      $distance = $d 
+      $station = $s 
+    end
+  end
+  * = [THIS]->call script 'mf.tg.log' : fmt='%s ware:%s %s station2: %s'  arg1=$ware  arg2=$buysell  arg3=$station  arg4=null
+  do if $station 
+  break
+end
+ 
+ 
+$price = $station->get price of ware $ware
+if $buysell == 'buy' 
+  $amount = $station->get true amount of ware $ware in cargo bay
+else if $buysell == 'sell' 
+  $amount = $station->get free amount of ware $ware in cargo bay
+end
+$distance = $distance 
+ 
+$buysell = create new array, arguments=$station, $price, $amount, $distance, null
+ 
+return $buysell
+ 
+ 

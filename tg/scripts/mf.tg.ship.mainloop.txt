@@ -1,0 +1,51 @@
+NAME: mf.tg.ship.mainloop
+CMD:  0
+DESC: 
+VSN:  136
+ARGS: 0
+---END-OF-METADATA---
+ 
+= wait randomly from 1000 to 5000 ms
+[THIS]->set command: {COMMAND_NONE 0}
+$s = get global variable: name='mf.tg.ships'
+if not find [THIS] in array: $s
+  = [THIS]->call script 'mf.tg.log' : fmt='%s: I was dissmised'  arg1=null  arg2=null  arg3=null  arg4=null 
+  return [FALSE]
+end
+ 
+$status = get global variable: name='mf.tg.status'
+skip if $status == 'running' 
+  return [FALSE]
+ 
+if [THIS]->get local variable: name='waiting'
+  [THIS]->send incoming message: text='waiting for orders....' temporary=[FALSE]
+  return [FALSE]
+end
+ 
+skip if [THIS]->call script 'mf.tg.ship.checkhw' :
+  return [FALSE]
+ 
+= [THIS]->call script 'mf.tg.ship.equip' : Eneed=null 
+ 
+$r = [THIS]->call script 'mf.tg.route.delivery' :
+* [THIS]->set command: {COMMAND_MF_PAUSE}
+skip if $r 
+  $r = [THIS]->call script 'mf.tg.route.best' :
+ 
+if not $r 
+  = [THIS]->call script 'mf.tg.log' : fmt='%s: there is no valid routes - idle for some time '  arg1=null  arg2=null  arg3=null  arg4=null 
+  [THIS]->set command: {COMMAND_IDLE}
+  = wait randomly from 10000 to 30000 ms
+  return [TRUE]
+   
+end
+ 
+= [THIS]->call script 'mf.tg.ship.trade' : route=$r 
+[THIS]->set local variable: name='buyws' value=null
+[THIS]->set local variable: name='sellws' value=null
+[THIS]->set local variable: name='delivery' value=null
+ 
+ 
+return [TRUE]
+ 
+ 

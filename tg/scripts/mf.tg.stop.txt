@@ -1,0 +1,59 @@
+NAME: mf.tg.stop
+CMD:  0
+DESC: 
+VSN:  105
+ARGS: 0
+---END-OF-METADATA---
+ 
+$status = get global variable: name='mf.tg.status'
+skip if $status != 'stopping' 
+  return null
+ 
+set global variable: name='mf.tg.status' value='stopping'
+ 
+$ships = get global variable: name='mf.tg.ships'
+$ships.i = size of array $ships
+while $ships.i 
+  dec $ships.i =
+  $ship = $ships[$ships.i]
+  skip if $ship->exists
+    continue
+   
+  while $ship->is script 'mf.tg.ship.mainloop.pl' on stack of task=0
+    = wait 3000 ms
+  end
+end
+ 
+$ships = get ship array: of race {Player} class/type=null
+$ships.i = size of array $ships
+while $ships.i 
+  dec $ships.i =
+  $ship = $ships[$ships.i]
+  skip if $ship->exists
+    continue
+   
+  = $ship->call script 'mf.tg.ship.addremove' : ship=$ship  add=[FALSE] 
+  $vars = $ship->get all local variable keys, starting with='mf.tg'
+  $vars.i = size of array $vars
+  while $vars.i 
+    dec $vars.i =
+    $var = $vars[$vars.i]
+    = $ship->call script 'mf.tg.log' : fmt='%s var set to null: %s'  arg1=$var  arg2=null  arg3=null  arg4=null 
+    $ship->set local variable: name=$var value=null
+  end
+   
+end
+$vars = get all global variable keys, starting with='mf.tg'
+$vars.i = size of array $vars
+while $vars.i 
+  dec $vars.i =
+  $var = $vars[$vars.i]
+  do if $var == 'mf.tg.hotkey' 
+  continue
+  do if $var == 'mf.tg.pageId' 
+  continue
+  set global variable: name=$var value=null
+end
+return null
+ 
+ 

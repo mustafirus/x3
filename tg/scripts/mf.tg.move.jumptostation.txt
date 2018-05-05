@@ -1,0 +1,29 @@
+NAME: mf.tg.move.jumptostation
+CMD:  0
+DESC: 
+VSN:  108
+ARGS: 1
+station|Var/Station|12|
+---END-OF-METADATA---
+skip if $station 
+  return [FALSE]
+$sector = $station->get sector
+$needed = [THIS]->needed jump drive energy for jump to sector $sector
+$amount = [THIS]->get amount of ware {Energy Cells} in cargo bay
+ 
+= [THIS]->call script 'mf.tg.log' : fmt='%s check energy from %s to %s: need: %s, cargo: %s'  arg1=[SECTOR]  arg2=$sector  arg3=$needed  arg4=$amount 
+ 
+if $needed > $amount 
+  = [THIS]->call script 'mf.tg.ship.equip' : Eneed=$needed 
+end
+ 
+= [THIS]->call script '!move.movetostation' : targetstation=$station 
+return [TRUE]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

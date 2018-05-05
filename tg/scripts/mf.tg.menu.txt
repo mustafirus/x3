@@ -1,0 +1,203 @@
+NAME: mf.tg.menu
+CMD:  0
+DESC: 
+VSN:  119
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+load text: id=$pageId
+ 
+while [TRUE] 
+   
+  $menu = create custom menu array
+   
+  add custom menu heading to array $menu: title='Guild Control'
+  $status = get global variable: name='mf.tg.status'
+  if not $status 
+    add custom menu item to array $menu: text='Start' returnvalue='start'
+    goto label showmenu
+  else if $status == 'running' 
+    $income = get global variable: name='mf.tg.stat.income'
+    $expence = get global variable: name='mf.tg.stat.expence'
+    $delivery = get global variable: name='mf.tg.stat.delivery'
+    $expence = -$expence 
+    $delivery = -$delivery 
+    $profit = $income + $expence 
+    $income = [THIS]->call script 'mf.tg.cr' : cr=$income  msg=null 
+    $expence = [THIS]->call script 'mf.tg.cr' : cr=$expence  msg=null 
+    $profit = [THIS]->call script 'mf.tg.cr' : cr=$profit  msg=null 
+    $delivery = [THIS]->call script 'mf.tg.cr' : cr=$delivery  msg=null 
+    $t = sprintf: fmt='Income: %s', $income, null, null, null, null
+    add custom menu info line to array $menu: text=$t
+    $t = sprintf: fmt='Expence: %s', $expence, null, null, null, null
+    add custom menu info line to array $menu: text=$t
+    $t = sprintf: fmt='Profit: %s', $profit, null, null, null, null
+    add custom menu info line to array $menu: text=$t
+    $t = sprintf: fmt='Delivery: %s', $delivery, null, null, null, null
+    add custom menu info line to array $menu: text=$t
+     
+     
+    add custom menu item to array $menu: text='Pause' returnvalue='pause'
+    add custom menu item to array $menu: text='Statistics' returnvalue='stat'
+    add custom menu item to array $menu: text='Clear statistics' returnvalue='statclear'
+     
+     
+  else if $status == 'paused' 
+    add custom menu item to array $menu: text='Stop' returnvalue='stop'
+    add custom menu item to array $menu: text='Resume' returnvalue='resume'
+  else if $status == 'stopping' 
+    add custom menu item to array $menu: text='Stopping' returnvalue=null
+    goto label showmenu
+  end
+   
+  add custom menu heading to array $menu: title='Guild Defaults'
+  $j = get global variable: name='mf.tg.defaults.refueljumps'
+  skip if $j 
+    $j = 80 
+  $t = sprintf: pageid=$pageId textid=103, $j, null, null, null, null
+  add custom menu item to array $menu: text=$t returnvalue='refueljumps'
+   
+  add custom menu heading to array $menu: title='Delivery orders'
+  add custom menu item to array $menu: text='Add order' returnvalue='addOrder'
+  = [THIS]->call script 'mf.tg.orders' : menu=$menu 
+   
+  add custom menu heading to array $menu: title='Guild Ships'
+  add custom menu item to array $menu: text='Add ship' returnvalue='addShip'
+  add custom menu item to array $menu: text='Add all TS ships in sector' returnvalue='addShipTS'
+  gosub listShips
+   
+  * add custom menu heading to array $menu: title='Guild Stations'
+  * add custom menu item to array $menu: text='Add stattion' returnvalue='addStation'
+  * gosub listStations
+   
+  showmenu:
+  $ret = open custom menu: title='Trader Guild Menu' description='Main menu for ALL guild operations' option array=$menu
+  if $ret == -1 
+    return null
+  else
+     
+    if is datatyp[ $ret ] == {DATATYPE_STRING}
+      if $ret == 'addShip' 
+        $x = [THIS]->get user input: type={Var/Ship owned by Player}, title='Select ship to add'
+        if $x 
+          = $x->call script 'mf.tg.ship.addremove' : ship=$x  add=[TRUE] 
+        end
+         
+      else if $ret == 'addShipTS' 
+        $x = [THIS]->get user input: type={Var/Sector}, title='Select sector to add TS ships'
+        if $x 
+          $ships = find ship: sector=$x class or type={TS 2031} race={Player} flags=[Find.Multiple] refobj=null maxdist=null maxnum=1000 refpos=null
+          write to log file $pageId  append=[TRUE]  printf: fmt='%s', $ships, null, null, null, null
+           
+          $ships.i = size of array $ships
+          while $ships.i 
+            dec $ships.i =
+            $ship = $ships[$ships.i]
+            = $ship->call script 'mf.tg.ship.addremove' : ship=$ship  add=[TRUE] 
+          end
+        end
+         
+      else if $ret == 'addStation' 
+        $x = [THIS]->get user input: type={Var/Station owned by Player}, title='Select station to add'
+        if $x 
+          $s = get global variable: name='mf.tg.stations'
+          skip if $s 
+            $s = array alloc: size=0
+          skip if find $x in array: $s
+            append $x to array $s
+          set global variable: name='mf.tg.stations' value=$s
+        end
+         
+      else if $ret == 'addOrder' 
+        = [THIS]->call script 'mf.tg.orders' : menu=null 
+      else if match regular expression: 'order#.*' to string $ret
+        = [THIS]->call script 'mf.tg.orders' : menu=$ret 
+      else if $ret == 'start' 
+        set global variable: name='mf.tg.status' value='running'
+        set global variable: name='mf.tg.stat.income' value=0
+        set global variable: name='mf.tg.stat.expence' value=0
+        set global variable: name='mf.tg.stat.delivery' value=0
+        set global variable: name='mf.tg.ship.max.serial' value=1
+        set global variable: name='mf.tg.defaults.refueljumps' value=80
+        START [THIS]->call script 'mf.tg.mainloop' :
+      else if $ret == 'stop' 
+        START [THIS]->call script 'mf.tg.stop' :
+      else if $ret == 'pause' 
+        set global variable: name='mf.tg.status' value='paused'
+      else if $ret == 'stat' 
+        = [THIS]->call script 'mf.tg.stat' :
+        return null
+      else if $ret == 'statclear' 
+         
+        set global variable: name='mf.tg.stat.income' value=0
+        set global variable: name='mf.tg.stat.expence' value=0
+        set global variable: name='mf.tg.stat.delivery' value=0
+        $ships = get global variable: name='mf.tg.ships'
+        $ships.i = size of array $ships
+        while $ships.i 
+          dec $ships.i =
+          $ship = $ships[$ships.i]
+           
+          $ship->set local variable: name='mf.tg.ship.income' value=0
+          $ship->set local variable: name='mf.tg.ship.expence' value=0
+           
+        end
+        return null
+         
+      else if $ret == 'resume' 
+        set global variable: name='mf.tg.status' value='running'
+        START [THIS]->call script 'mf.tg.mainloop' :
+        * set global variable: name='mf.tg.routes.interval' value=300
+        * 1START $null-1call script 'mf.tg.routes.loop' :
+      else if $ret == 'refueljumps' 
+        $j = [THIS]->get user input: type={Var/Number}, title='Fuel resuply quantity(jumps)'
+        set global variable: name='mf.tg.defaults.refueljumps' value=$j
+        $ships = get global variable: name='mf.tg.ships'
+        $ships.i = size of array $ships
+        while $ships.i 
+          dec $ships.i =
+          $ship = $ships[$ships.i]
+          $ship->set jumpdrive fuel resupply: amount=$j
+        end
+         
+      end
+    else if is datatyp[ $ret ] == {DATATYPE_SHIP}
+      = $ret->call script 'mf.tg.ship.addremove' : ship=$ret  add=[FALSE] 
+    else if is datatyp[ $ret ] == {DATATYPE_STATION}
+      $s = get global variable: name='mf.tg.stations'
+      $i = get index of $ret in array $s offset=-1 + 1
+      remove element from array $s at index $i
+      set global variable: name='mf.tg.stations' value=$s
+    end
+  end
+   
+end
+return null
+ 
+listShips:
+$s = get global variable: name='mf.tg.ships'
+$s = reverse array $s
+$s.i = size of array $s
+while $s.i 
+  dec $s.i =
+  $sh = $s[$s.i]
+  $id = $sh->get ID code
+  $t = sprintf: pageid=$pageId textid=101, $sh, $id, null, null, null
+  add custom menu item to array $menu: text=$t returnvalue=$sh
+end
+endsub
+ 
+listStations:
+$s = get global variable: name='mf.tg.stations'
+$s.i = size of array $s
+while $s.i 
+  dec $s.i =
+  $sh = $s[$s.i]
+  $id = $sh->get ID code
+  $t = sprintf: pageid=$pageId textid=101, $sh, $id, null, null, null
+  add custom menu item to array $menu: text=$t returnvalue=$sh
+end
+endsub
+return null
+ 
+ 

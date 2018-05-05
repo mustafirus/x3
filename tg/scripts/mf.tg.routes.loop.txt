@@ -1,0 +1,18 @@
+NAME: mf.tg.routes.loop
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+while [TRUE] 
+  $status = get global variable: name='mf.tg.status'
+  skip if $status == 'running' 
+    break
+  = $null->call script 'mf.tg.routes.actual' :
+  $interval = get global variable: name='mf.tg.routes.interval'
+  skip if $interval > 0 
+    break
+  $i = $interval * 1000 
+  = wait $i ms
+end
+return null

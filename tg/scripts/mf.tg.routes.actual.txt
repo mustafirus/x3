@@ -1,0 +1,129 @@
+NAME: mf.tg.routes.actual
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [FALSE] 
+$null = null 
+ 
+ 
+$wares = $null->call script 'mf.tg.wares' :
+ 
+do if $debug 
+$debug.begin = playing time
+ 
+$routes = array alloc: size=0
+* $profit.tot = 0
+* $profit.cnt = 0
+* $routes.bonus = array alloc: size=0
+* do if $debug
+* write to log file $pageId  append=[TRUE]  printf: fmt='All routes', null, null, null, null, null
+ 
+$ware.i = size of array $wares
+while $ware.i 
+  = wait 10 ms
+  dec $ware.i =
+  $ware = $wares[$ware.i]
+   
+  $stations = $null->call script 'mf.tg.stations' : ware=$ware 
+  $ware.sellers = $stations[0]
+  $ware.buyers = $stations[1]
+   
+  * ****** decart multiplication of stations
+  $ware.sellers.i = size of array $ware.sellers
+  while $ware.sellers.i 
+    * = wait 10 ms
+    dec $ware.sellers.i =
+    $ware.seller = $ware.sellers[$ware.sellers.i]
+     
+    $ware.seller.price = $ware.seller[1]
+    $ware.seller.amt = $ware.seller[2]
+     
+     
+    $ware.buyers.i = size of array $ware.buyers
+    while $ware.buyers.i 
+      * = wait 10 ms
+      dec $ware.buyers.i =
+      $ware.buyer = $ware.buyers[$ware.buyers.i]
+       
+      $ware.buyer.price = $ware.buyer[1]
+      $ware.buyer.amt = $ware.buyer[2]
+       
+      skip if $ware.buyer.price > $ware.seller.price 
+        continue
+       
+      * $vol = get volume of ware $ware
+      * $amt = 10000 / $vol
+      * skip if $amt <= $ware.seller.amt
+      * $amt = $ware.seller.amt
+      * skip if $amt <= $ware.buyer.amt
+      * $amt = $ware.buyer.amt
+      * $profit = ( $ware.buyer.price - $ware.seller.price ) * $amt
+       
+      * skip if $profit >= 50000
+      * continue
+      * skip if $profit.max >= $profit
+      * $profit.tot = $profit.tot + $profit / 1000
+      * inc $profit.cnt =
+      * write to log file $pageId  append=[TRUE]  printf: fmt='===Total profit %s: cnt:%s', $profit.tot, $profit.cnt, null, null, null
+       
+      * do if $debug
+      * write to log file $pageId  append=[TRUE]  printf: fmt='%s: %s %s -> %s', $ware, $profit, $ware.seller, $ware.buyer, null
+       
+      $r = array alloc: size=3
+      $r[0] = $ware
+      $r[1] = $ware.seller
+      $r[2] = $ware.buyer
+      * $r[3] = $profit
+       
+      append $r to array $routes
+       
+    end
+     
+  end
+  * end  ware
+end
+ 
+* $profit.tot = 0
+* $profit.tot / $profit.cnt * 1000
+* do if $debug
+* write to log file $pageId  append=[TRUE]  printf: fmt='AVG Profit: %s', $profit.tot, $ware.seller, $ware.buyer, null, null
+ 
+ 
+* $br = array alloc: size=0
+* $routes.i = size of array $routes
+* while $routes.i
+* dec $routes.i =
+* $r = $routes[$routes.i]
+* $profit = $r[3]
+* skip if $profit > $profit.tot
+* continue
+* append $r to array $br
+* end
+ 
+* $routes = $br
+ 
+set global variable: name='mf.tg.routes' value=$routes
+ 
+if $debug 
+  $debug.end = playing time
+  $elapsed = $debug.end - $debug.begin 
+  $num = size of array $routes
+  write to player logbook: printf: fmt='Found %s routes in %ss', $num, $elapsed, null, null, null
+   
+  $routes.i = size of array $routes
+  * write to log file $pageId  append=[TRUE]  printf: fmt='Good routes', null, null, null, null, null
+  while $routes.i 
+    = wait 1 ms
+    dec $routes.i =
+    $r = $routes[$routes.i]
+    $w = $r[0]
+    $s = $r[1]
+    $b = $r[2]
+    * $p = $r[3]
+    write to log file $pageId  append=[TRUE]  printf: fmt='%s: %s -> %s', $w, $s, $b, null, null
+  end
+end
+return null

@@ -1,0 +1,64 @@
+NAME: mf.tg.ship.rename
+CMD:  0
+DESC: 
+VSN:  119
+ARGS: 1
+back|Var/Boolean|63|rename to original?
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+load text: id=$pageId
+ 
+if $back 
+  $oldname = [THIS]->get local variable: name='mf.tg.oldname'
+  do if $oldname 
+  [THIS]->set name to $oldname
+  return null
+end
+ 
+$oldname = [THIS]->get name
+[THIS]->set local variable: name='mf.tg.oldname' value=$oldname
+ 
+$serial = [THIS]->get local variable: name='mf.tg.serial'
+= [THIS]->call script 'mf.tg.log' : fmt='%s serial: %s'  arg1=$serial  arg2=null  arg3=null  arg4=null 
+if not $serial 
+  $serial = get global variable: name='mf.tg.ship.max.serial'
+  skip if $serial 
+    $serial = 1 
+  = [THIS]->call script 'mf.tg.log' : fmt='%s serial1: %s'  arg1=$serial  arg2=null  arg3=null  arg4=null 
+  [THIS]->set local variable: name='mf.tg.serial' value=$serial
+  $s = $serial + 1 
+  set global variable: name='mf.tg.ship.max.serial' value=$s
+  = [THIS]->call script 'mf.tg.log' : fmt='%s max serial: %s'  arg1=$s  arg2=null  arg3=null  arg4=null 
+end
+if $serial < 10 
+  $serial = sprintf: fmt='00%s', $serial, null, null, null, null
+end
+if $serial < 100 
+  $serial = sprintf: fmt='0%s', $serial, null, null, null, null
+end
+ 
+ 
+* $class = [THIS]->get ware type code of object
+$class = [THIS]->get object class
+$race = [THIS]->get maker race
+* $var = [THIS]->get ship variation
+$class = sprintf: fmt='%s %s', $race, $class, null, null, null
+ 
+ 
+$cbs = [THIS]->get cargo bay size
+$plainname = sprintf: pageid=$pageId textid=1001, $serial, $class, $cbs, null, null
+$colorname = sprintf: pageid=$pageId textid=1002, $serial, $class, $cbs, null, null
+[THIS]->set local variable: name='plainname' value=$plainname
+[THIS]->set name to $colorname
+ 
+* $class = substitute in string $class: pattern 'Super Freighter' with 'SF'
+* $class = substitute in string $class: pattern 'Tanker' with 'T'
+* $class = substitute in string $class: pattern 'Hauler' with 'H'
+* $class = substitute in string $class: pattern 'Raider' with 'R'
+* $class = substitute in string $class: pattern 'Sentinel' with 'S'
+* $class = substitute in string $class: pattern 'Vanguard' with 'V'
+* $class = substitute in string $class: pattern 'Miner' with 'M'
+ 
+return null
+ 
+ 

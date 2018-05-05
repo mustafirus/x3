@@ -1,0 +1,46 @@
+NAME: mf.tg.station.exclude
+CMD:  0
+DESC: 
+VSN:  6
+ARGS: 1
+ware|Var/Ware|13|
+---END-OF-METADATA---
+$unknown.sectors = [THIS]->call script 'mf.tg.station.unknown' :
+ 
+if size of array $unknown.sectors
+  $buystations = clone array $unknown.sectors : index 0 ... null
+  $sellstations = clone array $unknown.sectors : index 0 ... null
+else
+  $buystations = array alloc: size=0
+  $sellstations = array alloc: size=0
+end
+ 
+ 
+ 
+$ships = get global variable: name='mf.tg.ships'
+$ships.i = size of array $ships
+while $ships.i 
+  dec $ships.i =
+  $ship = $ships[$ships.i]
+  skip if $ship->exists
+    continue
+  $buyws = $ship->get local variable: name='buyws'
+  $sellws = $ship->get local variable: name='sellws'
+  if $buyws 
+    $buyware = $buyws[0]
+    $buystation = $buyws[1]
+    do if $buyware == $ware 
+    append $buystation to array $buystations
+  end
+  if $sellws 
+    $sellware = $sellws[0]
+    $sellstation = $sellws[1]
+    do if $sellware == $ware 
+    append $sellstation to array $sellstations
+  end
+end
+ 
+$r = create new array, arguments=$buystations, $sellstations, null, null, null
+return $r
+ 
+ 

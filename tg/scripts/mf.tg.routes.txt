@@ -1,0 +1,8 @@
+NAME: mf.tg.routes
+CMD:  0
+DESC: 
+VSN:  100
+ARGS: 0
+---END-OF-METADATA---
+$routes = get global variable: name='mf.tg.routes'
+return $routes

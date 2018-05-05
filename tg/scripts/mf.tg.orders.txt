@@ -1,0 +1,120 @@
+NAME: mf.tg.orders
+CMD:  0
+DESC: 
+VSN:  137
+ARGS: 1
+menu|Value|9|
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+* load text: id=$pageId
+ 
+if is datatyp[ $menu ] == {DATATYPE_ARRAY}
+  $orders = get global variable: name='mf.tg.orders'
+   
+  skip if $orders 
+    $orders = array alloc: size=0
+  $orders.i = size of array $orders
+  while $orders.i 
+    dec $orders.i =
+    $order = $orders[$orders.i]
+    $order.dest = $order[0]
+    $order.ware = $order[1]
+    $order.amt = $order[2]
+     
+    $t = sprintf: pageid=$pageId textid=104, $order.dest, $order.ware, $order.amt, null, null
+    $ret = 'order#' + $orders.i 
+    add custom menu item to array $menu: text=$t returnvalue=$ret
+  end
+  return null
+else if is datatyp[ $menu ] == {DATATYPE_STRING}
+   
+  $orders = get global variable: name='mf.tg.orders'
+  $orders.i = get substring of $menu offset=6 length=null
+  $orders.i = string $orders.i to integer
+  $order = $orders[$orders.i]
+else
+  $orders = get global variable: name='mf.tg.orders'
+  if not $orders 
+    $orders = array alloc: size=0
+    set global variable: name='mf.tg.orders' value=$orders
+  end
+  $order = array alloc: size=4
+  $orders.i = size of array $orders
+  append $order to array $orders
+end
+ 
+$order.dest = $order[0]
+$order.ware = $order[1]
+$order.amt = $order[2]
+$order.price = $order[3]
+ 
+while [TRUE] 
+   
+  $menu.order = create custom menu array
+  $t = sprintf: pageid=$pageId textid=105, $order.dest, null, null, null, null
+  add custom menu item to array $menu.order: text=$t returnvalue='destware'
+  $t = sprintf: pageid=$pageId textid=106, $order.ware, null, null, null, null
+  add custom menu item to array $menu.order: text=$t returnvalue='destware'
+  $t = sprintf: pageid=$pageId textid=107, $order.amt, null, null, null, null
+  add custom menu item to array $menu.order: text=$t returnvalue='amt'
+  $t = sprintf: pageid=$pageId textid=108, $order.price, null, null, null, null
+  add custom menu item to array $menu.order: text=$t returnvalue='price'
+  add custom menu item to array $menu.order: text='Delete order' returnvalue='delete'
+  $ret = open custom menu: title='Order configure' description='Order configure' option array=$menu.order
+  if $ret == -1 
+    break
+  else if $ret == 'destware' 
+    $t = sprintf: pageid=$pageId textid=109, null, null, null, null, null
+    * $t = sprintf: pageid=$pageId textid=110, null, null, null, null, null
+    $dw = [THIS]->get user input: type={Var/Station and Ware}, title=$t
+    if $dw 
+      $order.dest = $dw[1]
+      $order.ware = $dw[0]
+      $order.amt = $order.dest->get free amount of ware $order.ware in cargo bay
+      $order.price = $order.dest->get price of ware $order.ware
+    end
+     
+  else if $ret == 'amt' 
+    $t = sprintf: pageid=$pageId textid=111, null, null, null, null, null
+    $o = [THIS]->get user input: type={Number}, title=$t
+    if is datatyp[ $o ] == {DATATYPE_INT}
+      do if $o >= 0 
+      $order.amt = $o 
+    end
+    $freeamt = $order.dest->get free amount of ware $order.ware in cargo bay
+    do if $order.amt > $freeamt 
+    $order.amt = $freeamt 
+  else if $ret == 'price' 
+    * $order.price = null
+    $t.min = get min price of ware $order.ware
+    $t.avg = get average price of ware $order.ware
+    $t.max = get max price of ware $order.ware
+    $t = sprintf: pageid=$pageId textid=112, $t.min, $t.avg, $t.max, null, null
+    $p = [THIS]->get user input: type={String}, title=$t
+    do if $p 
+    $order.price = $o 
+    $order.price = string $p to integer
+    skip if $order.price 
+      $order.price = $order.dest->get price of ware $order.ware
+     
+    skip if $order.price >= $t.min 
+      $order.price = $t.min 
+    skip if $order.price <= $t.max 
+      $order.price = $t.max 
+     
+  else if $ret == 'delete' 
+    remove element from array $orders at index $orders.i
+    return null
+  end
+end
+ 
+if not ( $order.dest OR $order.ware OR $order.amt OR $order.price ) 
+  remove element from array $orders at index $orders.i
+end
+$order[0] = $order.dest
+$order[1] = $order.ware
+$order[2] = $order.amt
+$order[3] = $order.price
+return null
+ 
+ 

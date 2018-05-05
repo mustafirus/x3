@@ -1,0 +1,99 @@
+NAME: mf.tg.ship.signal.attacked
+CMD:  0
+DESC: Asynchron signal. attacked for TS TP ships
+VSN:  137
+ARGS: 2
+attacker|Var/Ship/Station|22|the attacker
+action|Var/Number|10|action
+---END-OF-METADATA---
+do if $action == [ACTION_JUMP] 
+return null
+$old.cmd = [THIS]->call script 'mf.tg.ship.cmd' : cmd='save'  old=null 
+ 
+= [THIS]->call script 'mf.tg.ship.problem' : id=25  Arg1=[SECTOR]  Arg2=$attacker  Arg3=null 
+ 
+$r = random value from 5 to 15 - 1
+$r = [THIS]->launch $r fight drones: protect me or attack target=null
+ 
+* $unknown.sectors = [THIS]->call script 'mf.tg.station.unknown' :
+ 
+$sectors = array alloc: size=0
+$sector.list.all = [SECTOR]->find all sectors within 1 jumps: Only known sectors=[TRUE]
+$sector.list.num = size of array $sector.list.all
+while $sector.list.num 
+  dec $sector.list.num =
+  $sector = $sector.list.all[$sector.list.num]
+   
+  do if $sector == [SECTOR] 
+  continue
+  skip if find ship: sector=$sector class or type=null race={Player} flags=null refobj=null maxdist=null maxnum=1 refpos=null
+    continue
+   
+  append $sector to array $sectors
+end
+ 
+$sectors.num = size of array $sectors
+$sectors.num = random value from 0 to $sectors.num - 1
+$sector = $sectors[$sector.list.num]
+ 
+$flags = [Find.Friend] | [Find.Neutral] | [Find.Nearest] | [Find.Known] | [Find.DockingAllowed] 
+$station = find station in galaxy: startsector=$sector class or type=null race=null flags=$flags refobj=[THIS] serial=null max.jumps=0
+ 
+= [THIS]->call script 'mf.tg.log' : fmt='%s retreat to station: %s'  arg1=$station  arg2=null  arg3=null  arg4=null 
+ 
+if $station->exists
+   
+  [THIS]->set command: {COMMAND_RETREAT}
+  $previousdest = [THIS]->get destination
+  [THIS]->set destination to $station
+  $destination.pos = $station->get position as array
+  $destination.sector = $station->get sector
+  append $destination.sector to array $destination.pos
+  = [THIS]->call script '!move.jumptogate.nearest' : targetpos=$destination.pos  jumpto=[FALSE] 
+  [THIS]->set local variable: name='waiting' value=[TRUE]
+  while [TRUE] 
+    $waiting = [THIS]->get local variable: name='waiting'
+    skip if $waiting 
+      break
+    $fret = [THIS]->fly to station $station
+    do if $fret == {FLRET_LANDED} OR $fret == {FLRET_ERROR} 
+    break
+    = wait randomly from 100 to 200 ms
+  end
+  * = [THIS]->call script '!move.movetostation' : targetstation=$station
+   
+  [THIS]->set command: {COMMAND_IDLE}
+  do if $previousdest->exists
+  [THIS]->set destination to $previousdest
+   
+  while [TRUE] 
+     
+    $waiting = [THIS]->get local variable: name='waiting'
+    skip if $waiting 
+      break
+     
+    = wait randomly from 3000 to 5000 ms
+     
+  end
+  * = [THIS]->call script 'mf.tg.ship.equip' : Eneed=null
+  return null
+end
+ 
+if [THIS]->is in active sector
+  $timeout = random value from 2000 to 10000 - 1
+else
+  $timeout = random value from 40000 to 60000 - 1
+end
+ 
+$shield.pct = [THIS]->get shield percent
+$intensity = 100 - $shield.pct 
+ 
+= [THIS]->defensive move: type=null, intensity=$intensity, timeout=$timeout ms, avoid object=$attacker
+ 
+ 
+ 
+= [THIS]->call script 'mf.tg.ship.cmd' : cmd='restore'  old=$old.cmd 
+ 
+return null
+ 
+ 

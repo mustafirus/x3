@@ -1,0 +1,117 @@
+NAME: mf.tg.stations
+CMD:  0
+DESC: mf.tg.
+VSN:  100
+ARGS: 1
+ware|Var/Ware|13|ware to lookup
+---END-OF-METADATA---
+$pageId = get global variable: name='mf.tg.pageId'
+$debug = [FALSE] 
+$null = null 
+ 
+$ware.sellers = array alloc: size=0
+$ware.buyers = array alloc: size=0
+$deep = 5 
+ 
+$found = array alloc: size=0
+$cnt = $deep 
+while $cnt 
+  = wait 1 ms
+  $station = find station: product $ware with best price:  max.price=null, amount=null, max.jumps=null, startsector=null, trader=null, exclude array=$found
+  skip if $station 
+    break
+   
+  append $station to array $found
+   
+  gosub checkKnown
+  skip if $station 
+    continue
+  if not [PLAYERSHIP]->can buy ware $ware at station $station
+    continue
+  end
+   
+  $distance = $null->call script 'mf.tg.distance' : station=$station 
+  skip if $distance 
+    continue
+   
+  $amt = $station->get true amount of ware $ware in cargo bay
+  gosub fill_r
+  append $r to array $ware.sellers
+  dec $cnt =
+end
+ 
+$found = array alloc: size=0
+$cnt = $deep 
+while $cnt 
+  = wait 1 ms
+   
+  $station = find station: resource $ware with best price: min.price=null, amount=null, max.jumps=null, startsector=null, trader=null, exclude array=$found
+  skip if $station 
+    break
+  append $station to array $found
+   
+  gosub checkKnown
+  skip if $station 
+    continue
+  $distance = $null->call script 'mf.tg.distance' : station=$station 
+  skip if $distance 
+    continue
+   
+  $amt = $station->get free amount of ware $ware in cargo bay
+  gosub fill_r
+  append $r to array $ware.buyers
+  dec $cnt =
+end
+ 
+$stations = array alloc: size=2
+$ware.sellers = reverse array $ware.sellers
+$ware.buyers = reverse array $ware.buyers
+$stations[0] = $ware.sellers
+$stations[1] = $ware.buyers
+ 
+ 
+return $stations
+ 
+ 
+fill_r:
+$p = $station->get price of ware $ware
+$r = array alloc: size=4
+$r[0] = $station
+$r[1] = $p
+$r[2] = $amt
+$r[3] = $distance
+do if $debug 
+write to log file $pageId  append=[TRUE]  printf: fmt='%s: p:%s a:%s d:%s', $station, $p, $amt, $distance, null
+ 
+endsub
+ 
+checkKnown:
+ 
+if not $station->is known
+  $station = null 
+  endsub
+end
+ 
+$so = $station->get owner race
+if $so == {Player} 
+  $station = null 
+  endsub
+end
+ 
+if not [PLAYERSHIP]->is docking allowed at $station
+  $station = null 
+  endsub
+end
+ 
+$sec = $station->get sector
+$sh = find ship: sector=$sec class or type={Ship 2004} race={Player} flags=[Find.IncludeDocked] refobj=null maxdist=null maxnum=1 refpos=null
+if not $sh 
+  $st = find station: sector=$sec class or type={Station 2016} race={Player} flags=null refobj=null maxdist=null maxnum=1 refpos=null
+  if not $st 
+    $station = null 
+  end
+end
+endsub
+ 
+ 
+return null
